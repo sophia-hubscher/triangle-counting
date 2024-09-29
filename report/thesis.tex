@@ -1,0 +1,40 @@
+\documentclass[12pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}  % For including figures
+\usepackage{amsmath}   % For math symbols
+\usepackage{amssymb}   % For math symbols
+\usepackage{hyperref}  % For clickable links
+\usepackage{geometry}  % For setting margins
+\usepackage{setspace}  % For setting line spacing
+\usepackage{fancyhdr}  % For customizing headers
+\usepackage{cite}      % For bibliography
+\usepackage{lipsum}    % For placeholder text
+\usepackage{titlesec}  % For section formatting
+
+\geometry{letterpaper, margin=1in}
+\setstretch{1.5}  % 1.5 line spacing
+
+\begin{document}
+
+\section{Introduction}
+
+Counting triangles is a fundamental problem in graph theory with widespread applications in social networks, bioinformatics, and more.
+These triangles, formed by three mutually connected nodes, can, in social network graphs, represent closed friendships, indicating a high level of local connectivity, which can give great insite into the network as a whole.
+However, for large graphs, especially sparse ones, where the number of edges is much smaller compared to the number of possible edges, efficiently counting these triangles poses significant computational challenges.
+
+To address this, we turn toward randomized algorithms. These algorithms rely on probabilistic techniques to sample subsets of the graph's nodes, estimating the global triangle count based on local observations.
+By doing this, these algorithms significantly reduce the runtime compared to exact methods, particularly in sparse graphs where only a fraction of potential edges exist.
+Additionally, randomized algorithms often provide tunable accuracy, allowing for a trade-off between precision and performance, making them ideal for processing large-scale networks.
+
+
+
+
+\cite{knuth1984texbook}
+
+
+% Bibliography
+\newpage
+\bibliographystyle{plain}
+\bibliography{thesis_bib}
+
+\end{document}
