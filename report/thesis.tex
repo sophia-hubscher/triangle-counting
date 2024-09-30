@@ -1,4 +1,4 @@
-\documentclass[12pt]{report}
+\documentclass[12pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}  % For including figures
 \usepackage{amsmath}   % For math symbols
@@ -10,27 +10,86 @@
 \usepackage{cite}      % For bibliography
 \usepackage{lipsum}    % For placeholder text
 \usepackage{titlesec}  % For section formatting
+\usepackage{booktabs}  % For table lines
 
 \geometry{letterpaper, margin=1in}
 \setstretch{1.5}  % 1.5 line spacing
 
 \begin{document}
 
-\section{Introduction}
+\section{Notation}
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{ll}
+        \toprule
+        \textbf{Symbol} & \textbf{Description} \\
+        \midrule
+        $G(V, E)$       & Graph with $V$ vertices and $E$ edges. \\
+        $n = |V|$       & Number of vertices in graph $G$. \\
+        $m = |E|$       & Number of edges in graph $G$. \\
+        $\Delta_i$      & Number of triangles node $i$ participates in. \\
+        $d_i$           & Degree of node $i$. \\
+        \bottomrule
+    \end{tabular}
+    \caption{List of notation used.}
+    \label{tab:notation}
+\end{table}
+
+\newpage
+
+\section{Literature Review}
+
+\subsection{Outline DELETE LATER}
+\begin{itemize}
+    \item Why do we care about triangles? (Motivation)
+    \item If we don't care about runtime, how do we calculate them? (Exact algorithms)
+    \item Look, it's slow.
+    \item Methods for fast triangle counting:
+    \begin{itemize}
+        \item Talk about different methods:
+        \begin{itemize}
+            \item Split into subsections:
+            \begin{itemize}
+                \item Linear algebraic methods (e.g. Eigentriangle, Hutchinson's estimator paper by Avron)
+                \item Sampling methods
+            \end{itemize}
+        \end{itemize}
+    \end{itemize}
+    \item Our techniques that aren't specific to triangles:
+    \begin{itemize}
+        \item Importance sampling
+        \item Variance reduction
+        \item Learning-augmented algorithms
+        \begin{itemize}
+            \item If I have predictions about my output, how can I use them to augment my algorithms?
+        \end{itemize}
+        \item Talk about these techniques and where they've been used
+    \end{itemize}
+\end{itemize}
+
+\subsection{Introduction}
 
 Counting triangles is a fundamental problem in graph theory with widespread applications in social networks, bioinformatics, and more.
 These triangles, formed by three mutually connected nodes, can, in social network graphs, represent closed friendships, indicating a high level of local connectivity, which can give great insite into the network as a whole.
 However, for large graphs, especially sparse ones, where the number of edges is much smaller compared to the number of possible edges, efficiently counting these triangles poses significant computational challenges.
 
+\subsection{Methods for Triangle Counting}
+
+There are a few trivial methods for triangle counting.
+Primarily, we an use a brute force technique in which we enumerate all distinct sets of three vertices ${u, v, w}$ and check if they form a triangle.
+This involves examining every possible combination of vertices in the graph and testing whether all three edges $(u, v)$, $(v, w)$, and $(w, u)$ exist.
+Assuming, optimally, that we have edges stored in a hash table where retrival takes $O(1)$ time, the time complexity of this brute force approach is $\Theta(n^3)$, since the number of such three-vertex sets grows cubically with the number of vertices. \cite{al_hasan_triangle_2018}
+This method is straightforward but inefficient for large graphs due to its high computational cost.
+
+While for smaller graphs, this runtime is acceptable, when dealing with larger graphs, such as those representing large social netwworks, a $\Theta(n^3)$ runtime becomes impractical.
+
+
+\subsection{Recycling Bin DELETE LATER}
+
 To address this, we turn toward randomized algorithms. These algorithms rely on probabilistic techniques to sample subsets of the graph's nodes, estimating the global triangle count based on local observations.
 By doing this, these algorithms significantly reduce the runtime compared to exact methods, particularly in sparse graphs where only a fraction of potential edges exist.
 Additionally, randomized algorithms often provide tunable accuracy, allowing for a trade-off between precision and performance, making them ideal for processing large-scale networks.
-
-
-
-
-\cite{knuth1984texbook}
-
 
 % Bibliography
 \newpage
