@@ -79,10 +79,11 @@ However, for large graphs, especially sparse ones, where the number of edges is 
 There are a few trivial methods for triangle counting.
 Primarily, we an use a brute force technique in which we enumerate all distinct sets of three vertices ${u, v, w}$ and check if they form a triangle.
 This involves examining every possible combination of vertices in the graph and testing whether all three edges $(u, v)$, $(v, w)$, and $(w, u)$ exist.
-Assuming, optimally, that we have edges stored in a hash table where retrival takes $O(1)$ time, the time complexity of this brute force approach is $\Theta(n^3)$, since the number of such three-vertex sets grows cubically with the number of vertices. \cite{al_hasan_triangle_2018}
+Assuming, optimally, that we have edges stored in a hash table where retrival takes $O(1)$ time, the time complexity of this brute force approach is $\Theta(n^3)$, since the number of such three-vertex sets grows cubically with the number of vertices \cite{al_hasan_triangle_2018}.
 This method is straightforward but inefficient for large graphs due to its high computational cost.
 
 While for smaller graphs, this runtime is acceptable, when dealing with larger graphs, such as those representing large social netwworks, a $\Theta(n^3)$ runtime becomes impractical.
+Thus, we turn toward alternative triangle counting and estimation methods.
 
 
 \subsection{Recycling Bin DELETE LATER}
