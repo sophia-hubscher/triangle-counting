@@ -89,6 +89,13 @@ def sample_by_degree(A, n, s, power):
 
   return probabilities, sampled_nodes
 
+def precompute_node_triangle_counts(A):
+  node_triangle_counts = {}
+  n = len(A)
+  for node_index in range(n):
+      node_triangle_counts[node_index] = count_node_triangles(A, node_index)
+  return node_triangle_counts
+
 """# Uniform Sampling"""
 
 def estimate_uniformly_per_node_method(A, s):
@@ -112,13 +119,15 @@ def estimate_uniformly_submatrix_method(A, s):
 
 """# Importance Sampling"""
 
-def importance_estimate_per_node_method(A, s, power):
+def importance_estimate_per_node_method(A, s, power, node_triangle_counts):
   n = len(A)
   probabilities, sampled_nodes = sample_by_degree(A, n, s, power)
 
   estimate = 0
+  
   for i in sampled_nodes:
-    triangle_count = count_node_triangles(A, i)
+    # triangle_count = count_node_triangles(A, i)
+    triangle_count = node_triangle_counts[i]
     estimate += triangle_count * (1 / (s * probabilities[i]))
 
   return estimate // 3
@@ -212,39 +221,8 @@ def plot(s_values, results, powers):
 
 """# Test Sampling"""
 
-def edges_to_adjacency_matrix_csv(file_path, node_count):
-  adjacency_matrix = np.zeros((node_count, node_count))
-
-  with open(file_path, mode='r') as file:
-    csv_reader = csv.reader(file)
-
-    # skip the header
-    next(csv_reader, None)
-
-    for row in csv_reader:
-      if len(row) >= 2:
-        index_1 = int(row[0].strip())
-        index_2 = int(row[1].strip())
-
-        adjacency_matrix[index_1, index_2] = 1
-        adjacency_matrix[index_2, index_1] = 1
-
-  return adjacency_matrix
-
-def edges_to_adjacency_matrix_txt(file_path, node_count):
-  adjacency_matrix = np.zeros((node_count, node_count))
-
-  with open(file_path, 'r') as file:
-    for line in file:
-      if line.strip():
-        index_1, index_2 = map(int, line.split())
-
-        adjacency_matrix[index_1, index_2] = 1
-        adjacency_matrix[index_2, index_1] = 1
-
-  return adjacency_matrix
-
-def parallel_estimation(power, s, true_triangle_count, m, estimation_function, iterations):
+count_again = 0
+def parallel_estimation(power, s, true_triangle_count, m, estimation_function, node_triangle_counts, iterations):
   errors = []
   times = []
   estimates = []
@@ -252,7 +230,7 @@ def parallel_estimation(power, s, true_triangle_count, m, estimation_function, i
 
   for _ in range(iterations):
     start_time = time.time()
-    estimate = estimation_function(m, s, power)
+    estimate = estimation_function(m, s, power, node_triangle_counts)
     end_time = time.time()
 
     duration = end_time - start_time
@@ -274,6 +252,8 @@ def parallel_estimation(power, s, true_triangle_count, m, estimation_function, i
 
 # run parallel estimation for multiple powers and sample sizes
 def run_parallel_estimation(s_values, powers, true_triangle_count, m, estimation_function, iterations=20):
+  node_triangle_counts = precompute_node_triangle_counts(m)
+
   results = {
     "avg_errors": {power: {} for power in powers},
     "avg_times": {power: {} for power in powers},
@@ -286,7 +266,7 @@ def run_parallel_estimation(s_values, powers, true_triangle_count, m, estimation
 
   with mp.Pool(mp.cpu_count()) as pool:
     for power in powers:
-      parallel_results = pool.starmap(parallel_estimation, [(power, s, true_triangle_count, m, estimation_function, iterations) for s in s_values])
+      parallel_results = pool.starmap(parallel_estimation, [(power, s, true_triangle_count, m, estimation_function, node_triangle_counts, iterations) for s in s_values])
 
       for i, result in enumerate(parallel_results):
         s = s_values[i]
@@ -324,7 +304,8 @@ if __name__ == '__main__':
   node_count = 4039
   m = edges_to_adjacency_matrix_txt(file_path, node_count)
 
-  s_values = [5, 100, 500, 1000, 2000, 3000, 4000, node_count]
+  s_values = [5, 100, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, node_count]
+  # s_values = [5, 100, 500, 1000, 2000, 3000, 4000, node_count]
   powers = [1, 1.5, 2]
 
   true_triangle_count = count_triangles(m)
