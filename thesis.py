@@ -212,38 +212,6 @@ def plot(s_values, results, powers):
 
 """# Test Sampling"""
 
-def edges_to_adjacency_matrix_csv(file_path, node_count):
-  adjacency_matrix = np.zeros((node_count, node_count))
-
-  with open(file_path, mode='r') as file:
-    csv_reader = csv.reader(file)
-
-    # skip the header
-    next(csv_reader, None)
-
-    for row in csv_reader:
-      if len(row) >= 2:
-        index_1 = int(row[0].strip())
-        index_2 = int(row[1].strip())
-
-        adjacency_matrix[index_1, index_2] = 1
-        adjacency_matrix[index_2, index_1] = 1
-
-  return adjacency_matrix
-
-def edges_to_adjacency_matrix_txt(file_path, node_count):
-  adjacency_matrix = np.zeros((node_count, node_count))
-
-  with open(file_path, 'r') as file:
-    for line in file:
-      if line.strip():
-        index_1, index_2 = map(int, line.split())
-
-        adjacency_matrix[index_1, index_2] = 1
-        adjacency_matrix[index_2, index_1] = 1
-
-  return adjacency_matrix
-
 def parallel_estimation(power, s, true_triangle_count, m, estimation_function, iterations):
   errors = []
   times = []
