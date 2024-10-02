@@ -56,6 +56,26 @@ def edges_to_adjacency_matrix_txt(file_path, node_count):
 
   return adjacency_matrix
 
+def serialize_results_to_csv(results, s_values, powers, output_file, method_name):
+  file_exists = os.path.isfile(output_file)
+
+  with open(output_file, mode='a' if file_exists else 'w', newline='') as file:
+    writer = csv.writer(file)
+
+    if not file_exists:
+      writer.writerow(["Method", "Power", "Sample Size", "Avg Error", "Avg Time", "Variance", "Avg Percent Error", "Estimates"])
+
+    for power in powers:
+      for s in s_values:
+        avg_error = results["avg_errors"][power][s]
+        avg_time = results["avg_times"][power][s]
+        variance = results["avg_variances"][power][s]
+        avg_percent_error = results["avg_percent_errors"][power][s]
+
+        estimates_str = ', '.join(map(str, results["all_estimates"][power][s]))
+
+        writer.writerow([method_name, power, s, avg_error, avg_time, variance, avg_percent_error, estimates_str])
+
 def count_triangles(m):
   return np.trace(np.linalg.matrix_power(m, 3)) // 6.0
 
@@ -138,16 +158,33 @@ def importance_estimate_submatrix_method(A, s, power):
 
   return tri_count
 
+"""# Line of Best Fit """
+
+def get_line_of_best_fit(A):
+  n = len(A)
+  degrees = np.sum(A, axis=1)
+  triangles = np.zeros(n)
+
+  for i in range(n):
+    triangles[i] = count_node_triangles(A, i)
+
+  log_degrees = np.log(degrees + 0.0001)
+  log_triangles = np.log(triangles + 0.0001)
+
+  slope, intercept = np.polyfit(log_degrees, log_triangles, 1)
+
+  return slope, intercept
+
 """# Plotting"""
 
 def plot(s_values, results, powers):
-  colors = ['b', 'r', 'g']
+  colors = ['b', 'r', 'g', 'c', 'm', 'y']
 
   # error graph
   plt.figure(figsize=(12, 5))
   for i, power in enumerate(powers):
       avg_errors = [results["avg_errors"][power][s] for s in s_values]
-      plt.plot(s_values, avg_errors, marker='o', linestyle='-', color=colors[i], label=f'Power {power}')
+      plt.plot(s_values, avg_errors, marker='o', linestyle='-', color=colors[i % len(colors)], label=f'Power {power}')
   plt.xscale('log')
   plt.yscale('log')
   plt.xlabel('Sample Size (log scale)')
@@ -161,7 +198,7 @@ def plot(s_values, results, powers):
   plt.figure(figsize=(12, 5))
   for i, power in enumerate(powers):
       avg_times = [results["avg_times"][power][s] for s in s_values]
-      plt.plot(s_values, avg_times, marker='o', linestyle='-', color=colors[i], label=f'Power {power}')
+      plt.plot(s_values, avg_times, marker='o', linestyle='-', color=colors[i % len(colors)], label=f'Power {power}')
   plt.xscale('log')
   plt.yscale('log')
   plt.xlabel('Sample Size (log scale)')
@@ -175,7 +212,7 @@ def plot(s_values, results, powers):
   plt.figure(figsize=(12, 5))
   for i, power in enumerate(powers):
       avg_variances = [results["avg_variances"][power][s] for s in s_values]
-      plt.plot(s_values, avg_variances, marker='o', linestyle='-', color=colors[i], label=f'Power {power}')
+      plt.plot(s_values, avg_variances, marker='o', linestyle='-', color=colors[i % len(colors)], label=f'Power {power}')
   plt.xscale('log')
   plt.yscale('log')
   plt.xlabel('Sample Size (log scale)')
@@ -189,7 +226,7 @@ def plot(s_values, results, powers):
   plt.figure(figsize=(12, 5))
   for i, power in enumerate(powers):
       avg_percent_errors = [results["avg_percent_errors"][power][s] for s in s_values]
-      plt.plot(s_values, avg_percent_errors, marker='o', linestyle='-', color=colors[i], label=f'Power {power}')
+      plt.plot(s_values, avg_percent_errors, marker='o', linestyle='-', color=colors[i % len(colors)], label=f'Power {power}')
   plt.xscale('log')
   plt.yscale('log')
   plt.xlabel('Sample Size (log scale)')
@@ -240,7 +277,6 @@ def parallel_estimation(power, s, true_triangle_count, m, estimation_function, i
     "estimates": estimates
   }
 
-# run parallel estimation for multiple powers and sample sizes
 def run_parallel_estimation(s_values, powers, true_triangle_count, m, estimation_function, iterations=20):
   results = {
     "avg_errors": {power: {} for power in powers},
@@ -267,33 +303,13 @@ def run_parallel_estimation(s_values, powers, true_triangle_count, m, estimation
 
   return results
 
-def serialize_results_to_csv(results, s_values, powers, output_file, method_name):
-  file_exists = os.path.isfile(output_file)
-
-  with open(output_file, mode='a' if file_exists else 'w', newline='') as file:
-    writer = csv.writer(file)
-
-    if not file_exists:
-      writer.writerow(["Method", "Power", "Sample Size", "Avg Error", "Avg Time", "Variance", "Avg Percent Error", "Estimates"])
-
-    for power in powers:
-      for s in s_values:
-        avg_error = results["avg_errors"][power][s]
-        avg_time = results["avg_times"][power][s]
-        variance = results["avg_variances"][power][s]
-        avg_percent_error = results["avg_percent_errors"][power][s]
-
-        estimates_str = ', '.join(map(str, results["all_estimates"][power][s]))
-
-        writer.writerow([method_name, power, s, avg_error, avg_time, variance, avg_percent_error, estimates_str])
-
 if __name__ == '__main__':
   file_path = 'facebook_combined.txt'
   node_count = 4039
   m = edges_to_adjacency_matrix_txt(file_path, node_count)
 
-  s_values = [5, 100, 500, 1000, 2000, 3000, 4000, node_count]
-  powers = [1, 1.5, 2]
+  s_values = [5, 100, 500, 1000, 2000, 3000, 4000]
+  powers = [1, 1.5, 2, get_line_of_best_fit(m)[0]]
 
   true_triangle_count = count_triangles(m)
   print(f"True Triangle Count: {true_triangle_count}")
@@ -305,4 +321,3 @@ if __name__ == '__main__':
   serialize_results_to_csv(results, s_values, powers, output_file, method_name)
 
   plot(s_values, results, powers)
-  
