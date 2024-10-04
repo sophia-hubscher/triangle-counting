@@ -168,12 +168,37 @@ def get_line_of_best_fit(A):
   for i in range(n):
     triangles[i] = count_node_triangles(A, i)
 
-  log_degrees = np.log(degrees + 0.0001)
-  log_triangles = np.log(triangles + 0.0001)
+  valid_indices = (degrees > 0) & (triangles > 0)
+  filtered_degrees = degrees[valid_indices]
+  filtered_triangles = triangles[valid_indices]
+
+  log_degrees = np.log(filtered_degrees)
+  log_triangles = np.log(filtered_triangles)
 
   slope, intercept = np.polyfit(log_degrees, log_triangles, 1)
 
+  # plt.scatter(log_degrees, log_triangles, color='blue', label='Data Points')
+  # plt.plot(log_degrees, line_of_best_fit, color='red', label=f'Best Fit Line (slope={slope:.2f})')
+  # plt.show()
+
   return slope, intercept
+
+"""# Variance Reduction """
+
+def estimate_variance_reduction_method(A, s, slope, intercept):
+  n = len(A)
+
+  degree_array = np.sum(A, axis=1)
+  approx_triangles = np.power(degree_array, slope) * np.exp(intercept)
+  M = np.sum(approx_triangles)
+
+  sampled_nodes = gen_s_ints(s, n)
+  sampled_node_triangles = np.array([count_node_triangles(A, i) for i in sampled_nodes])
+  sampled_m_i_vals = np.array([approx_triangles[i] for i in sampled_nodes])
+
+  D = np.sum(sampled_node_triangles - sampled_m_i_vals) * (n/s)
+
+  return (M + D) / 3
 
 """# Plotting"""
 
@@ -303,13 +328,53 @@ def run_parallel_estimation(s_values, powers, true_triangle_count, m, estimation
 
   return results
 
+def run_sequential_estimation(s_values, powers, true_triangle_count, m, estimation_function, iterations=20):
+  results = {
+    "avg_errors": {power: {} for power in powers},
+    "avg_times": {power: {} for power in powers},
+    "avg_variances": {power: {} for power in powers},
+    "avg_percent_errors": {power: {} for power in powers},
+    "all_estimates": {power: {} for power in powers},
+  }
+
+  for power in powers:
+    for s in s_values:
+      errors = []
+      times = []
+      estimates = []
+      percent_errors = []
+
+      for _ in range(iterations):
+        start_time = time.time()
+        estimate = estimation_function(m, s, power)
+        end_time = time.time()
+
+        duration = end_time - start_time
+        error = abs(true_triangle_count - estimate)
+        percent_error = abs(error / true_triangle_count)
+
+        errors.append(error)
+        times.append(duration)
+        estimates.append(estimate)
+        percent_errors.append(percent_error)
+
+      results["avg_errors"][power][s] = np.mean(errors)
+      results["avg_times"][power][s] = np.mean(times)
+      results["avg_variances"][power][s] = np.var(estimates)
+      results["avg_percent_errors"][power][s] = np.mean(percent_errors)
+      results["all_estimates"][power][s] = estimates
+
+      print(f"Power: {power}, s: {s}")
+
+  return results
+
 if __name__ == '__main__':
   file_path = 'facebook_combined.txt'
   node_count = 4039
   m = edges_to_adjacency_matrix_txt(file_path, node_count)
 
   s_values = [5, 100, 500, 1000, 2000, 3000, 4000]
-  powers = [1, 1.5, 2, get_line_of_best_fit(m)[0]]
+  powers = [1, 1.5, get_line_of_best_fit(m)[0], 2]
 
   true_triangle_count = count_triangles(m)
   print(f"True Triangle Count: {true_triangle_count}")
