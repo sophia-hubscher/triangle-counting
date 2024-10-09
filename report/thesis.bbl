@@ -10,6 +10,17 @@ Corlin~O. Beum and Everett~G. Brundage.
 \newblock A {Method} for {Analyzing} the {Sociomatrix}.
 \newblock {\em Sociometry}, 13(2):141--145, 1950.
 
+\bibitem{lovasz_large_2012}
+Laaszlo Lovaasz.
+\newblock {\em Large networks and graph limits}.
+\newblock Number volume 60 in American {Mathematical} {Society} colloquium publications. American Mathematical Society, Providence, Rhode Island, 2012.
+
+\bibitem{seshadhri_triadic_2013}
+C.~Seshadhri, Ali Pinar, and Tamara~G. Kolda.
+\newblock Triadic {Measures} on {Graphs}: {The} {Power} of {Wedge} {Sampling}.
+\newblock In {\em Proceedings of the 2013 {SIAM} {International} {Conference} on {Data} {Mining}}, pages 10--18, May 2013.
+\newblock arXiv:1202.5230 [cs].
+
 \bibitem{strassen_gaussian_1969}
 V.~Strassen.
 \newblock Gaussian {Elimination} is not {Optimal}.
@@ -20,5 +31,10 @@ Charalampos~E. Tsourakakis.
 \newblock Fast {Counting} of {Triangles} in {Large} {Real} {Networks} without {Counting}: {Algorithms} and {Laws}.
 \newblock In {\em 2008 {Eighth} {IEEE} {International} {Conference} on {Data} {Mining}}, pages 608--617, December 2008.
 \newblock ISSN: 2374-8486.
+
+\bibitem{tsourakakis_doulion_2009}
+Charalampos~E. Tsourakakis, U.~Kang, Gary~L. Miller, and Christos Faloutsos.
+\newblock {DOULION}: counting triangles in massive graphs with a coin.
+\newblock In {\em Proceedings of the 15th {ACM} {SIGKDD} international conference on {Knowledge} discovery and data mining}, {KDD} '09, pages 837--846, New York, NY, USA, June 2009. Association for Computing Machinery.
 
 \end{thebibliography}

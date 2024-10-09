@@ -1,4 +1,4 @@
-\documentclass[12pt]{report}
+\documentclass[12pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}  % For including figures
 \usepackage{amsmath}   % For math symbols
@@ -9,19 +9,25 @@
 \usepackage{fancyhdr}  % For customizing headers
 \usepackage{cite}      % For bibliography
 \usepackage{lipsum}    % For placeholder text
-\usepackage{titlesec}  % For section formatting
+\usepackage{titlesec}  % For subsection formatting
 \usepackage{booktabs}  % For table lines
 \usepackage{tikz}      % For drawing graphs
 \usepackage{caption}   % For captions
 \usepackage{float}     % For placing figures
 \usepackage{subcaption} % For subfigures
 
+\newcommand{\subsubsubsection}[1]{
+  \vspace{1em} % Space above the section
+  \noindent\textbf{#1} % Bold the section title
+  \vspace{0.5em} % Space below the section
+}
+
 \geometry{letterpaper, margin=1in}
 \setstretch{1.5}  % 1.5 line spacing
 
 \begin{document}
 
-\chapter{Notation}
+\section{Notation}
 
 \begin{table}[ht]
     \centering
@@ -43,9 +49,9 @@
 
 \newpage
 
-\chapter{Literature Review}
+\section{Literature Review}
 
-\section{Outline DELETE LATER}
+\subsection{Outline DELETE LATER}
 \begin{itemize}
     \item Why do we care about triangles? (Motivation)
     \item If we don't care about runtime, how do we calculate them? (Exact algorithms)
@@ -54,7 +60,7 @@
     \begin{itemize}
         \item Talk about different methods:
         \begin{itemize}
-            \item Split into subsections:
+            \item Split into subsubsections:
             \begin{itemize}
                 \item Linear algebraic methods (e.g. Eigentriangle, Hutchinson's estimator paper by Avron)
                 \item Sampling methods
@@ -73,16 +79,17 @@
     \end{itemize}
 \end{itemize}
 
-\section{Introduction}
+\subsection{Introduction}
 
-Counting triangles is a fundamental problem in graph theory with widespread applications in social networks, bioinformatics, and more.
+Counting triangles is a fundamental problem in graph theory with widespread applications in social networks, bioinformatics, and more \cite{lovasz_large_2012}.
 These triangles, formed by three mutually connected nodes, can, in social network graphs, represent closed friendships, indicating a high level of local connectivity, which can give great insight into the network as a whole.
 However, for large graphs, especially sparse ones, where the number of edges is much smaller compared to the number of possible edges, efficiently counting these triangles poses significant computational challenges.
 
-\section{Methods for Triangle Counting}
+\subsection{Methods for Triangle Counting}
 
 Triangle counting can be approached in a variety of ways, each with its advantages and drawbacks. 
-One of the simplest methods is the brute force technique, where all distinct sets of three vertices ${u, v, w}$ are enumerated and checked for the existence of a triangle. This involves examining every possible combination of vertices in the graph and testing whether all three edges $(u, v)$, $(v, w)$, and $(w, u)$ exist. 
+One of the simplest methods is the brute force technique, where all distinct sets of three vertices ${u, v, w}$ are enumerated and checked for the existence of a triangle.
+This involves examining every possible combination of vertices in the graph and testing whether all three edges $(u, v)$, $(v, w)$, and $(w, u)$ exist. 
 
 Assuming optimal conditions with edges stored in a hash table, where edge retrieval takes $O(1)$ time, the time complexity of this brute force approach is $\Theta(n^3)$. 
 This cubic complexity arises because the number of combinations of three vertices grows cubically with the total number of vertices \cite{al_hasan_triangle_2018}. 
@@ -93,7 +100,7 @@ However, when scaling up to larger graphs—such as those representing extensive
 
 Thus, researchers have turned to alternative triangle counting and estimation methods.
 
-\subsection{Linear Algebraic Methods}
+\subsubsection{Linear Algebraic Methods}
 
 Graphs can be conveniently represented using adjacency matrices, which in social network analysis are typically referred to as \emph{sociomatrices} \cite{beum_method_1950}. 
 In these matrices, each row and column represents a node, while edges between nodes are represented as 1s in the corresponding matrix entry.
@@ -147,7 +154,7 @@ Thus, the total complexity for computing $A^3$ is $O(n^3)$.
 After computing $A^3$, calculating the trace takes $O(n)$, as you need to iterate over the $n$ diagonal elements.
 Thus, the overall runtime complexity for the operation is $O(n^3)$.
 
-\subsubsection{Strassen's Algorithm}
+\subsubsubsection{Strassen's Algorithm}
 
 This previous approach assumes that matrix multiplication is performed using the standard algorithm.
 However, more sophisticated techniques, such as Strassen's algorithm \cite{strassen_gaussian_1969}, can reduce matrix multiplication time.
@@ -158,7 +165,7 @@ Computing $A^2$ using Strassen's algorithm will take $O(n^{\log_2 7})$.
 Then, multiplying $A^2$ by $A$ again takes $O(n^{2.81})$.
 Therefore, the total complexity for computing $A^3$ with Strassen's algorithm is $O(n^{\log_2 7}) + O(n^{\log_2 7}) = O(n^{\log_2 7})$, or roughly $O(n^{2.81})$.
 
-\subsubsection{EigenTriangle Algorithm}
+\subsubsubsection{EigenTriangle Algorithm}
 
 Another significant approach in triangle counting is the use of spectral methods.
 One such method is the EigenTriangle algorithm \cite{tsourakakis_fast_2008}, which estimates the triangle count $\Delta$ by considering the spectral decomposition of the adjacency matrix $A$.
@@ -183,12 +190,31 @@ where $\lambda_i$ are the $k$ top eigenvalues of the adjacency matrix.
 The runtime of EigenTriangle is dominated by the cost of computing the top $k$ eigenvalues and eigenvectors of $A$, which can be done in $O(k m)$, where $m$ is the number of edges and $k$ is typically much smaller than the number of nodes $n$.
 This is a substantial improvement over the complexity of direct methods like $\mathrm{trace}(A^3)$.
 
-\subsection{Randomized Algorithms}
+\subsubsection{Sampling Methods}
 
-To address this, we turn toward randomized algorithms. These algorithms rely on probabilistic techniques to sample subsets of the graph's nodes, estimating the global triangle count based on local observations.
-By doing this, these algorithms significantly reduce the runtime compared to exact methods, particularly in sparse graphs where only a fraction of potential edges exist.
+One of the most effective ways to estimate triangle counts in large, sparse graphs is through sampling methods.
+These methods rely on randomly selecting edges or vertices and then inspecting their local neighborhoods for the presence of triangles.
+Sampling-based techniques are particularly useful in scenarios where calculating the exact triangle count is computationally expensive or unnecessary.
 
-Additionally, randomized algorithms often provide tunable accuracy, allowing for a trade-off between precision and performance, making them ideal for processing large-scale networks.
+Additionally, sampling algorithms often provide tunable accuracy, allowing for a trade-off between precision and performance, making them ideal for processing large-scale networks.
+
+\subsubsubsection{Edge Sampling}
+
+In edge sampling, we randomly sample a subset of edges from the graph, count the number of triangles in the subgraph, and scale up to reach our estimate.
+
+One key edge sampling algorithm is Doulion \cite{tsourakakis_doulion_2009}, where each edge in $G$ is sampled with probability $p$.
+As all triangles consist of three edges, this means that all triangles in $G$ have probability $p^3$ of being counted.
+Thus, the number of triangles counted is scaled by $\frac{1}{p^3}$ to achieve a final estimate.
+
+\subsubsubsection{Wedge Sampling}
+
+Wedge sampling \cite{seshadhri_triadic_2013} focuses on counting wedges—triplets of nodes that form two edges but not necessarily a triangle.
+A wedge is defined by three vertices $(u, v, w)$ where $u$ is adjacent to both $v$ and $w$, but $v$ and $w$ may or may not be adjacent.
+Once wedges are sampled, the algorithm checks how many of them are closed (i.e., form triangles).
+
+The number of triangles can then be estimated by multiplying the number of closed wedges by the fraction of all wedges that were closed in the sample.
+Wedge sampling tends to work well in graphs with a large number of high-degree vertices, where it becomes easier to sample many wedges at once, but unlike edge sampling, it cannot be efficiently done using data structures like adjacency matrices or adjacency lists.
+Thus, wedge sampling comes with an additional preprocessing step that adds to runtime.
 
 \newpage
 \bibliographystyle{plain}

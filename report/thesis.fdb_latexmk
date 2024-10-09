@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex thesis"] 1728491686.25544 "thesis.aux" "thesis.bbl" "thesis" 1728491708.80191 0
-  "./thesis_bib.bib" 1728488412.55464 4599 20ba2f5e269487da7b35ee9c42ae05a5 ""
+["bibtex thesis"] 1728495671.27291 "thesis.aux" "thesis.bbl" "thesis" 1728495672.30668 0
+  "./thesis_bib.bib" 1728495419.90461 8737 439742fb065a71e7a496bc4a36067b6b ""
   "/usr/local/texlive/2024/texmf-dist/bibtex/bst/base/plain.bst" 1292289607 20613 bd3fbfa9f64872b81ac57a0dd2ed855f ""
-  "thesis.aux" 1728491708.52951 2316 66066260856b567890fcd5b41bfd393e "pdflatex"
+  "thesis.aux" 1728495672.04164 2152 db1d214615b3ba026a5fc3a37b522024 "pdflatex"
   (generated)
   "thesis.bbl"
   "thesis.blg"
   (rewritten before read)
-["pdflatex"] 1728491707.77604 "/Users/sophiahubscher/Documents/triangle-counting/report/thesis.tex" "thesis.pdf" "thesis" 1728491708.80204 0
-  "/Users/sophiahubscher/Documents/triangle-counting/report/thesis.tex" 1728491707.50199 9833 680846ddbb7efbe5636e6c19bcb5deb4 ""
+["pdflatex"] 1728495671.38087 "/Users/sophiahubscher/Documents/triangle-counting/report/thesis.tex" "thesis.pdf" "thesis" 1728495672.3068 0
+  "/Users/sophiahubscher/Documents/triangle-counting/report/thesis.tex" 1728495669.8939 11523 0826ea5276bdeddfe530d72aa676e689 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/tcrm1200.tfm" 1136768653 1536 74b7293ec3713bb7fdca8dd1bd1f469c ""
@@ -118,10 +118,10 @@
   "/usr/local/texlive/2024/texmf-dist/tex/latex/amsmath/amstext.sty" 1686341992 2444 0d0c1ee65478277e8015d65b86983da2 ""
   "/usr/local/texlive/2024/texmf-dist/tex/latex/atveryend/atveryend.sty" 1576191570 19336 ce7ae9438967282886b3b036cfad1e4d ""
   "/usr/local/texlive/2024/texmf-dist/tex/latex/auxhook/auxhook.sty" 1576625391 3935 57aa3c3e203a5c2effb4d2bd2efbc323 ""
+  "/usr/local/texlive/2024/texmf-dist/tex/latex/base/article.cls" 1705352648 20144 147463a6a579f4597269ef9565205cfe ""
   "/usr/local/texlive/2024/texmf-dist/tex/latex/base/atbegshi-ltx.sty" 1705352648 3045 273c666a54e60b9f730964f431a56c1b ""
   "/usr/local/texlive/2024/texmf-dist/tex/latex/base/atveryend-ltx.sty" 1705352648 2462 6bc53756156dbd71c1ad550d30a3b93f ""
   "/usr/local/texlive/2024/texmf-dist/tex/latex/base/inputenc.sty" 1705352648 5048 425739d70251273bf93e3d51f3c40048 ""
-  "/usr/local/texlive/2024/texmf-dist/tex/latex/base/report.cls" 1705352648 23203 f5d913095ece2233436f0e628619cd37 ""
   "/usr/local/texlive/2024/texmf-dist/tex/latex/base/size12.clo" 1705352648 8449 f07039d8e4e89f21078d9b5137579bfc ""
   "/usr/local/texlive/2024/texmf-dist/tex/latex/booktabs/booktabs.sty" 1579038678 6078 f1cb470c9199e7110a27851508ed7a5c ""
   "/usr/local/texlive/2024/texmf-dist/tex/latex/caption/caption.sty" 1696191071 56128 c2ccf1a29d78c33bc553880402e4fb9a ""
@@ -175,10 +175,10 @@
   "/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1727563534.20416 5467645 128b85b7cde5f5edc5cb7f1dd7ff8736 ""
   "/usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1727563514 8221426 c278802e2645a4ad0c6fd7542466e085 ""
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
-  "thesis.aux" 1728491708.52951 2316 66066260856b567890fcd5b41bfd393e "pdflatex"
-  "thesis.bbl" 1728491686.36082 915 b8cd0102291244835646be70c55c4681 "bibtex thesis"
-  "thesis.out" 1728491708.53003 1052 c687a713a6b149bf8c5071294bd4cb84 "pdflatex"
-  "thesis.tex" 1728491707.50199 9833 680846ddbb7efbe5636e6c19bcb5deb4 ""
+  "thesis.aux" 1728495672.04164 2152 db1d214615b3ba026a5fc3a37b522024 "pdflatex"
+  "thesis.bbl" 1728495671.37802 1879 ebcf7a0f11cbf9edca066f2b8b2bb888 "bibtex thesis"
+  "thesis.out" 1728495672.04228 1048 7ed7878bce2215a4d84209b68886cca2 "pdflatex"
+  "thesis.tex" 1728495669.8939 11523 0826ea5276bdeddfe530d72aa676e689 ""
   (generated)
   "thesis.aux"
   "thesis.log"
