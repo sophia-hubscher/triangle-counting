@@ -27,6 +27,10 @@
 
 \begin{document}
 
+\tableofcontents
+
+\newpage
+
 \section{Notation}
 
 \begin{table}[ht]
@@ -87,7 +91,7 @@ However, for large graphs, especially sparse ones, where the number of edges is 
 
 \subsection{Methods for Triangle Counting}
 
-Triangle counting can be approached in a variety of ways, each with its advantages and drawbacks. 
+Triangle counting can be approached in a variety of ways, each with its own advantages and disadvantages. 
 One of the simplest methods is the brute force technique, where all distinct sets of three vertices ${u, v, w}$ are enumerated and checked for the existence of a triangle.
 This involves examining every possible combination of vertices in the graph and testing whether all three edges $(u, v)$, $(v, w)$, and $(w, u)$ exist. 
 
@@ -95,15 +99,12 @@ Assuming optimal conditions with edges stored in a hash table, where edge retrie
 This cubic complexity arises because the number of combinations of three vertices grows cubically with the total number of vertices \cite{al_hasan_triangle_2018}. 
 
 While this method is straightforward, it is inefficient for large graphs due to its high computational cost.
-In smaller graphs, this runtime may be acceptable.
-However, when scaling up to larger graphs—such as those representing extensive social networks, a $\Theta(n^3)$ runtime quickly becomes impractical.
-
 Thus, researchers have turned to alternative triangle counting and estimation methods.
 
 \subsubsection{Linear Algebraic Methods}
 
-Graphs can be conveniently represented using adjacency matrices, which in social network analysis are typically referred to as \emph{sociomatrices} \cite{beum_method_1950}. 
-In these matrices, each row and column represents a node, while edges between nodes are represented as 1s in the corresponding matrix entry.
+Graphs can be conveniently represented using adjacency matrices, which, in social network analysis, are typically referred to as \emph{sociomatrices} \cite{beum_method_1950}. 
+In these matrices, each row and column represents a node, and edges between nodes are represented as 1s in the corresponding matrix entry.
 
 \begin{figure}[H]
     \centering
@@ -141,26 +142,29 @@ In these matrices, each row and column represents a node, while edges between no
 \end{figure}
 
 By using these adjacency matrices and leveraging linear algebra techniques, we can calculate triangle counts more efficiently. 
-The trace of the matrix offers a simple and effective approach. Specifically, we can use the formula:
+One simple method using the adjacency matrix is to use the following formula:
 
 \[
 \Delta = \frac{1}{6} \mathrm{trace}(A^3)
 \]
 
-This formula is derived from the fact that the diagonal elements of \(A^3\) count the number of triangles that each vertex participates in, effectively summing these counts across all vertices. 
+This formula is derived from the fact that the diagonal elements of \(A^3\) count the number of length-three paths (i.e. triangles) that each vertex participates in.
+Thus, in taking the trace, we get the sum of all these triangles, which after scaling, yields the global triangle count.
 
-To compute $A^3$, you first need to calculate $A^2$ (which takes $O(n^3)$ for an $n \times n$ matrix) and then multiply $A^2$ by $A$ (also $O(n^3)$).
+To compute $A^3$, we first need to calculate $A^2$ (which takes $O(n^3)$ for an $n \times n$ matrix) and then multiply $A^2$ by $A$ (also $O(n^3)$).
 Thus, the total complexity for computing $A^3$ is $O(n^3)$.
-After computing $A^3$, calculating the trace takes $O(n)$, as you need to iterate over the $n$ diagonal elements.
+After computing $A^3$, calculating the trace takes $O(n)$, as we need to iterate over the $n$ diagonal elements.
 Thus, the overall runtime complexity for the operation is $O(n^3)$.
 
 \subsubsubsection{Strassen's Algorithm}
 
-This previous approach assumes that matrix multiplication is performed using the standard algorithm.
+This runtime analysis assumes that matrix multiplication is performed using the standard algorithm.
 However, more sophisticated techniques, such as Strassen's algorithm \cite{strassen_gaussian_1969}, can reduce matrix multiplication time.
-Strassen's algorithm divides each matrix into smaller submatrices and performs a series of additions and multiplications that require only seven multiplications of these smaller matrices instead of eight, which is typical in standard matrix multiplication.
+In this algorithm, that is used on For large, square matrices, such as undirected sociomatrices, each matrix is divided into smaller submatrices on which a series additions and multiplications are performed.
+This process requires only seven multiplications of these smaller matrices instead of the eight that are typical in standard matrix multiplication.
+Thus, on large matrices, this leads to a significant speedup.
 
-For large, square matrices, such as sociomatrices, Strassen's algorithm reduces the complexity of multiplying two $n \times n$ matrices to approximately $O(n^{\log_2 7})$, which is about $O(n^{2.81})$.
+Specifically, Strassen's algorithm reduces the complexity of multiplying two $n \times n$ matrices to approximately $O(n^{\log_2 7})$, which is about $O(n^{2.81})$.
 Computing $A^2$ using Strassen's algorithm will take $O(n^{\log_2 7})$.
 Then, multiplying $A^2$ by $A$ again takes $O(n^{2.81})$.
 Therefore, the total complexity for computing $A^3$ with Strassen's algorithm is $O(n^{\log_2 7}) + O(n^{\log_2 7}) = O(n^{\log_2 7})$, or roughly $O(n^{2.81})$.
@@ -178,9 +182,8 @@ A = U \Lambda U^T
 \]
 
 where $U$ is a matrix whose columns are the eigenvectors of $A$, and $\Lambda$ is a diagonal matrix containing the corresponding eigenvalues.
-The cube of the adjacency matrix $A^3$ can be approximated by considering the largest eigenvalues and their corresponding eigenvectors, significantly reducing the computational complexity when compared to the direct calculation of $A^3$.
 
-Once the decomposition is performed, the number of triangles can be estimated using:
+Once the decomposition is performed, the number of triangles can be computed exactly using $\Delta = \frac{1}{6} \sum_{i=1}^{n} \lambda_i^3$, and can be estimated using:
 
 \[
 \Delta \approx \frac{1}{6} \sum_{i=1}^{k} \lambda_i^3
@@ -202,8 +205,8 @@ Additionally, sampling algorithms often provide tunable accuracy, allowing for a
 
 In edge sampling, we randomly sample a subset of edges from the graph, count the number of triangles in the subgraph, and scale up to reach our estimate.
 
-One key edge sampling algorithm is Doulion \cite{tsourakakis_doulion_2009}, where each edge in $G$ is sampled with probability $p$.
-As all triangles consist of three edges, this means that all triangles in $G$ have probability $p^3$ of being counted.
+One key edge sampling algorithm is Doulion \cite{tsourakakis_doulion_2009}, in which each edge in $G$ is sampled with probability $p$.
+As all triangles consist of three edges, meaning that all triangles in $G$ have probability $p^3$ of being counted.
 Thus, the number of triangles counted is scaled by $\frac{1}{p^3}$ to achieve a final estimate.
 
 \subsubsubsection{Wedge Sampling}

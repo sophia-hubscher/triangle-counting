@@ -1,0 +1,7 @@
+\contentsline {section}{\numberline {1}Notation}{2}{section.1}%
+\contentsline {section}{\numberline {2}Literature Review}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Outline DELETE LATER}{3}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Introduction}{3}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Methods for Triangle Counting}{4}{subsection.2.3}%
+\contentsline {subsubsection}{\numberline {2.3.1}Linear Algebraic Methods}{4}{subsubsection.2.3.1}%
+\contentsline {subsubsection}{\numberline {2.3.2}Sampling Methods}{7}{subsubsection.2.3.2}%
