@@ -5,4 +5,20 @@ Mohammad Al~Hasan and Vachik~S. Dave.
 \newblock Triangle counting in large networks: a review.
 \newblock {\em WIREs Data Mining and Knowledge Discovery}, 8(2):e1226, March 2018.
 
+\bibitem{beum_method_1950}
+Corlin~O. Beum and Everett~G. Brundage.
+\newblock A {Method} for {Analyzing} the {Sociomatrix}.
+\newblock {\em Sociometry}, 13(2):141--145, 1950.
+
+\bibitem{strassen_gaussian_1969}
+V.~Strassen.
+\newblock Gaussian {Elimination} is not {Optimal}.
+\newblock {\em Numerische Mathematik}, 13:354--356, 1969.
+
+\bibitem{tsourakakis_fast_2008}
+Charalampos~E. Tsourakakis.
+\newblock Fast {Counting} of {Triangles} in {Large} {Real} {Networks} without {Counting}: {Algorithms} and {Laws}.
+\newblock In {\em 2008 {Eighth} {IEEE} {International} {Conference} on {Data} {Mining}}, pages 608--617, December 2008.
+\newblock ISSN: 2374-8486.
+
 \end{thebibliography}
