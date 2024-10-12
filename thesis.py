@@ -195,9 +195,49 @@ def estimate_variance_reduction_method(A, s, slope, intercept):
 
   sampled_nodes = gen_s_ints(s, n)
   sampled_node_triangles = np.array([count_node_triangles(A, i) for i in sampled_nodes])
+
   sampled_m_i_vals = np.array([approx_triangles[i] for i in sampled_nodes])
 
   D = np.sum(sampled_node_triangles - sampled_m_i_vals) * (n/s)
+
+  # PLOTS FOR DEBUGGING
+
+  # abs_diff = np.abs(sampled_m_i_vals - sampled_node_triangles)  # |m_i - delta_i|
+  # relative_error = abs_diff / np.where(sampled_node_triangles != 0, sampled_node_triangles, 1)  # avoid division by 0
+
+  # # true vs approximate triangle counts
+  # plt.figure(figsize=(6, 4))
+  # plt.scatter(sampled_node_triangles, sampled_m_i_vals, color='blue')
+  # plt.plot([0, max(sampled_node_triangles)], [0, max(sampled_m_i_vals)], color='red', linestyle='--', label='y=x')
+  # plt.xlabel('True Triangles (Δ_i)')
+  # plt.ylabel('Approximate Triangles (m_i)')
+  # plt.title('True vs Approximate Triangle Counts')
+  # plt.legend()
+  # plt.show()
+
+  # # log-log plot of |m_i - delta_i| vs d_i
+  # plt.figure(figsize=(6, 4))
+  # plt.loglog(degree_array[sampled_nodes], abs_diff, 'o', color='green')
+  # plt.xlabel('Degree (d_i)')
+  # plt.ylabel('|m_i - Δ_i|')
+  # plt.title('Log-Log Plot of |m_i - Δ_i| vs Degree (d_i)')
+  # plt.show()
+
+  # #  histogram of relative error |m_i - delta_i| / delta_i
+  # plt.figure(figsize=(6, 4))
+  # plt.hist(relative_error, bins=20, color='purple', edgecolor='black', alpha=0.7)
+  # plt.xlabel('Relative Error |m_i - Δ_i| / Δ_i')
+  # plt.ylabel('Frequency')
+  # plt.title('Histogram of Relative Error')
+  # plt.show()
+
+  # # histogram of true triangles (Δ_i)
+  # plt.figure(figsize=(6, 4))
+  # plt.hist(sampled_node_triangles, bins=20, color='orange', edgecolor='black', alpha=0.7)
+  # plt.xlabel('True Triangles (Δ_i)')
+  # plt.ylabel('Frequency')
+  # plt.title('Histogram of True Triangle Counts (Δ_i)')
+  # plt.show()
 
   return (M + D) / 3
 
@@ -379,6 +419,9 @@ if __name__ == '__main__':
 
   true_triangle_count = count_triangles(m)
   print(f"True Triangle Count: {true_triangle_count}")
+
+  # slope, intercept = get_line_of_best_fit(m)
+  # estimate_variance_reduction_method(m, 500, slope, intercept)
 
   results = run_parallel_estimation(s_values, powers, true_triangle_count, m, importance_estimate_per_node_method)
 
