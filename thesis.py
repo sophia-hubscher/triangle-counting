@@ -177,6 +177,7 @@ def get_line_of_best_fit(A):
 
   slope, intercept = np.polyfit(log_degrees, log_triangles, 1)
 
+  # line_of_best_fit = slope * log_degrees + intercept
   # plt.scatter(log_degrees, log_triangles, color='blue', label='Data Points')
   # plt.plot(log_degrees, line_of_best_fit, color='red', label=f'Best Fit Line (slope={slope:.2f})')
   # plt.show()
@@ -374,7 +375,7 @@ if __name__ == '__main__':
   m = edges_to_adjacency_matrix_txt(file_path, node_count)
 
   s_values = [5, 100, 500, 1000, 2000, 3000, 4000]
-  powers = [1, 1.5, get_line_of_best_fit(m)[0], 2]
+  powers = [0, 1, 1.5, get_line_of_best_fit(m)[0], 2]
 
   true_triangle_count = count_triangles(m)
   print(f"True Triangle Count: {true_triangle_count}")
