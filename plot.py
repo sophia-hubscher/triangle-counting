@@ -160,7 +160,7 @@ def plot_comparison(all_results, methods):
     plt.title('Accuracy vs. Runtime Comparison Across Methods')
     plt.grid(True)
     plt.legend()
-    plt.savefig('plots/accuracy_vs_runtime_comparison.png')
+    plt.savefig(f'{plots_folder}/accuracy_vs_runtime_comparison.png')
 
 if __name__ == '__main__':
     plot_csv('estimation_results.csv')
