@@ -1,6 +1,17 @@
+import os
 import numpy as np
 import matplotlib.pyplot as plt
 import csv
+from datetime import datetime
+
+def get_timestamped_subfolder(parent_folder):
+    current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    new_subfolder = os.path.join(parent_folder, current_time)
+    os.makedirs(new_subfolder, exist_ok=True)
+
+    return new_subfolder
+
+plots_folder = get_timestamped_subfolder('plots')
 
 def plot(s_values, results, powers, method):
     colors = ['b', 'r', 'g', 'c', 'm', 'y']
@@ -16,7 +27,7 @@ def plot(s_values, results, powers, method):
     plt.title(f'Average Error vs. Sample Size for Method: {method}')
     plt.grid(True)
     plt.legend()
-    plt.show()
+    plt.savefig(f'{plots_folder}/avg_error_{method}.png')
 
     plt.figure(figsize=(12, 5))
     for i, power in enumerate(powers):
@@ -29,7 +40,7 @@ def plot(s_values, results, powers, method):
     plt.title(f'Average Duration vs. Sample Size for Method: {method}')
     plt.grid(True)
     plt.legend()
-    plt.show()
+    plt.savefig(f'{plots_folder}/avg_duration_{method}.png')
 
     plt.figure(figsize=(12, 5))
     for i, power in enumerate(powers):
@@ -42,7 +53,7 @@ def plot(s_values, results, powers, method):
     plt.title(f'Average Variance vs. Sample Size for Method: {method}')
     plt.grid(True)
     plt.legend()
-    plt.show()
+    plt.savefig(f'{plots_folder}/avg_variance_{method}.png')
 
     plt.figure(figsize=(12, 5))
     for i, power in enumerate(powers):
@@ -55,7 +66,7 @@ def plot(s_values, results, powers, method):
     plt.title(f'Percent Error vs. Sample Size for Method: {method}')
     plt.grid(True)
     plt.legend()
-    plt.show()
+    plt.savefig(f'{plots_folder}/percent_error_{method}.png')
 
     for i, power in enumerate(powers):
         plt.figure(figsize=(12, 6))
@@ -66,7 +77,7 @@ def plot(s_values, results, powers, method):
         plt.ylabel('Estimate Distribution')
         plt.title(f'Whisker Plot of Estimates vs. Sample Size for Method: {method}, Power {power}')
         plt.grid(True)
-        plt.show()
+        plt.savefig(f'{plots_folder}/whisker_plot_{method}_power_{power}.png')
 
 def plot_csv(csv_file):
     methods = set()
@@ -128,10 +139,10 @@ def plot_comparison(all_results, methods):
     plt.figure(figsize=(12, 6))
 
     for method_idx, method in enumerate(methods):
-        color = colors[method_idx % len(colors)]
-        marker = markers[method_idx % len(markers)]
+        color = colors[method_idx % len(markers)]
         
-        for power in all_results[method]['avg_errors']:
+        for power_idx, power in enumerate(all_results[method]['avg_errors']):
+            marker = markers[power_idx % len(colors)]
             avg_errors = []
             avg_times = []
 
@@ -149,7 +160,7 @@ def plot_comparison(all_results, methods):
     plt.title('Accuracy vs. Runtime Comparison Across Methods')
     plt.grid(True)
     plt.legend()
-    plt.show()
+    plt.savefig('plots/accuracy_vs_runtime_comparison.png')
 
 if __name__ == '__main__':
     plot_csv('estimation_results.csv')
