@@ -4,9 +4,11 @@ import matplotlib.pyplot as plt
 import csv
 from datetime import datetime
 
+dataset = 'GrQc'
+
 def get_timestamped_subfolder(parent_folder):
     current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    new_subfolder = os.path.join(parent_folder, current_time)
+    new_subfolder = os.path.join(parent_folder, f'{dataset}/{current_time}')
     os.makedirs(new_subfolder, exist_ok=True)
 
     return new_subfolder
@@ -77,15 +79,15 @@ def plot(s_values, results, powers, method):
         plt.ylabel('Estimate Distribution')
         plt.title(f'Whisker Plot of Estimates vs. Sample Size for Method: {method}, Power {power}')
         plt.grid(True)
-        plt.savefig(f'{plots_folder}/whisker_plot_{method}_power_{power}.png')
+        plt.savefig(f'/{plots_folder}/whisker_plot_{method}_power_{power}.png')
 
-def plot_csv(csv_file):
+def plot_csv():
     methods = set()
 
     # This stores results for each method separately
     all_results = {}
 
-    with open(csv_file, mode='r') as file:
+    with open(f'results/estimation_results_{dataset}.csv', mode='r') as file:
         reader = csv.DictReader(file)
 
         for row in reader:
@@ -163,4 +165,4 @@ def plot_comparison(all_results, methods):
     plt.savefig(f'{plots_folder}/accuracy_vs_runtime_comparison.png')
 
 if __name__ == '__main__':
-    plot_csv('estimation_results.csv')
+    plot_csv()
