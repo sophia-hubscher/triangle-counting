@@ -79,7 +79,7 @@ def plot(s_values, results, powers, method):
         plt.ylabel('Estimate Distribution')
         plt.title(f'Whisker Plot of Estimates vs. Sample Size for Method: {method}, Power {power}')
         plt.grid(True)
-        plt.savefig(f'/{plots_folder}/whisker_plot_{method}_power_{power}.png')
+        plt.savefig(f'{plots_folder}/whisker_plot_{method}_power_{power}.png')
 
 def plot_csv():
     methods = set()
