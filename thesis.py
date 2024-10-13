@@ -410,8 +410,12 @@ def run_sequential_estimation(s_values, powers, true_triangle_count, m, estimati
   return results
 
 if __name__ == '__main__':
-  file_path = 'facebook_combined.txt'
-  node_count = 4039
+  # file_path = 'data/facebook_combined.txt'
+  # node_count = 4039
+  
+  file_path = 'data/ca-GrQc_mapped.txt'
+  node_count = 5242
+
   m = edges_to_adjacency_matrix_txt(file_path, node_count)
 
   s_values = [5, 100, 500, 1000, 2000, 3000, 4000]
@@ -423,10 +427,10 @@ if __name__ == '__main__':
   # slope, intercept = get_line_of_best_fit(m)
   # estimate_variance_reduction_method(m, 500, slope, intercept)
 
-  results = run_parallel_estimation(s_values, powers, true_triangle_count, m, importance_estimate_per_node_method)
+  results = run_parallel_estimation(s_values, powers, true_triangle_count, m, importance_estimate_submatrix_method)
 
-  output_file = 'estimation_results.csv'
-  method_name = 'importance_estimate_per_node_method'
-  serialize_results_to_csv(results, s_values, powers, output_file, method_name)
+  output_file = 'estimation_results_GrQc.csv'
+  method_name = 'importance_estimate_submatrix_method'
+  serialize_results_to_csv(results, s_values, powers, f'results/{output_file}', method_name)
 
   plot(s_values, results, powers)
