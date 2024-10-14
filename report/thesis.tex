@@ -55,34 +55,6 @@
 
 \section{Literature Review}
 
-\subsection{Outline DELETE LATER}
-\begin{itemize}
-    \item Why do we care about triangles? (Motivation)
-    \item If we don't care about runtime, how do we calculate them? (Exact algorithms)
-    \item Look, it's slow.
-    \item Methods for fast triangle counting:
-    \begin{itemize}
-        \item Talk about different methods:
-        \begin{itemize}
-            \item Split into subsubsections:
-            \begin{itemize}
-                \item Linear algebraic methods (e.g. Eigentriangle, Hutchinson's estimator paper by Avron)
-                \item Sampling methods
-            \end{itemize}
-        \end{itemize}
-    \end{itemize}
-    \item Our techniques that aren't specific to triangles:
-    \begin{itemize}
-        \item Importance sampling
-        \item Variance reduction
-        \item Learning-augmented algorithms
-        \begin{itemize}
-            \item If I have predictions about my output, how can I use them to augment my algorithms?
-        \end{itemize}
-        \item Talk about these techniques and where they've been used
-    \end{itemize}
-\end{itemize}
-
 \subsection{Introduction}
 
 Counting triangles is a fundamental problem in graph theory with widespread applications in social networks, bioinformatics, and more \cite{lovasz_large_2012}.
@@ -193,6 +165,18 @@ where $\lambda_i$ are the $k$ top eigenvalues of the adjacency matrix.
 The runtime of EigenTriangle is dominated by the cost of computing the top $k$ eigenvalues and eigenvectors of $A$, which can be done in $O(k m)$, where $m$ is the number of edges and $k$ is typically much smaller than the number of nodes $n$.
 This is a substantial improvement over the complexity of direct methods like $\mathrm{trace}(A^3)$.
 
+\subsubsubsection{TraceTriangle Algorithm}
+
+The TraceTriangle algorithm \cite{avron_counting_2010} is a randomized algorithm designed for efficient triangle estimation in large graphs.
+It leverages trace-based techniques, which compute the trace of matrix powers to approximate the number of triangles.
+Specifically, the algorithm relies on the previously mentioned property: $\Delta = \frac{1}{6} \mathrm{trace}(A^3)$ where $A$ is the adjacency matrix of the graph and $\Delta$ is the number of triangles.
+However, rather than computing the full matrix multiplication $A^3$, which is computationally expensive for large graphs, the TraceTriangle algorithm uses a randomized approach to approximate this trace, significantly reducing computation time.
+
+Comparing TraceTriangle to the EigenTriangle algorithm, TraceTriangle achieves higher accuracy across multiple types of graphs.
+Despite this accuracy advantage, EigenTriangle tends to run more quickly than TraceTriangle on large graphs.
+That said, one significant advantage of TraceTriangle is its potential for parallelization, which EigenTriangle lacks.
+This allows TraceTriangle to scale more effectively with the size of the graph, ultimately reducing the speed advantage of EigenTriangle in larger computations.
+
 \subsubsection{Sampling Methods}
 
 One of the most effective ways to estimate triangle counts in large, sparse graphs is through sampling methods.
@@ -218,6 +202,26 @@ Once wedges are sampled, the algorithm checks how many of them are closed (i.e.,
 The number of triangles can then be estimated by multiplying the number of closed wedges by the fraction of all wedges that were closed in the sample.
 Wedge sampling tends to work well in graphs with a large number of high-degree vertices, where it becomes easier to sample many wedges at once, but unlike edge sampling, it cannot be efficiently done using data structures like adjacency matrices or adjacency lists.
 Thus, wedge sampling comes with an additional preprocessing step that adds to runtime.
+
+\subsection{General Algorithmic Strategies}
+
+Beyond specific algorithms for triangle counting, various general techniques from theoretical computer science have been adapted for this problem, particularly in designing faster algorithms.
+
+\subsubsection{Importance Sampling}
+
+Importance sampling is used to focus computational effort on the most "important" parts of a graph.
+
+TEXT HERE
+
+\subsubsection{Variance Reduction}
+
+Variance reduction is another general technique that can be applied to triangle estimation, improving accuracy without increasing the number of samples needed.
+
+TEXT HERE
+
+\subsubsection{Learning-Augmented Algorithms}
+
+TEXT HERE
 
 \newpage
 \bibliographystyle{plain}

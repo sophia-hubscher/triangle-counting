@@ -1,17 +1,15 @@
 # Fdb version 4
-["bibtex thesis"] 1728495755.74433 "thesis.aux" "thesis.bbl" "thesis" 1728504798.04864 0
-  "./thesis_bib.bib" 1728495419.90461 8737 439742fb065a71e7a496bc4a36067b6b ""
+["bibtex thesis"] 1728923860.96395 "thesis.aux" "thesis.bbl" "thesis" 1728923862.05698 0
+  "./thesis_bib.bib" 1728923724.87972 10825 e8e1107928fce01474cfe64ecc75f364 ""
   "/usr/local/texlive/2024/texmf-dist/bibtex/bst/base/plain.bst" 1292289607 20613 bd3fbfa9f64872b81ac57a0dd2ed855f ""
-  "thesis.aux" 1728504797.74034 2152 18eecb09916a939198a6bd097364c24c "pdflatex"
+  "thesis.aux" 1728923861.79022 2643 26d66eacc216ee332dfccd0f44841168 "pdflatex"
   (generated)
   "thesis.bbl"
   "thesis.blg"
   (rewritten before read)
-["pdflatex"] 1728504796.70062 "/Users/sophiahubscher/Documents/triangle-counting/report/thesis.tex" "thesis.pdf" "thesis" 1728504798.04877 0
-  "/Users/sophiahubscher/Documents/triangle-counting/report/thesis.tex" 1728504796.47972 11392 8cc914e46dab5b6f0dd19e3ef18f8491 ""
-  "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
+["pdflatex"] 1728923861.07887 "/Users/sophiahubscher/Documents/triangle-counting/report/thesis.tex" "thesis.pdf" "thesis" 1728923862.05712 0
+  "/Users/sophiahubscher/Documents/triangle-counting/report/thesis.tex" 1728923859.54368 12236 3e507eaeb193936d2d931b93380f0f79 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
-  "/usr/local/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/tcrm1200.tfm" 1136768653 1536 74b7293ec3713bb7fdca8dd1bd1f469c ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1246382020 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm" 1246382020 916 f87d7c45f9c908e672703b83b72241a3 ""
@@ -40,7 +38,6 @@
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1248133631 32726 0a1aea6fcd6468ee2cf64d891f5c43c8 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1248133631 32569 5e5ddc8df908dea60932f3c484a54c0d ""
   "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb" 1248133631 36118 fad905eba93cff5bce1e185fe980a177 ""
-  "/usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb" 1215737283 136101 f533469f523533d38317ab5729d00c8a ""
   "/usr/local/texlive/2024/texmf-dist/tex/context/base/mkii/supp-pdf.mkii" 1461363279 71627 94eb9990bed73c364d7f53f960cc8c5b ""
   "/usr/local/texlive/2024/texmf-dist/tex/generic/atbegshi/atbegshi.sty" 1575674566 24708 5584a51a7101caf7e6bbf1fc27d8f7b1 ""
   "/usr/local/texlive/2024/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty" 1576625341 40635 c40361e206be584d448876bba8a64a3b ""
@@ -175,11 +172,11 @@
   "/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1727563534.20416 5467645 128b85b7cde5f5edc5cb7f1dd7ff8736 ""
   "/usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1727563514 8221426 c278802e2645a4ad0c6fd7542466e085 ""
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
-  "thesis.aux" 1728504797.74034 2152 18eecb09916a939198a6bd097364c24c "pdflatex"
-  "thesis.bbl" 1728495755.85988 1879 ebcf7a0f11cbf9edca066f2b8b2bb888 "bibtex thesis"
-  "thesis.out" 1728504797.74099 1048 7ed7878bce2215a4d84209b68886cca2 "pdflatex"
-  "thesis.tex" 1728504796.47972 11392 8cc914e46dab5b6f0dd19e3ef18f8491 ""
-  "thesis.toc" 1728504797.74126 588 4e3919666ba85e398b67dafdb1fa3660 "pdflatex"
+  "thesis.aux" 1728923861.79022 2643 26d66eacc216ee332dfccd0f44841168 "pdflatex"
+  "thesis.bbl" 1728923861.07607 2084 d416d40f899780461faff56a58c6f493 "bibtex thesis"
+  "thesis.out" 1728923861.79076 1639 dbd05141e2f993daa984cd1678a3651d "pdflatex"
+  "thesis.tex" 1728923859.54368 12236 3e507eaeb193936d2d931b93380f0f79 ""
+  "thesis.toc" 1728923861.79096 892 d72e821e0be729c967ebe6ca199a30e9 "pdflatex"
   (generated)
   "thesis.aux"
   "thesis.log"
