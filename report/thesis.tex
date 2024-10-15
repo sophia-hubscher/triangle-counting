@@ -209,7 +209,7 @@ Beyond specific algorithms for triangle counting, various general techniques fro
 
 \subsubsection{Importance Sampling}
 
-Importance sampling is used to focus computational effort on the most "important" parts of a graph.
+Whereas with uniform sampling, where all edges/nodes/wedges/etc. are sampled with the same probability, importance sampling is used to focus computational effort on the most ``important" parts of a graph.
 
 TEXT HERE
 
@@ -221,7 +221,18 @@ TEXT HERE
 
 \subsubsection{Learning-Augmented Algorithms}
 
-TEXT HERE
+A learning-augmented algorithm \cite{roughgarden_algorithms_2020} is an algorithm that uses a prediction to boost its performance.
+Whereas most algorithms take only the problem their input, learning-augmented algorithms also accept an extra piece of information—usually a prediction about some part of the solution.
+The algorithm then uses this prediction to run faster or produce better results.
+
+An example of a learning-augmented algorithm is its use in the maximum weight matching problem.
+The maximum weight matching problem \cite{duan_linear-time_2014} is the problem of finding a matching in which the sum of weights is maximized in a weighted graph.
+The typical solution for this problem, the Hungarian algorithm, runs in $O(m\sqrt{n})$ time.
+
+When a learning-augmented approach \cite{dinitz_faster_2021} is applied however, where machine-learned predictions are used to ``warm-start" the algorithm, that runtime is significantly reduced when the predictions are accurate.
+When the predictions are inaccurate, the runtime is simply the same as in the Hungarian algorithm.
+
+In general, this method can be highly effective, as accurate predictions can significantly enhance algorithms' efficiency or result quality.
 
 \newpage
 \bibliographystyle{plain}
