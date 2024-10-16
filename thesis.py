@@ -33,13 +33,13 @@ def edges_to_adjacency_matrix_csv(file_path, node_count):
     # skip the header
     next(csv_reader, None)
 
-  for row in csv_reader:
-    if len(row) >= 2:
-      index_1 = int(row[0].strip())
-      index_2 = int(row[1].strip())
+    for row in csv_reader:
+      if len(row) >= 2:
+        index_1 = int(row[0].strip())
+        index_2 = int(row[1].strip())
 
-      adjacency_matrix[index_1, index_2] = 1
-      adjacency_matrix[index_2, index_1] = 1
+        adjacency_matrix[index_1, index_2] = 1
+        adjacency_matrix[index_2, index_1] = 1
 
   return adjacency_matrix
 
@@ -413,24 +413,29 @@ if __name__ == '__main__':
   # file_path = 'data/facebook_combined.txt'
   # node_count = 4039
   
-  file_path = 'data/ca-GrQc_mapped.txt'
-  node_count = 5242
+  # file_path = 'data/ca-GrQc_mapped.txt'
+  # node_count = 5242
 
-  m = edges_to_adjacency_matrix_txt(file_path, node_count)
+  file_path = 'data/musae_crocodile.csv'
+  node_count = 11631
+  true_triangle_count = 630879
 
-  s_values = [5, 100, 500, 1000, 2000, 3000, 4000]
+  m = edges_to_adjacency_matrix_csv(file_path, node_count)
+
+  s_values = [500]
+  # s_values = [5, 100, 500, 1000, 2000, 3000, 4000]
   powers = [0, 1, 1.5, get_line_of_best_fit(m)[0], 2]
 
-  true_triangle_count = count_triangles(m)
+  # true_triangle_count = count_triangles(m)
   print(f"True Triangle Count: {true_triangle_count}")
 
   # slope, intercept = get_line_of_best_fit(m)
   # estimate_variance_reduction_method(m, 500, slope, intercept)
 
-  results = run_parallel_estimation(s_values, powers, true_triangle_count, m, importance_estimate_submatrix_method)
+  results = run_parallel_estimation(s_values, powers, true_triangle_count, m, importance_estimate_per_node_method)
 
-  output_file = 'estimation_results_GrQc.csv'
-  method_name = 'importance_estimate_submatrix_method'
+  output_file = 'estimation_results_croc.csv'
+  method_name = 'importance_estimate_per_node_method'
   serialize_results_to_csv(results, s_values, powers, f'results/{output_file}', method_name)
 
   plot(s_values, results, powers)
