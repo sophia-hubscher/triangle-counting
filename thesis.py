@@ -422,8 +422,7 @@ if __name__ == '__main__':
 
   m = edges_to_adjacency_matrix_csv(file_path, node_count)
 
-  s_values = [500]
-  # s_values = [5, 100, 500, 1000, 2000, 3000, 4000]
+  s_values = [5, 100, 500, 1000, 2000, 3000, 4000]
   powers = [0, 1, 1.5, get_line_of_best_fit(m)[0], 2]
 
   # true_triangle_count = count_triangles(m)
