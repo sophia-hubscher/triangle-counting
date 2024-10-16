@@ -35,6 +35,11 @@ Michael Mitzenmacher and Sergei Vassilvitskii.
 \newblock Algorithms with {Predictions}.
 \newblock In Tim Roughgarden, editor, {\em Beyond the {Worst}-{Case} {Analysis} of {Algorithms}}, pages 646--662. Cambridge University Press, 1 edition, December 2020.
 
+\bibitem{motwani_randomized_1995}
+Rajeev Motwani and Prabhakar Raghavan.
+\newblock {\em Randomized {Algorithms}}.
+\newblock Cambridge University Press, Cambridge, 1995.
+
 \bibitem{seshadhri_triadic_2013}
 C.~Seshadhri, Ali Pinar, and Tamara~G. Kolda.
 \newblock Triadic {Measures} on {Graphs}: {The} {Power} of {Wedge} {Sampling}.
