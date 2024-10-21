@@ -210,12 +210,14 @@ Beyond specific algorithms for triangle counting, various general techniques fro
 
 \subsubsection{Variance Reduction}
 
-Variance reduction is another general technique that can be applied to triangle estimation, improving accuracy without increasing the number of samples needed.
+Variance reduction \cite{prescott_monte_1965} is another general technique that can be applied to triangle estimation, improving accuracy without increasing the number of samples needed.
 
-TEXT HERE
+Variance reduction methods aim to reduce the spread (or variance) of estimations, leading to more reliable results even with fewer samples.
+This is particularly important in large-scale graphs, where taking a high number of samples may be computationally infeasible.
 
-\subsubsection{Importance Sampling}
+\subsubsubsection{Importance Sampling}
 
+One example of a variance reduction method is importance sampling.
 When estimating a metric relating to a large population using uniform sampling, where all edges/nodes/wedges/etc. are sampled with the same probability, often a very large number of samples is required to ensure a good relative approximation \cite{lovasz_large_2012}.
 This is because uniform sampling does not prioritize areas of the graph that may have a disproportionately large impact on the estimate.
 Consequently, the computational cost can be high for achieving a desired accuracy level in many cases.
@@ -223,8 +225,6 @@ Consequently, the computational cost can be high for achieving a desired accurac
 When using importance sampling \cite{motwani_randomized_1995}, the process is improved by sampling higher-interest nodes with higher probability, focusing computational effort on the most ``important" parts of a graph.
 The key idea behind importance sampling is to bias the sampling distribution towards more informative areas of the graph.
 For instance, in a graph where certain nodes are highly connected or play a critical role in the overall structure, importance sampling would prioritize these nodes to reduce the variance of the estimates.
-
-EXAMPLE HERE
 
 \subsubsection{Learning-Augmented Algorithms}
 

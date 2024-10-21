@@ -40,6 +40,11 @@ Rajeev Motwani and Prabhakar Raghavan.
 \newblock {\em Randomized {Algorithms}}.
 \newblock Cambridge University Press, Cambridge, 1995.
 
+\bibitem{prescott_monte_1965}
+P.~Prescott, J.~M. Hammersley, and D.~C. Handscomb.
+\newblock Monte {Carlo} {Methods}.
+\newblock {\em Applied Statistics}, 14(2/3):211, 1965.
+
 \bibitem{seshadhri_triadic_2013}
 C.~Seshadhri, Ali Pinar, and Tamara~G. Kolda.
 \newblock Triadic {Measures} on {Graphs}: {The} {Power} of {Wedge} {Sampling}.
