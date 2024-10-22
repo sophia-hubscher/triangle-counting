@@ -5,6 +5,9 @@ import csv
 from datetime import datetime
 
 dataset = 'GrQc'
+dataset_names = {'fb': 'Facebook Dataset',
+                 'croc': 'Crocodile Wikipedia Dataset',
+                 'GrQc': 'Collaboration Network Dataset'}
 
 def get_timestamped_subfolder(parent_folder):
     current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
@@ -26,7 +29,7 @@ def plot(s_values, results, powers, method):
     plt.yscale('log')
     plt.xlabel('Sample Size (log scale)')
     plt.ylabel('Average Error (log scale)')
-    plt.title(f'Average Error vs. Sample Size for Method: {method}')
+    plt.title(f'Average Error vs. Sample Size for Method: {method} ({dataset_names[dataset]})')
     plt.grid(True)
     plt.legend()
     plt.savefig(f'{plots_folder}/avg_error_{method}.png')
@@ -39,10 +42,11 @@ def plot(s_values, results, powers, method):
     plt.yscale('log')
     plt.xlabel('Sample Size (log scale)')
     plt.ylabel('Average Duration (seconds, log scale)')
-    plt.title(f'Average Duration vs. Sample Size for Method: {method}')
+    plt.title(f'Average Duration vs. Sample Size for Method: {method} ({dataset_names[dataset]})')
     plt.grid(True)
     plt.legend()
     plt.savefig(f'{plots_folder}/avg_duration_{method}.png')
+    plt.close()
 
     plt.figure(figsize=(12, 5))
     for i, power in enumerate(powers):
@@ -52,10 +56,11 @@ def plot(s_values, results, powers, method):
     plt.yscale('log')
     plt.xlabel('Sample Size (log scale)')
     plt.ylabel('Average Variance (log scale)')
-    plt.title(f'Average Variance vs. Sample Size for Method: {method}')
+    plt.title(f'Average Variance vs. Sample Size for Method: {method} ({dataset_names[dataset]})')
     plt.grid(True)
     plt.legend()
     plt.savefig(f'{plots_folder}/avg_variance_{method}.png')
+    plt.close()
 
     plt.figure(figsize=(12, 5))
     for i, power in enumerate(powers):
@@ -65,10 +70,11 @@ def plot(s_values, results, powers, method):
     plt.yscale('log')
     plt.xlabel('Sample Size (log scale)')
     plt.ylabel('Percent Error (log scale)')
-    plt.title(f'Percent Error vs. Sample Size for Method: {method}')
+    plt.title(f'Percent Error vs. Sample Size for Method: {method} ({dataset_names[dataset]})')
     plt.grid(True)
     plt.legend()
     plt.savefig(f'{plots_folder}/percent_error_{method}.png')
+    plt.close()
 
     for i, power in enumerate(powers):
         plt.figure(figsize=(12, 6))
@@ -77,9 +83,10 @@ def plot(s_values, results, powers, method):
         plt.xticks(range(len(s_values)), s_values)
         plt.xlabel('Sample Size')
         plt.ylabel('Estimate Distribution')
-        plt.title(f'Whisker Plot of Estimates vs. Sample Size for Method: {method}, Power {power}')
+        plt.title(f'Whisker Plot of Estimates vs. Sample Size for Method: {method} ({dataset_names[dataset]}), Power {power}')
         plt.grid(True)
         plt.savefig(f'{plots_folder}/whisker_plot_{method}_power_{power}.png')
+        plt.close()
 
 def plot_csv():
     methods = set()
@@ -159,10 +166,11 @@ def plot_comparison(all_results, methods):
     plt.yscale('log')
     plt.xlabel('Average Runtime (seconds, log scale)')
     plt.ylabel('Average Error (log scale)')
-    plt.title('Accuracy vs. Runtime Comparison Across Methods')
+    plt.title(f'Accuracy vs. Runtime Comparison Across Methods ({dataset_names[dataset]})')
     plt.grid(True)
     plt.legend()
     plt.savefig(f'{plots_folder}/accuracy_vs_runtime_comparison.png')
+    plt.close()
 
 if __name__ == '__main__':
     plot_csv()
