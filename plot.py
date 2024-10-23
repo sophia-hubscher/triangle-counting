@@ -137,7 +137,7 @@ def plot_csv():
 
     for method in methods:
         s_values = sorted(all_results[method]['s_values'])
-        plot(s_values, all_results[method], sorted(all_results[method]['avg_errors'].keys()), method)
+        plot(s_values, all_results[method], sorted(all_results[method]['avg_percent_errors'].keys()), method)
 
     plot_comparison(all_results, methods)
 
@@ -150,22 +150,22 @@ def plot_comparison(all_results, methods):
     for method_idx, method in enumerate(methods):
         color = colors[method_idx % len(markers)]
         
-        for power_idx, power in enumerate(all_results[method]['avg_errors']):
+        for power_idx, power in enumerate(all_results[method]['avg_percent_errors']):
             marker = markers[power_idx % len(colors)]
-            avg_errors = []
+            avg_percent_errors = []
             avg_times = []
 
             for s in sorted(all_results[method]['s_values']):
-                avg_errors.append(all_results[method]['avg_errors'][power][s])
+                avg_percent_errors.append(all_results[method]['avg_percent_errors'][power][s])
                 avg_times.append(all_results[method]['avg_times'][power][s])
 
             # Plotting accuracy vs runtime
-            plt.plot(avg_times, avg_errors, marker=marker, linestyle='-', color=color, label=f'{method} Power {power}')
+            plt.plot(avg_times, avg_percent_errors, marker=marker, linestyle='-', color=color, label=f'{method} Power {power}')
 
     plt.xscale('log')
     plt.yscale('log')
     plt.xlabel('Average Runtime (seconds, log scale)')
-    plt.ylabel('Average Error (log scale)')
+    plt.ylabel('Average Percent Error (log scale)')
     plt.title(f'Accuracy vs. Runtime Comparison Across Methods ({dataset_names[dataset]})')
     plt.grid(True)
     plt.legend()
