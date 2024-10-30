@@ -1,4 +1,15 @@
 
+@inproceedings{avron_counting_2010,
+	title = {Counting {Triangles} in {Large} {Graphs} using {Randomized} {Matrix} {Trace} {Estimation}},
+	url = {http://www.math.tau.ac.il/~haimav/Avron-KDD-LDMTA10.pdf},
+	abstract = {Triangle counting is an important problem in graph mining with several real-world applications. Interesting metrics, such as the clustering coefficient and the transitivity ratio, involve computing the number of triangles. Furthermore, several interesting graph mining applications rely on computing the number of triangles in a large-scale graph. However, exact triangle counting is expensive and memory consuming, and current approximation algorithms are unsatisfactory and not practical for very large-scale graphs. In this paper we present a new highly-parallel randomized algorithm for approximating the number of triangles in an undirected graph. Our algorithm uses a well-known relation between the number of triangles and the trace of the cubed adjacency matrix. A Monte-Carlo simulation is used to estimate this quantity. Each sample requires O({\textbar}E{\textbar}) time and O(ǫ 2 log(1/δ)ρ(G) 2 ) samples are required to guarantee an (ǫ, δ)-approximation, where ρ(G) is a measure of the triangle sparsity of G (ρ(G) is not necessarily small). Our algorithm requires only O({\textbar}V {\textbar}) space in order to work efficiently. We present experiments that demonstrate that in practice usually only O(log 2 {\textbar}V {\textbar}) samples are required to get good approximations for graphs frequently encountered in data-mining tasks, and that our algorithm is competitive with state-of-the-art approximate triangle counting methods both in terms of accuracy and in terms of running-time. The use of Monte-Carlo simulation support parallelization well: our algorithm is embarrassingly parallel with a critical path of only O({\textbar}E{\textbar}), achievable on as few as O(log 2 {\textbar}V {\textbar}) processors.},
+	urldate = {2024-10-14},
+	booktitle = {Proceedings of {Kdd}-{Ldmta}’10},
+	author = {Avron, Haim},
+	month = jul,
+	year = {2010},
+}
+
 @article{prescott_monte_1965,
 	title = {Monte {Carlo} {Methods}.},
 	volume = {14},
@@ -83,17 +94,6 @@
 	year = {2020},
 	doi = {10.1017/9781108637435.037},
 	pages = {646--662},
-}
-
-@inproceedings{avron_counting_2010,
-	title = {Counting {Triangles} in {Large} {Graphs} using {Randomized} {Matrix} {Trace} {Estimation}},
-	url = {http://www.math.tau.ac.il/~haimav/Avron-KDD-LDMTA10.pdf},
-	abstract = {Triangle counting is an important problem in graph mining with several real-world applications. Interesting metrics, such as the clustering coefficient and the transitivity ratio, involve computing the number of triangles. Furthermore, several interesting graph mining applications rely on computing the number of triangles in a large-scale graph. However, exact triangle counting is expensive and memory consuming, and current approximation algorithms are unsatisfactory and not practical for very large-scale graphs. In this paper we present a new highly-parallel randomized algorithm for approximating the number of triangles in an undirected graph. Our algorithm uses a well-known relation between the number of triangles and the trace of the cubed adjacency matrix. A Monte-Carlo simulation is used to estimate this quantity. Each sample requires O({\textbar}E{\textbar}) time and O(ǫ 2 log(1/δ)ρ(G) 2 ) samples are required to guarantee an (ǫ, δ)-approximation, where ρ(G) is a measure of the triangle sparsity of G (ρ(G) is not necessarily small). Our algorithm requires only O({\textbar}V {\textbar}) space in order to work efficiently. We present experiments that demonstrate that in practice usually only O(log 2 {\textbar}V {\textbar}) samples are required to get good approximations for graphs frequently encountered in data-mining tasks, and that our algorithm is competitive with state-of-the-art approximate triangle counting methods both in terms of accuracy and in terms of running-time. The use of Monte-Carlo simulation support parallelization well: our algorithm is embarrassingly parallel with a critical path of only O({\textbar}E{\textbar}), achievable on as few as O(log 2 {\textbar}V {\textbar}) processors.},
-	urldate = {2024-10-14},
-	booktitle = {Proceedings of {Kdd}-{Ldmta}’10},
-	author = {Avron, H.},
-	month = jul,
-	year = {2010},
 }
 
 @inproceedings{seshadhri_triadic_2013,

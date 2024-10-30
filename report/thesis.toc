@@ -2,8 +2,8 @@
 \contentsline {section}{\numberline {2}Literature Review}{3}{section.2}%
 \contentsline {subsection}{\numberline {2.1}Introduction}{3}{subsection.2.1}%
 \contentsline {subsection}{\numberline {2.2}Methods for Triangle Counting}{3}{subsection.2.2}%
-\contentsline {subsubsection}{\numberline {2.2.1}Linear Algebraic Methods}{3}{subsubsection.2.2.1}%
-\contentsline {subsubsection}{\numberline {2.2.2}Sampling Methods}{6}{subsubsection.2.2.2}%
-\contentsline {subsection}{\numberline {2.3}General Algorithmic Strategies}{7}{subsection.2.3}%
-\contentsline {subsubsection}{\numberline {2.3.1}Variance Reduction}{7}{subsubsection.2.3.1}%
-\contentsline {subsubsection}{\numberline {2.3.2}Learning-Augmented Algorithms}{8}{subsubsection.2.3.2}%
+\contentsline {subsubsection}{\numberline {2.2.1}Linear Algebraic Methods}{4}{subsubsection.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.2.2}Sampling Methods}{7}{subsubsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.3}General Algorithmic Strategies}{8}{subsection.2.3}%
+\contentsline {subsubsection}{\numberline {2.3.1}Variance Reduction}{8}{subsubsection.2.3.1}%
+\contentsline {subsubsection}{\numberline {2.3.2}Learning-Augmented Algorithms}{9}{subsubsection.2.3.2}%

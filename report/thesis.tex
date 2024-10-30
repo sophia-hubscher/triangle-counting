@@ -43,9 +43,9 @@
         $n = |V|$       & Number of vertices in graph $G$. \\
         $m = |E|$       & Number of edges in graph $G$. \\
         $A$             & The adjacency matrix for the graph $G$. \\
-        $\Delta_i$      & Number of triangles node $i$ participates in. \\
+        $\Delta_i$      & Number of triangles node $i$ participates in. \\ % UNUSED SO FAR
         $\Delta$        & Total number of triangles in $G$. \\
-        $d_i$           & Degree of node $i$. \\
+        $d_i$           & Degree of node $i$. \\ % UNUSED SO FAR
         \bottomrule
     \end{tabular}
     \caption{List of notation used.}
@@ -59,7 +59,35 @@
 \subsection{Introduction}
 
 Counting triangles is a fundamental problem in graph theory with widespread applications in social networks, bioinformatics, and more \cite{lovasz_large_2012}.
-These triangles, formed by three mutually connected nodes, can, in social network graphs, represent closed friendships, indicating a high level of local connectivity, which can give great insight into the network as a whole.
+These triangles, are formed by three mutually connected nodes, as shown in \ref{fig:triangles}, which contains three triangles.
+
+\begin{figure}[H]
+    \centering
+    % Create a minipage for the graph
+    \begin{minipage}{0.45\textwidth}
+        \begin{tikzpicture}[scale=1.5]
+            % Define vertices
+            \node[circle, draw] (A) at (0, 0) {A};
+            \node[circle, draw] (B) at (1, 1) {B};
+            \node[circle, draw] (C) at (1, -1) {C};
+            \node[circle, draw] (D) at (2, 0) {D};
+            \node[circle, draw] (E) at (2, 1) {E};
+
+            % Draw edges to form triangles
+            \draw (A) -- (B);
+            \draw (A) -- (C);
+            \draw (B) -- (C); 
+            \draw (B) -- (D);
+            \draw (C) -- (D);
+            \draw (B) -- (E);
+            \draw (D) -- (E);
+        \end{tikzpicture}
+        \caption{Graph with triangles formed between vertices (A, B, C), (B, C, D) and (B, D, E).}
+        \label{fig:triangles}
+    \end{minipage}%
+\end{figure}
+
+These triangles can, in social network graphs, represent closed friendships, indicating a high level of local connectivity, which can give great insight into the network as a whole.
 However, for large graphs, especially sparse ones, where the number of edges is much smaller compared to the number of possible edges, efficiently counting these triangles poses significant computational challenges.
 
 \subsection{Methods for Triangle Counting}
@@ -69,9 +97,10 @@ One of the simplest methods is the brute force technique, where all distinct set
 This involves examining every possible combination of vertices in the graph and testing whether all three edges $(u, v)$, $(v, w)$, and $(w, u)$ exist. 
 
 Assuming optimal conditions with edges stored in a hash table, where edge retrieval takes $O(1)$ time, the time complexity of this brute force approach is $\Theta(n^3)$. 
-This cubic complexity arises because the number of combinations of three vertices grows cubically with the total number of vertices \cite{al_hasan_triangle_2018}. 
+This complexity stems from the fact that ${n \choose k} = \Theta(n^k)$, and thus, ${n \choose 3} = \Theta(n^3)$ \cite{al_hasan_triangle_2018}. 
 
 While this method is straightforward, it is inefficient for large graphs due to its high computational cost.
+Additionally, this method is no more efficient on sparse graphs (those with relatively few edges compared to the maximum number of edges possible) than on dense ones, which is another area for improvement.
 Thus, researchers have turned to alternative triangle counting and estimation methods.
 
 \subsubsection{Linear Algebraic Methods}
@@ -115,16 +144,17 @@ In these matrices, each row and column represents a node, and edges between node
 \end{figure}
 
 By using these adjacency matrices and leveraging linear algebra techniques, we can calculate triangle counts more efficiently. 
-One simple method using the adjacency matrix is to use the following formula:
+One simple method using the adjacency matrix is to use the following formula where $A$ is the adjacency matrix corresponding to the graph $G$ and $\Delta$ is the global triangle count in $G$:
 
 \[
 \Delta = \frac{1}{6} \mathrm{trace}(A^3)
 \]
 
-This formula is derived from the fact that the diagonal elements of \(A^3\) count the number of length-three paths (i.e. triangles) that each vertex participates in.
-Thus, in taking the trace, we get the sum of all these triangles, which after scaling, yields the global triangle count.
+This formula is derived from the fact that the diagonal elements of $A^3$ count the number of length-three paths (i.e. triangles) that each vertex participates in.
+Each triangle can be formed from six of these length-three paths, as each triangle can be drawn starting at any of its three nodes and moving either clockwise or counter-clockwise.
+Thus, the trace of $A^3$ is divided by 6 to arrive at the global triangle count.
 
-To compute $A^3$, we first need to calculate $A^2$ (which takes $O(n^3)$ for an $n \times n$ matrix) and then multiply $A^2$ by $A$ (also $O(n^3)$).
+To compute $A^3$, we first need to calculate $A^2$ (which takes $O(n^3)$ for an $n \times n$ matrix, $n$ thus also being the number of nodes in our graph $G$) and then multiply $A^2$ by $A$ (also $O(n^3)$).
 Thus, the total complexity for computing $A^3$ is $O(n^3)$.
 After computing $A^3$, calculating the trace takes $O(n)$, as we need to iterate over the $n$ diagonal elements.
 Thus, the overall runtime complexity for the operation is $O(n^3)$.
@@ -133,13 +163,13 @@ Thus, the overall runtime complexity for the operation is $O(n^3)$.
 
 This runtime analysis assumes that matrix multiplication is performed using the standard algorithm.
 However, more sophisticated techniques, such as Strassen's algorithm \cite{strassen_gaussian_1969}, can reduce matrix multiplication time.
-In this algorithm, that is used on For large, square matrices, such as undirected sociomatrices, each matrix is divided into smaller submatrices on which a series additions and multiplications are performed.
+In this algorithm, that is used on large, square matrices, such as undirected sociomatrices, each matrix is divided into smaller submatrices on which a series additions and multiplications are performed.
 This process requires only seven multiplications of these smaller matrices instead of the eight that are typical in standard matrix multiplication.
 Thus, on large matrices, this leads to a significant speedup.
 
 Specifically, Strassen's algorithm reduces the complexity of multiplying two $n \times n$ matrices to approximately $O(n^{\log_2 7})$, which is about $O(n^{2.81})$.
 Computing $A^2$ using Strassen's algorithm will take $O(n^{\log_2 7})$.
-Then, multiplying $A^2$ by $A$ again takes $O(n^{2.81})$.
+Then, multiplying $A^2$ by $A$ again takes $O(n^{\log_2 7})$.
 Therefore, the total complexity for computing $A^3$ with Strassen's algorithm is $O(n^{\log_2 7}) + O(n^{\log_2 7}) = O(n^{\log_2 7})$, or roughly $O(n^{2.81})$.
 
 \subsubsubsection{EigenTriangle Algorithm}
@@ -162,8 +192,8 @@ Once the decomposition is performed, the number of triangles can be computed exa
 \Delta \approx \frac{1}{6} \sum_{i=1}^{k} \lambda_i^3
 \]
 
-where $\lambda_i$ are the $k$ top eigenvalues of the adjacency matrix.
-The runtime of EigenTriangle is dominated by the cost of computing the top $k$ eigenvalues and eigenvectors of $A$, which can be done in $O(k m)$, where $m$ is the number of edges and $k$ is typically much smaller than the number of nodes $n$.
+where $\lambda_i$ are the $k$ eigenvalues of largest magnitude of the adjacency matrix $A$.
+The runtime of EigenTriangle is dominated by the cost of computing the top $k$ eigenvalues and eigenvectors of $A$, which can be done in $O(k m)$ time, where $m$ is the number of edges and $k$ is typically much smaller than the number of nodes $n$.
 This is a substantial improvement over the complexity of direct methods like $\mathrm{trace}(A^3)$.
 
 \subsubsubsection{TraceTriangle Algorithm}
@@ -190,13 +220,13 @@ Additionally, sampling algorithms often provide tunable accuracy, allowing for a
 
 In edge sampling, we randomly sample a subset of edges from the graph, count the number of triangles in the subgraph, and scale up to reach our estimate.
 
-One key edge sampling algorithm is Doulion \cite{tsourakakis_doulion_2009}, in which each edge in $G$ is sampled with probability $p$.
-As all triangles consist of three edges, meaning that all triangles in $G$ have probability $p^3$ of being counted.
+One key edge sampling algorithm is Doulion \cite{tsourakakis_doulion_2009}, in which each edge in our graph $G$ is sampled with probability $p$.
+As all triangles consist of three edges, this means that all triangles in $G$ have probability $p^3$ of being counted.
 Thus, the number of triangles counted is scaled by $\frac{1}{p^3}$ to achieve a final estimate.
 
 \subsubsubsection{Wedge Sampling}
 
-Wedge sampling \cite{seshadhri_triadic_2013} focuses on counting wedges—triplets of nodes that form two edges but not necessarily a triangle.
+Wedge sampling \cite{seshadhri_triadic_2013} focuses on estimating wedges—triplets of nodes that form two edges but not necessarily a triangle.
 A wedge is defined by three vertices $(u, v, w)$ where $u$ is adjacent to both $v$ and $w$, but $v$ and $w$ may or may not be adjacent.
 Once wedges are sampled, the algorithm checks how many of them are closed (i.e., form triangles).
 
