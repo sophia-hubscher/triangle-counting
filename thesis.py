@@ -241,6 +241,23 @@ def estimate_variance_reduction_method(A, s, slope, intercept):
 
   return (M + D) / 3
 
+def estimate_importance_variance_reduction_method(A, s, power, slope, intercept):
+  n = len(A)
+
+  degree_array = np.sum(A, axis=1)
+  approx_triangles = np.power(degree_array, slope) * np.exp(intercept)
+  M = np.sum(approx_triangles)
+
+  probabilities, sampled_nodes = sample_by_degree(A, n, s, power)
+  sampled_node_probabilities = np.array([probabilities[i] for i in sampled_nodes])
+  sampled_node_triangles = np.array([count_node_triangles(A, i) for i in sampled_nodes])
+
+  sampled_m_i_vals = np.array([approx_triangles[i] for i in sampled_nodes])
+
+  D = np.sum((sampled_node_triangles - sampled_m_i_vals) * (1 / (s * sampled_node_probabilities)))
+
+  return (M + D) / 3
+
 """# Plotting"""
 
 def plot(s_values, results, powers):
