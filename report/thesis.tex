@@ -23,7 +23,9 @@
 }
 
 \geometry{letterpaper, margin=1in}
-\setstretch{1.5}  % 1.5 line spacing
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
 
 \begin{document}
 
@@ -140,7 +142,7 @@ Additionally, sampling algorithms often provide tunable accuracy, allowing for a
 
 \subsubsubsection{Edge Sampling}
 
-\noindent In edge sampling, we randomly sample a subset of edges from the graph, count the number of triangles in the subgraph, and scale up to reach our estimate.
+In edge sampling, we randomly sample a subset of edges from the graph, count the number of triangles in the subgraph, and scale up to reach our estimate.
 
 One key edge sampling algorithm is Doulion \cite{tsourakakis_doulion_2009}, in which each edge in our graph $G$ is sampled with probability $p$.
 As all triangles consist of three edges, this means that all triangles in $G$ have probability $p^3$ of being counted.
@@ -153,7 +155,7 @@ In all of these algorithms though, the key piece of their efficiency and efficac
 
 \subsubsubsection{Wedge Sampling}
 
-\noindent Wedge sampling \cite{seshadhri_triadic_2013} focuses on estimating wedges—triplets of nodes that form two edges but not necessarily a triangle.
+Wedge sampling \cite{seshadhri_triadic_2013} focuses on estimating wedges—triplets of nodes that form two edges but not necessarily a triangle.
 A wedge is defined by three vertices $(u, v, w)$ where $u$ is adjacent to both $v$ and $w$, but $v$ and $w$ may or may not be adjacent (see Figure~\ref{fig:wedge_diagram}).
 
 \begin{figure}[h]
@@ -341,7 +343,7 @@ While this is not a direct improvement over the runtime of the naive algorithm, 
 
 \subsubsubsection{Strassen's Algorithm}
 
-\noindent This runtime analysis above assumes that matrix multiplication is performed using the standard algorithm.
+This runtime analysis above assumes that matrix multiplication is performed using the standard algorithm.
 However, more sophisticated techniques, such as Strassen's algorithm \cite{strassen_gaussian_1969}, can reduce matrix multiplication time.
 In this algorithm, that is used on large, square matrices, such as undirected sociomatrices, each matrix is divided into smaller submatrices on which a series additions and multiplications are performed.
 
@@ -358,7 +360,7 @@ There are matrix multiplication algorithms that are even faster, such as one wit
 
 \subsubsubsection{EigenTriangle Algorithm}
 
-\noindent Another significant approach in triangle counting is the use of spectral methods.
+Another significant approach in triangle counting is the use of spectral methods.
 One such method is the EigenTriangle algorithm \cite{tsourakakis_fast_2008}, which estimates the triangle count $\Delta$ by considering the spectral decomposition of the adjacency matrix $A$.
 
 The EigenTriangle algorithm is based on the observation that the number of triangles in a graph is closely related to the spectrum of its adjacency matrix.
@@ -368,7 +370,7 @@ In particular, the adjacency matrix $A$ is decomposed as:
 A = U \Lambda U^T,
 \]
 
-\noindent where $U$ is a matrix whose columns are the eigenvectors of $A$, and $\Lambda$ is a diagonal matrix containing the corresponding eigenvalues.
+where $U$ is a matrix whose columns are the eigenvectors of $A$, and $\Lambda$ is a diagonal matrix containing the corresponding eigenvalues.
 
 Once the decomposition is performed, the number of triangles can be computed exactly using $\Delta = \frac{1}{6} \sum_{i=1}^{n} \lambda_i^3$, and can be estimated using:
 
@@ -376,7 +378,7 @@ Once the decomposition is performed, the number of triangles can be computed exa
 \Delta \approx \frac{1}{6} \sum_{i=1}^{k} \lambda_i^3,
 \]
 
-\noindent where $\lambda_i$ are the $k$ eigenvalues of largest magnitude of the adjacency matrix $A$.
+where $\lambda_i$ are the $k$ eigenvalues of largest magnitude of the adjacency matrix $A$.
 The runtime of EigenTriangle is dominated by the cost of approximating the top $k$ eigenvalues and eigenvectors of $A$, which, using the Lanszos method \cite{cullum_lanczos_2002}, can be done in roughly $O(k m)$ time, where $m$ is the number of edges and $k$ is typically much smaller than the number of nodes $n$.
 This is a significant improvement over the runtimes of direct methods.
 
@@ -386,7 +388,7 @@ Given this, it makes sense that this runtime is a substantial improvement over t
 
 \subsubsubsection{TraceTriangle Algorithm}
 
-\noindent The TraceTriangle algorithm \cite{avron_counting_2010} is a randomized algorithm designed for efficient triangle estimation in large graphs.
+The TraceTriangle algorithm \cite{avron_counting_2010} is a randomized algorithm designed for efficient triangle estimation in large graphs.
 It leverages trace-based techniques, which compute the trace of matrix powers to approximate the number of triangles.
 Specifically, the algorithm relies on the previously mentioned property: $\Delta = \frac{1}{6} \mathrm{trace}(A^3)$, where $A$ is the adjacency matrix of the graph and $\Delta$ is the number of triangles.
 However, rather than computing the full matrix multiplication $A^3$, which is computationally expensive for large graphs, the TraceTriangle algorithm uses a randomized approach to approximate this trace, significantly reducing computation time.
@@ -424,29 +426,29 @@ This can be done by plotting nodes' degrees ($d_i$) versus triangle counts $(\De
 \Delta_i \approx d_i^\alpha \cdot e^\beta = m_i.
 \]
 
-\noindent Now, using this equation, we can estimate the overall triangle count $M$ by applying this line of best fit relationship to all nodes in the graph:
+Now, using this equation, we can estimate the overall triangle count $M$ by applying this line of best fit relationship to all nodes in the graph:
 
 \[
 M = \sum_{i = 1}^{n} m_i.
 \]
 
-\noindent Next, we sample our graph to get $s$ nodes, with $s$ being our sample size. For each of these $s$ sampled nodes, we count the number of triangles they are involved in (written $\Delta_i$) and find the difference between those actual triangle counts and their estimated triangle counts using the line of best fit relationship. We then take the sum of these errors and scale them up to estimate the error on our global triangle count (written $E$). Mathematically, this can be expressed as follows:
+Next, we sample our graph to get $s$ nodes, with $s$ being our sample size. For each of these $s$ sampled nodes, we count the number of triangles they are involved in (written $\Delta_i$) and find the difference between those actual triangle counts and their estimated triangle counts using the line of best fit relationship. We then take the sum of these errors and scale them up to estimate the error on our global triangle count (written $E$). Mathematically, this can be expressed as follows:
 
 \[
 E = \left( \sum_{i = 1}^{s} \Delta_i - m_i \right) \cdot \frac{n}{s}.
 \]
 
-\noindent Lastly, we take the sum of our estimate and our error, and divide this sum by three to avoid triple-counting triangles, as each triangle has three nodes it is involved in:
+Lastly, we take the sum of our estimate and our error, and divide this sum by three to avoid triple-counting triangles, as each triangle has three nodes it is involved in:
 
 \[
 \Delta \approx \frac{M + E}{3}.
 \]
 
-\noindent Thus, by applying this variance reduction technique, we arrive at an estimate for the triangle count $\Delta$.
+Thus, by applying this variance reduction technique, we arrive at an estimate for the triangle count $\Delta$.
 
 \subsubsubsection{Importance Sampling}
 
-\noindent One example of a variance reduction method is importance sampling.
+One example of a variance reduction method is importance sampling.
 When estimating a metric relating to a large population using uniform sampling, where all edges/nodes/wedges/etc. are sampled with the same probability, often a very large number of samples is required to ensure a good relative approximation \cite{lovasz_large_2012}.
 This is because uniform sampling does not prioritize areas of the graph that may have a disproportionately large impact on the estimate.
 Consequently, the computational cost can be high for achieving a desired accuracy level in many cases.
@@ -530,14 +532,10 @@ In each meeting, I’ll bring an informal report of my progress that covers the 
 During each meeting, my Committee Chair and I will discuss experiments that can be run in the upcoming week.
 In addition, I will continuously update my thesis report, and will go over any questions relating to it at our weekly meetings.
 
-\bigskip
-
-\noindent \textbf{Meetings with Full Committee:} Full committee meetings, where both of my committee members and I are present, will happen monthly.
+\textbf{Meetings with Full Committee:} Full committee meetings, where both of my committee members and I are present, will happen monthly.
 In these meetings we will discuss my progress toward the project milestones and brainstorm new approaches I could try.
 
-\bigskip
-
-\noindent \textbf{Weekly Time Commitment:} Outside of these meetings, I will be committing 6-10 hours each week of work to my thesis.
+\textbf{Weekly Time Commitment:} Outside of these meetings, I will be committing 6-10 hours each week of work to my thesis.
 The specific hours worked will vary depending on the goals set at each weekly meeting.
 
 \newpage
