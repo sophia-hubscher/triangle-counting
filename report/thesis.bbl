@@ -3,37 +3,55 @@
 \bibitem{al_hasan_triangle_2018}
 Mohammad Al~Hasan and Vachik~S. Dave.
 \newblock Triangle counting in large networks: a review.
-\newblock {\em WIREs Data Mining and Knowledge Discovery}, 8(2):e1226, March 2018.
+\newblock {\em WIREs Data Mining and Knowledge Discovery}, 2018.
+
+\bibitem{arifuzzaman_parallel_2012}
+SM~Arifuzzaman, Maleq Khan, and Madhav Marathe.
+\newblock Parallel {Algorithms} for {Counting} {Triangles} and {Computing} {Clustering} {Coefficients}.
+\newblock pages 1448--1449, 2012.
 
 \bibitem{avron_counting_2010}
 Haim Avron.
 \newblock Counting {Triangles} in {Large} {Graphs} using {Randomized} {Matrix} {Trace} {Estimation}.
-\newblock In {\em Proceedings of {Kdd}-{Ldmta}’10}, July 2010.
+\newblock In {\em Proceedings of {Kdd}-{Ldmta}’10}, 2010.
 
 \bibitem{beum_method_1950}
 Corlin~O. Beum and Everett~G. Brundage.
 \newblock A {Method} for {Analyzing} the {Sociomatrix}.
-\newblock {\em Sociometry}, 13(2):141--145, 1950.
+\newblock {\em Sociometry}, pages 141--145, 1950.
+
+\bibitem{boldrin_fast_2024}
+Cristian Boldrin and Fabio Vandin.
+\newblock Fast and {Accurate} {Triangle} {Counting} in {Graph} {Streams} {Using} {Predictions}, 2024.
+
+\bibitem{cullum_lanczos_2002}
+Jane~K. Cullum and Ralph~A. Willoughby.
+\newblock {\em Lanczos {Algorithms} for {Large} {Symmetric} {Eigenvalue} {Computations}: {Vol}. {I}: {Theory}}.
+\newblock Society for Industrial and Applied Mathematics, 2002.
 
 \bibitem{dinitz_faster_2021}
 Michael Dinitz, Sungjin Im, Thomas Lavastida, Benjamin Moseley, and Sergei Vassilvitskii.
-\newblock Faster {Matchings} via {Learned} {Duals}, July 2021.
-\newblock arXiv:2107.09770 [cs].
+\newblock Faster {Matchings} via {Learned} {Duals}, 2021.
 
 \bibitem{duan_linear-time_2014}
 Ran Duan and Seth Pettie.
 \newblock Linear-{Time} {Approximation} for {Maximum} {Weight} {Matching}.
-\newblock {\em J. ACM}, 61(1):1:1--1:23, January 2014.
+\newblock {\em J. ACM}, pages 1:1--1:23, 2014.
+
+\bibitem{hutchinson_stochastic_1990}
+M.F. Hutchinson.
+\newblock A stochastic estimator of the trace of the influence matrix for laplacian smoothing splines.
+\newblock {\em Communications in Statistics - Simulation and Computation}, pages 433--450, 1990.
 
 \bibitem{lovasz_large_2012}
 Laszlo Lovasz.
 \newblock {\em Large networks and graph limits}.
-\newblock Number volume 60 in American {Mathematical} {Society} colloquium publications. American Mathematical Society, Providence, Rhode Island, 2012.
+\newblock American {Mathematical} {Society} colloquium publications. American Mathematical Society, Providence, Rhode Island, 2012.
 
 \bibitem{roughgarden_algorithms_2020}
 Michael Mitzenmacher and Sergei Vassilvitskii.
 \newblock Algorithms with {Predictions}.
-\newblock In Tim Roughgarden, editor, {\em Beyond the {Worst}-{Case} {Analysis} of {Algorithms}}, pages 646--662. Cambridge University Press, 1 edition, December 2020.
+\newblock In Tim Roughgarden, editor, {\em Beyond the {Worst}-{Case} {Analysis} of {Algorithms}}, pages 646--662. Cambridge University Press, 2020.
 
 \bibitem{motwani_randomized_1995}
 Rajeev Motwani and Prabhakar Raghavan.
@@ -48,8 +66,7 @@ P.~Prescott, J.~M. Hammersley, and D.~C. Handscomb.
 \bibitem{seshadhri_triadic_2013}
 C.~Seshadhri, Ali Pinar, and Tamara~G. Kolda.
 \newblock Triadic {Measures} on {Graphs}: {The} {Power} of {Wedge} {Sampling}.
-\newblock In {\em Proceedings of the 2013 {SIAM} {International} {Conference} on {Data} {Mining}}, pages 10--18, May 2013.
-\newblock arXiv:1202.5230 [cs].
+\newblock In {\em Proceedings of the 2013 {SIAM} {International} {Conference} on {Data} {Mining}}, pages 10--18, 2013.
 
 \bibitem{strassen_gaussian_1969}
 V.~Strassen.
@@ -59,12 +76,15 @@ V.~Strassen.
 \bibitem{tsourakakis_fast_2008}
 Charalampos~E. Tsourakakis.
 \newblock Fast {Counting} of {Triangles} in {Large} {Real} {Networks} without {Counting}: {Algorithms} and {Laws}.
-\newblock In {\em 2008 {Eighth} {IEEE} {International} {Conference} on {Data} {Mining}}, pages 608--617, December 2008.
-\newblock ISSN: 2374-8486.
+\newblock In {\em 2008 {Eighth} {IEEE} {International} {Conference} on {Data} {Mining}}, pages 608--617, 2008.
 
 \bibitem{tsourakakis_doulion_2009}
 Charalampos~E. Tsourakakis, U.~Kang, Gary~L. Miller, and Christos Faloutsos.
 \newblock {DOULION}: counting triangles in massive graphs with a coin.
-\newblock In {\em Proceedings of the 15th {ACM} {SIGKDD} international conference on {Knowledge} discovery and data mining}, {KDD} '09, pages 837--846, New York, NY, USA, June 2009. Association for Computing Machinery.
+\newblock In {\em Proceedings of the 15th {ACM} {SIGKDD} international conference on {Knowledge} discovery and data mining}, {KDD} '09, pages 837--846. Association for Computing Machinery, 2009.
+
+\bibitem{williams_new_2023}
+Virginia~Vassilevska Williams, Yinzhan Xu, Zixuan Xu, and Renfei Zhou.
+\newblock New {Bounds} for {Matrix} {Multiplication}: from {Alpha} to {Omega}, 2023.
 
 \end{thebibliography}

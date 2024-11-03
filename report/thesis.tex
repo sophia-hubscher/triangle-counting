@@ -31,6 +31,21 @@
 
 \newpage
 
+\section{Introduction}
+
+What are you investigating and why?
+
+Provide a general description of your Honors Thesis topic (about one page)
+ 
+State the scientific question or creative endeavor (at least one page):
+describe objectives, hypotheses, and/or other discipline-specific inquiry.
+ 
+Explain the significance of the research question or the creative endeavor (at least one page):
+relate the research question or creative endeavor to the key literature.
+explain the importance of your topic to the advancement of knowledge in the discipline.
+
+\newpage
+
 \section{Notation}
 
 \begin{table}[ht]
@@ -43,9 +58,9 @@
         $n = |V|$       & Number of vertices in graph $G$. \\
         $m = |E|$       & Number of edges in graph $G$. \\
         $A$             & The adjacency matrix for the graph $G$. \\
-        $\Delta_i$      & Number of triangles node $i$ participates in. \\ % UNUSED SO FAR
+        $\Delta_i$      & Number of triangles node $i$ participates in. \\
         $\Delta$        & Total number of triangles in $G$. \\
-        $d_i$           & Degree of node $i$. \\ % UNUSED SO FAR
+        $d_i$           & Degree of node $i$. \\
         \bottomrule
     \end{tabular}
     \caption{List of notation used.}
@@ -59,7 +74,7 @@
 \subsection{Introduction}
 
 Counting triangles is a fundamental problem in graph theory with widespread applications in social networks, bioinformatics, and more \cite{lovasz_large_2012}.
-These triangles, are formed by three mutually connected nodes, as shown in \ref{fig:triangles}, which contains three triangles.
+These triangles, are formed by three mutually connected nodes, as shown in Figure~\ref{fig:triangles}, which contains three triangles.
 
 \begin{figure}[H]
     \centering
@@ -87,8 +102,18 @@ These triangles, are formed by three mutually connected nodes, as shown in \ref{
     \end{minipage}%
 \end{figure}
 
-These triangles can, in social network graphs, represent closed friendships, indicating a high level of local connectivity, which can give great insight into the network as a whole.
-However, for large graphs, especially sparse ones, where the number of edges is much smaller compared to the number of possible edges, efficiently counting these triangles poses significant computational challenges.
+These triangles can, in social network graphs, represent closed friendships, indicating a high level of local connectivity, which can give insight into the network as a whole.
+For example, in an analysis of the effect of recommender systems on the social network Twitter, an increase in the percentage of edges that closed triangles following the introduction of a ``Who to Follow'' friend-to-friend recommendation algorithm was used as evidence of the algorithm's efficacy.
+
+Unfortunately, for large graphs, especially sparse ones, where the number of edges is much smaller compared to the number of possible edges, efficiently counting these triangles poses significant computational challenges.
+
+\subsection{Types of Graphs}
+
+In graph theory, graphs are classified as either directed or undirected.  
+An \emph{undirected graph} is one in which edges have no specific direction, so the relationship between connected nodes is mutual: If $u$ connects to $v$, then $v$ connects to $u$.  
+In contrast, a \emph{directed graph}, or digraph, has edges with a defined direction—$u$ may point to $v$ without $v$ pointing to $u$.  
+This directional property is particularly relevant when calculating triangle counts, as a triangle in a directed graph can follow a specific directional sequence.  
+In this discussion, we generally refer to undirected graphs unless otherwise specified, although the methods described can be extended to directed graphs as well.
 
 \subsection{Methods for Triangle Counting}
 
@@ -103,7 +128,63 @@ While this method is straightforward, it is inefficient for large graphs due to 
 Additionally, this method is no more efficient on sparse graphs (those with relatively few edges compared to the maximum number of edges possible) than on dense ones, which is another area for improvement.
 Thus, researchers have turned to alternative triangle counting and estimation methods.
 
+\subsubsection{Sampling Methods}
+
+One of the most effective ways to estimate triangle counts in large, sparse graphs is through sampling methods.
+These methods rely on randomly selecting edges or vertices and then inspecting their local neighborhoods for the presence of triangles.
+Sampling-based techniques are particularly useful in scenarios where calculating the exact triangle count is computationally expensive or unnecessary.
+
+Additionally, sampling algorithms often provide tunable accuracy, allowing for a trade-off between precision and performance, making them ideal for processing large-scale networks.
+
+\subsubsubsection{Edge Sampling}
+
+\noindent In edge sampling, we randomly sample a subset of edges from the graph, count the number of triangles in the subgraph, and scale up to reach our estimate.
+
+One key edge sampling algorithm is Doulion \cite{tsourakakis_doulion_2009}, in which each edge in our graph $G$ is sampled with probability $p$.
+As all triangles consist of three edges, this means that all triangles in $G$ have probability $p^3$ of being counted.
+Thus, the number of triangles counted is scaled by $\frac{1}{p^3}$ to achieve a final estimate.
+
+Other algorithms extend this even further.
+For example, a parallel implementation of Doulion \cite{arifuzzaman_parallel_2012}, where each processor independently sparsifies its assigned partition of the graph, can improve accuracy.
+
+In all of these algorithms though, the key piece of their efficiency and efficacy is the sampling of edges to get a good picture of the graph's structure without counting every triangle individually.
+
+\subsubsubsection{Wedge Sampling}
+
+\noindent Wedge sampling \cite{seshadhri_triadic_2013} focuses on estimating wedges—triplets of nodes that form two edges but not necessarily a triangle.
+A wedge is defined by three vertices $(u, v, w)$ where $u$ is adjacent to both $v$ and $w$, but $v$ and $w$ may or may not be adjacent (see Figure~\ref{fig:wedge_diagram}).
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[scale = 1.2]
+        % Nodes
+        \node[circle, draw] (u) at (0,1) {u};
+        \node[circle, draw] (v) at (-1,0) {v};
+        \node[circle, draw] (w) at (1,0) {w};
+
+        % Edges
+        \draw[-] (u) -- (v);
+        \draw[-] (u) -- (w);
+
+        % Dashed line to indicate possible or absent connection
+        \draw[dashed] (v) -- (w);
+    \end{tikzpicture}
+    \caption{Wedge formed by vertices $u$, $v$, and $w$. Nodes $v$ and $w$ may or may not be connected.}
+    \label{fig:wedge_diagram}
+\end{figure}
+
+First, the algorithm counts the total number of wedges in the graph.
+To count these wedges, only one pass over all nodes is required, as at each node, every unique pair of outgoing edges from the node is counted as a single wedge.
+Thus, this operation takes $O(n)$ time where $n$ is the number of nodes in $G$.
+
+Once wedges are sampled, the algorithm checks how many of them are closed (i.e., form triangles).
+The number of triangles can then be estimated by multiplying the number of total wedges by the fraction of all wedges that were closed in the sample.
+Wedge sampling tends to work well in graphs with a large number of high-degree vertices, where it becomes easier to sample many wedges at once, but unlike edge sampling, it cannot be efficiently done using data structures like adjacency matrices or adjacency lists.
+Thus, wedge sampling comes with an additional preprocessing step that adds to runtime.
+
 \subsubsection{Linear Algebraic Methods}
+
+Along with sampling, we can employ linear algebraic techniques to increase the speed of our triangle counting.
 
 Graphs can be conveniently represented using adjacency matrices, which, in social network analysis, are typically referred to as \emph{sociomatrices} \cite{beum_method_1950}. 
 In these matrices, each row and column represents a node, and edges between nodes are represented as 1s in the corresponding matrix entry.
@@ -151,88 +232,173 @@ One simple method using the adjacency matrix is to use the following formula whe
 \]
 
 This formula is derived from the fact that the diagonal elements of $A^3$ count the number of length-three paths (i.e. triangles) that each vertex participates in.
-Each triangle can be formed from six of these length-three paths, as each triangle can be drawn starting at any of its three nodes and moving either clockwise or counter-clockwise.
-Thus, the trace of $A^3$ is divided by 6 to arrive at the global triangle count.
+Each triangle can be formed from six of these length-three paths, as each triangle can be drawn starting at any of its three nodes and moving either clockwise or counter-clockwise, as illustrated in Figure~\ref{fig:triangle-traversal}.
+Thus, the trace of $A^3$ is divided by six to scale down to the global triangle count.
+
+\begin{figure}[H]
+    \centering
+    % First triangle
+    \begin{subfigure}{0.15\textwidth}
+        \centering
+        \begin{tikzpicture}[scale=1.2]
+            % Define vertices
+            \node[circle, draw, fill=gray!50] (A) at (0,0) {A};
+            \node[circle, draw] (B) at (1,0) {B};
+            \node[circle, draw] (C) at (0.5,0.866) {C};
+
+            % Draw edges with arrows
+            \draw[thick, ->] (A) -- (B);
+            \draw[thick, ->] (B) -- (C);
+            \draw[thick, ->] (C) -- (A);
+        \end{tikzpicture}
+    \end{subfigure}
+    % Second triangle
+    \begin{subfigure}{0.15\textwidth}
+        \centering
+        \begin{tikzpicture}[scale=1.2]
+            % Define vertices
+            \node[circle, draw, fill=gray!50] (B) at (1,0) {B};
+            \node[circle, draw] (C) at (0.5,0.866) {C};
+            \node[circle, draw] (A) at (0,0) {A};
+
+            % Draw edges with arrows
+            \draw[thick, ->] (B) -- (C);
+            \draw[thick, ->] (C) -- (A);
+            \draw[thick, ->] (A) -- (B);
+        \end{tikzpicture}
+    \end{subfigure}
+    % Third triangle
+    \begin{subfigure}{0.15\textwidth}
+        \centering
+        \begin{tikzpicture}[scale=1.2]
+            % Define vertices
+            \node[circle, draw, fill=gray!50] (C) at (0.5,0.866) {C};
+            \node[circle, draw] (A) at (0,0) {A};
+            \node[circle, draw] (B) at (1,0) {B};
+
+            % Draw edges with arrows
+            \draw[thick, ->] (C) -- (A);
+            \draw[thick, ->] (A) -- (B);
+            \draw[thick, ->] (B) -- (C);
+        \end{tikzpicture}
+    \end{subfigure}
+    % Fourth triangle
+    \begin{subfigure}{0.15\textwidth}
+        \centering
+        \begin{tikzpicture}[scale=1.2]
+            % Define vertices
+            \node[circle, draw, fill=gray!50] (A) at (0,0) {A};
+            \node[circle, draw] (C) at (0.5,0.866) {C};
+            \node[circle, draw] (B) at (1,0) {B};
+
+            % Draw edges with arrows
+            \draw[thick, ->] (A) -- (C);
+            \draw[thick, ->] (C) -- (B);
+            \draw[thick, ->] (B) -- (A);
+        \end{tikzpicture}
+    \end{subfigure}
+    % Fifth triangle
+    \begin{subfigure}{0.15\textwidth}
+        \centering
+        \begin{tikzpicture}[scale=1.2]
+            % Define vertices
+            \node[circle, draw, fill=gray!50] (B) at (1,0) {B};
+            \node[circle, draw] (A) at (0,0) {A};
+            \node[circle, draw] (C) at (0.5,0.866) {C};
+
+            % Draw edges with arrows
+            \draw[thick, ->] (B) -- (A);
+            \draw[thick, ->] (A) -- (C);
+            \draw[thick, ->] (C) -- (B);
+        \end{tikzpicture}
+    \end{subfigure}
+    % Sixth triangle
+    \begin{subfigure}{0.15\textwidth}
+        \centering
+        \begin{tikzpicture}[scale=1.2]
+            % Define vertices
+            \node[circle, draw, fill=gray!50] (C) at (0.5,0.866) {C};
+            \node[circle, draw] (B) at (1,0) {B};
+            \node[circle, draw] (A) at (0,0) {A};
+
+            % Draw edges with arrows
+            \draw[thick, ->] (C) -- (B);
+            \draw[thick, ->] (B) -- (A);
+            \draw[thick, ->] (A) -- (C);
+        \end{tikzpicture}
+    \end{subfigure}
+    \caption{Six different ways to arrive at a length-three path in a triangle.}
+    \label{fig:triangle-traversal}
+\end{figure}
 
 To compute $A^3$, we first need to calculate $A^2$ (which takes $O(n^3)$ for an $n \times n$ matrix, $n$ thus also being the number of nodes in our graph $G$) and then multiply $A^2$ by $A$ (also $O(n^3)$).
 Thus, the total complexity for computing $A^3$ is $O(n^3)$.
 After computing $A^3$, calculating the trace takes $O(n)$, as we need to iterate over the $n$ diagonal elements.
 Thus, the overall runtime complexity for the operation is $O(n^3)$.
+While this is not a direct improvement over the runtime of the naive algorithm, this strategy forms the basis of many faster methods.
 
 \subsubsubsection{Strassen's Algorithm}
 
-This runtime analysis assumes that matrix multiplication is performed using the standard algorithm.
+\noindent This runtime analysis above assumes that matrix multiplication is performed using the standard algorithm.
 However, more sophisticated techniques, such as Strassen's algorithm \cite{strassen_gaussian_1969}, can reduce matrix multiplication time.
 In this algorithm, that is used on large, square matrices, such as undirected sociomatrices, each matrix is divided into smaller submatrices on which a series additions and multiplications are performed.
-This process requires only seven multiplications of these smaller matrices instead of the eight that are typical in standard matrix multiplication.
-Thus, on large matrices, this leads to a significant speedup.
 
 Specifically, Strassen's algorithm reduces the complexity of multiplying two $n \times n$ matrices to approximately $O(n^{\log_2 7})$, which is about $O(n^{2.81})$.
 Computing $A^2$ using Strassen's algorithm will take $O(n^{\log_2 7})$.
 Then, multiplying $A^2$ by $A$ again takes $O(n^{\log_2 7})$.
 Therefore, the total complexity for computing $A^3$ with Strassen's algorithm is $O(n^{\log_2 7}) + O(n^{\log_2 7}) = O(n^{\log_2 7})$, or roughly $O(n^{2.81})$.
 
+To contextualize this, on a $2 \times 2$ matrix, the $n^3$ multiplications required for the naive method would mean we would complete $2^3 = 8$ multiplications.
+With Strassen's method and its $n^{\log_2 7}$ multiplications, there would instead only be $2^{\log_2 7} = 7$ multiplications computed.
+On larger matrices, this leads to a significant speedup.
+
+There are matrix multiplication algorithms that are even faster, such as one with a $O(n^{2.371552})$ runtime, but this algorithm relies on the use of extremely large constants and is thus rarely used in real-world applications \cite{williams_new_2023}.
+
 \subsubsubsection{EigenTriangle Algorithm}
 
-Another significant approach in triangle counting is the use of spectral methods.
+\noindent Another significant approach in triangle counting is the use of spectral methods.
 One such method is the EigenTriangle algorithm \cite{tsourakakis_fast_2008}, which estimates the triangle count $\Delta$ by considering the spectral decomposition of the adjacency matrix $A$.
 
 The EigenTriangle algorithm is based on the observation that the number of triangles in a graph is closely related to the spectrum of its adjacency matrix.
 In particular, the adjacency matrix $A$ is decomposed as:
 
 \[
-A = U \Lambda U^T
+A = U \Lambda U^T,
 \]
 
-where $U$ is a matrix whose columns are the eigenvectors of $A$, and $\Lambda$ is a diagonal matrix containing the corresponding eigenvalues.
+\noindent where $U$ is a matrix whose columns are the eigenvectors of $A$, and $\Lambda$ is a diagonal matrix containing the corresponding eigenvalues.
 
 Once the decomposition is performed, the number of triangles can be computed exactly using $\Delta = \frac{1}{6} \sum_{i=1}^{n} \lambda_i^3$, and can be estimated using:
 
 \[
-\Delta \approx \frac{1}{6} \sum_{i=1}^{k} \lambda_i^3
+\Delta \approx \frac{1}{6} \sum_{i=1}^{k} \lambda_i^3,
 \]
 
-where $\lambda_i$ are the $k$ eigenvalues of largest magnitude of the adjacency matrix $A$.
-The runtime of EigenTriangle is dominated by the cost of computing the top $k$ eigenvalues and eigenvectors of $A$, which can be done in $O(k m)$ time, where $m$ is the number of edges and $k$ is typically much smaller than the number of nodes $n$.
-This is a substantial improvement over the complexity of direct methods like $\mathrm{trace}(A^3)$.
+\noindent where $\lambda_i$ are the $k$ eigenvalues of largest magnitude of the adjacency matrix $A$.
+The runtime of EigenTriangle is dominated by the cost of approximating the top $k$ eigenvalues and eigenvectors of $A$, which, using the Lanszos method \cite{cullum_lanczos_2002}, can be done in roughly $O(k m)$ time, where $m$ is the number of edges and $k$ is typically much smaller than the number of nodes $n$.
+This is a significant improvement over the runtimes of direct methods.
+
+Specifically, for the direct method in which was compute the trace of $A^3$, we know ${trace}(A^3) = \sum_{i = 1}^{n} \lambda_i(A^3) = \sum_{i = 1}^{n} \lambda_i^3$.
+Thus, we see that EigenTriangle approximates ${trace}(A^3)$.
+Given this, it makes sense that this runtime is a substantial improvement over the complexity of computing $\mathrm{trace}(A^3)$ directly.
 
 \subsubsubsection{TraceTriangle Algorithm}
 
-The TraceTriangle algorithm \cite{avron_counting_2010} is a randomized algorithm designed for efficient triangle estimation in large graphs.
+\noindent The TraceTriangle algorithm \cite{avron_counting_2010} is a randomized algorithm designed for efficient triangle estimation in large graphs.
 It leverages trace-based techniques, which compute the trace of matrix powers to approximate the number of triangles.
-Specifically, the algorithm relies on the previously mentioned property: $\Delta = \frac{1}{6} \mathrm{trace}(A^3)$ where $A$ is the adjacency matrix of the graph and $\Delta$ is the number of triangles.
+Specifically, the algorithm relies on the previously mentioned property: $\Delta = \frac{1}{6} \mathrm{trace}(A^3)$, where $A$ is the adjacency matrix of the graph and $\Delta$ is the number of triangles.
 However, rather than computing the full matrix multiplication $A^3$, which is computationally expensive for large graphs, the TraceTriangle algorithm uses a randomized approach to approximate this trace, significantly reducing computation time.
 
-Comparing TraceTriangle to the EigenTriangle algorithm, TraceTriangle achieves higher accuracy across multiple types of graphs.
+This randomized approach is based on Hutchinson's method \cite{hutchinson_stochastic_1990}, which is a technique for estimating the trace of a matrix by randomly sampling vectors.
+In this case, this significantly reduces computation time by approximating $\mathrm{trace}(A^3)$ through randomized sampling rather than explicit computation.
+
+The TraceTriangle algorithm is a sampling algorithm, and thus, it's runtime depends on the desired accuracy of output, as more or fewer samples can be taken depending on the application.
+Generally though, experiments demonstrate that typically $O(log^2|n|)$, where $n$ is the number of vertices in $G$, samples are required to get good approximations on real-world graphs, and regardless of application, the runtime for taking each sample is $O(|m|)$, where $m$ is the number of edges in $G$.
+
+Comparing TraceTriangle to the EigenTriangle algorithm, TraceTriangle achieves higher accuracy across multiple types of graphs \cite{avron_counting_2010}.
 Despite this accuracy advantage, EigenTriangle tends to run more quickly than TraceTriangle on large graphs.
-That said, one significant advantage of TraceTriangle is its potential for parallelization, which EigenTriangle lacks.
-This allows TraceTriangle to scale more effectively with the size of the graph, ultimately reducing the speed advantage of EigenTriangle in larger computations.
-
-\subsubsection{Sampling Methods}
-
-One of the most effective ways to estimate triangle counts in large, sparse graphs is through sampling methods.
-These methods rely on randomly selecting edges or vertices and then inspecting their local neighborhoods for the presence of triangles.
-Sampling-based techniques are particularly useful in scenarios where calculating the exact triangle count is computationally expensive or unnecessary.
-
-Additionally, sampling algorithms often provide tunable accuracy, allowing for a trade-off between precision and performance, making them ideal for processing large-scale networks.
-
-\subsubsubsection{Edge Sampling}
-
-In edge sampling, we randomly sample a subset of edges from the graph, count the number of triangles in the subgraph, and scale up to reach our estimate.
-
-One key edge sampling algorithm is Doulion \cite{tsourakakis_doulion_2009}, in which each edge in our graph $G$ is sampled with probability $p$.
-As all triangles consist of three edges, this means that all triangles in $G$ have probability $p^3$ of being counted.
-Thus, the number of triangles counted is scaled by $\frac{1}{p^3}$ to achieve a final estimate.
-
-\subsubsubsection{Wedge Sampling}
-
-Wedge sampling \cite{seshadhri_triadic_2013} focuses on estimating wedges—triplets of nodes that form two edges but not necessarily a triangle.
-A wedge is defined by three vertices $(u, v, w)$ where $u$ is adjacent to both $v$ and $w$, but $v$ and $w$ may or may not be adjacent.
-Once wedges are sampled, the algorithm checks how many of them are closed (i.e., form triangles).
-
-The number of triangles can then be estimated by multiplying the number of closed wedges by the fraction of all wedges that were closed in the sample.
-Wedge sampling tends to work well in graphs with a large number of high-degree vertices, where it becomes easier to sample many wedges at once, but unlike edge sampling, it cannot be efficiently done using data structures like adjacency matrices or adjacency lists.
-Thus, wedge sampling comes with an additional preprocessing step that adds to runtime.
+That said, one advantage of TraceTriangle is its potential for parallelization.
+This allows TraceTriangle to scale effectively with the size of the graph, ultimately reducing the speed advantage of EigenTriangle in larger computations.
 
 \subsection{General Algorithmic Strategies}
 
@@ -245,9 +411,40 @@ Variance reduction \cite{prescott_monte_1965} is another general technique that 
 Variance reduction methods aim to reduce the spread (or variance) of estimations, leading to more reliable results even with fewer samples.
 This is particularly important in large-scale graphs, where taking a high number of samples may be computationally infeasible.
 
+In terms of triangle counting, this method can be applied by finding a fast way of estimating the global triangle count, and then using sampling to estimate the error on that count.
+Specifically, we can begin by finding a relationship between the degree of nodes and the number of triangles they are involved in.
+This can be done by plotting nodes' degrees ($d_i$) versus triangle counts $(\Delta_i)$ on a log-log plot, finding a line of best fit, and then exponentiating as follows:
+
+\[
+\log(\Delta_i) \approx \alpha \cdot \log(d_i) + \beta
+\]
+\[
+\Delta_i \approx d_i^\alpha \cdot e^\beta = m_i.
+\]
+
+\noindent Now, using this equation, we can estimate the overall triangle count $M$ by applying this line of best fit relationship to all nodes in the graph:
+
+\[
+M = \sum_{i = 1}^{n} m_i.
+\]
+
+\noindent Next, we sample our graph to get $s$ nodes, with $s$ being our sample size. For each of these $s$ sampled nodes, we count the number of triangles they are involved in (written $\Delta_i$) and find the difference between those actual triangle counts and their estimated triangle counts using the line of best fit relationship. We then take the sum of these errors and scale them up to estimate the error on our global triangle count (written $E$). Mathematically, this can be expressed as follows:
+
+\[
+E = \left( \sum_{i = 1}^{s} \Delta_i - m_i \right) \cdot \frac{n}{s}.
+\]
+
+\noindent Lastly, we take the sum of our estimate and our error, and divide this sum by three to avoid triple-counting triangles, as each triangle has three nodes it is involved in:
+
+\[
+\Delta \approx \frac{M + E}{3}.
+\]
+
+\noindent Thus, by applying this variance reduction technique, we arrive at an estimate for the triangle count $\Delta$.
+
 \subsubsubsection{Importance Sampling}
 
-One example of a variance reduction method is importance sampling.
+\noindent One example of a variance reduction method is importance sampling.
 When estimating a metric relating to a large population using uniform sampling, where all edges/nodes/wedges/etc. are sampled with the same probability, often a very large number of samples is required to ensure a good relative approximation \cite{lovasz_large_2012}.
 This is because uniform sampling does not prioritize areas of the graph that may have a disproportionately large impact on the estimate.
 Consequently, the computational cost can be high for achieving a desired accuracy level in many cases.
@@ -255,6 +452,26 @@ Consequently, the computational cost can be high for achieving a desired accurac
 When using importance sampling \cite{motwani_randomized_1995}, the process is improved by sampling higher-interest nodes with higher probability, focusing computational effort on the most ``important" parts of a graph.
 The key idea behind importance sampling is to bias the sampling distribution towards more informative areas of the graph.
 For instance, in a graph where certain nodes are highly connected or play a critical role in the overall structure, importance sampling would prioritize these nodes to reduce the variance of the estimates.
+
+Importance sampling can also be applied to triangle counts.
+For example, we can prioritize high-degree nodes as the most ``important.''
+The weight of this importance is decided by some power $\alpha$ greater than 1 (which is equivalent to uniform sampling).
+This $\alpha$ can be tuned to indicate different strengths of relationships between the degree and triangle counts of nodes. 
+
+Once $\alpha$ has been selected, we use it to ascribe each node a probability $p_i$ to each node based in its degree $d_i$:
+
+\[
+D = \sum_{i = 1}^{n} d_i^\alpha
+\]
+\[
+p_i = \frac{d_i^\alpha}{D}.
+\]
+
+Next, we sample $s$ nodes based on their probabilities $p_i$.
+For example if $p_1 = 0.01$ and $p_2 = 0.1$, we are 10 times more likely to sample node 2 than node 1.
+
+Next, for each sampled node we count the number of triangles it is a part of, and then scale that count by $\frac{1}{s \cdot p_i}$.
+The sum of all these counts, scaled down by three (as to avoid triple-counting triangles), is our estimate for the global triangle count $\Delta$.
 
 \subsubsection{Learning-Augmented Algorithms}
 
@@ -269,9 +486,70 @@ The typical solution for this problem, the Hungarian algorithm, runs in $O(m\sqr
 When a learning-augmented approach \cite{dinitz_faster_2021} is applied however, where machine-learned predictions are used to ``warm-start" the algorithm, that runtime is significantly reduced when the predictions are accurate.
 When the predictions are inaccurate, the runtime is simply the same as in the Hungarian algorithm.
 
+This technique can be applied to triangle counting too.
+For example, Tonic \cite{boldrin_fast_2024}, a learning-augmented algorithm for counting triangles in graph streams, leverages predictions about edge ``heaviness" (i.e., the number of triangles they are involved in) to improve the accuracy and speed of triangle counting.
+Tonic combines these predictions with sampling methods to keep track of the most relevant edges.
+This allows the algorithm to focus on the edges that are most likely to contribute to the triangle count.
+
+Notably, Tonic provides unbiased estimates of triangle counts regardless of the accuracy of the predictor.
+However, when the predictor provides useful information on heavy edges, the algorithm produces estimates with reduced variance compared to state-of-the-art alternatives.
+
 In general, this method can be highly effective, as accurate predictions can significantly enhance algorithms' efficiency or result quality.
 
 \newpage
+
+\section{Methods}
+
+How are you conducting your research or creative endeavor?
+
+Detail the procedures or techniques you are using to conduct your research or produce your artifact.
+ 
+Describe the resources or materials you are using in your research. 
+ 
+If specialized training was required for your research manuscript or creative portfolio (e.g., lab safety certification or human/animal testing) describe the training you received.
+
+\newpage
+
+\section{Evaluation}
+
+How will your work be reviewed and graded?
+
+List the measurable goals the Thesis Committee expects you to accomplish during the semester.
+Indicate how your Thesis Committee will provide feedback regarding your progress.
+Indicate how your Thesis Committee will assess the viability of your research or creative endeavor in both the written and presentation formats.
+If you are registering for the Portfolio option, be specific about the artifact that you will produce in addition to the manuscript, such as a performance, musical score, architectural blueprint, engineering invention, screenplay, business case study, collection of original poetry, or art exhibition.
+
+\newpage
+
+\section{Communication}
+
+Specify the expectations about Thesis Committee meetings:
+
+Frequency of meetings with your Committee Chair.
+Committee Chair’s expectations for these meetings.
+Frequency of meetings with the second Committee Member.
+Committee Member’s expectations for these meetings.
+Expected time commitment applied to your research or creative endeavor between meetings (for example, 10 hours of work per week).
+
+\newpage
+
+\section{Timeline}
+
+Specify the dates and expectations for the periodic review of your research/creative results:
+
+Weekly?
+Bi-weekly?
+Specify deadlines for each stage of your research manuscript or creative portfolio, such as:
+First outline
+First draft
+Second draft
+FINAL completed manuscript and artifact (where applicable)
+Note that your committee may require additional assignments
+Specify the date and type of your presentation:
+(e.g., Thesis Committee only, public defense, public presentation or performance)
+
+\newpage
+
 \bibliographystyle{plain}
 \bibliography{thesis_bib}
 

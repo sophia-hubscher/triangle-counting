@@ -1,9 +1,15 @@
-\contentsline {section}{\numberline {1}Notation}{2}{section.1}%
-\contentsline {section}{\numberline {2}Literature Review}{3}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Introduction}{3}{subsection.2.1}%
-\contentsline {subsection}{\numberline {2.2}Methods for Triangle Counting}{3}{subsection.2.2}%
-\contentsline {subsubsection}{\numberline {2.2.1}Linear Algebraic Methods}{4}{subsubsection.2.2.1}%
-\contentsline {subsubsection}{\numberline {2.2.2}Sampling Methods}{7}{subsubsection.2.2.2}%
-\contentsline {subsection}{\numberline {2.3}General Algorithmic Strategies}{8}{subsection.2.3}%
-\contentsline {subsubsection}{\numberline {2.3.1}Variance Reduction}{8}{subsubsection.2.3.1}%
-\contentsline {subsubsection}{\numberline {2.3.2}Learning-Augmented Algorithms}{9}{subsubsection.2.3.2}%
+\contentsline {section}{\numberline {1}Introduction}{2}{section.1}%
+\contentsline {section}{\numberline {2}Notation}{3}{section.2}%
+\contentsline {section}{\numberline {3}Literature Review}{4}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Introduction}{4}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Types of Graphs}{4}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Methods for Triangle Counting}{5}{subsection.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.1}Sampling Methods}{5}{subsubsection.3.3.1}%
+\contentsline {subsubsection}{\numberline {3.3.2}Linear Algebraic Methods}{7}{subsubsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.4}General Algorithmic Strategies}{10}{subsection.3.4}%
+\contentsline {subsubsection}{\numberline {3.4.1}Variance Reduction}{11}{subsubsection.3.4.1}%
+\contentsline {subsubsection}{\numberline {3.4.2}Learning-Augmented Algorithms}{13}{subsubsection.3.4.2}%
+\contentsline {section}{\numberline {4}Methods}{15}{section.4}%
+\contentsline {section}{\numberline {5}Evaluation}{16}{section.5}%
+\contentsline {section}{\numberline {6}Communication}{17}{section.6}%
+\contentsline {section}{\numberline {7}Timeline}{18}{section.7}%
