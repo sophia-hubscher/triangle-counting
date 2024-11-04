@@ -183,9 +183,6 @@ def plot_comparison(all_results, methods):
 
             s_values = sorted(all_results[method]['s_values'])
 
-            print("hello")
-            print(method)
-            print(s_values)
             for s in s_values:
                 avg_percent_errors.append(all_results[method]['avg_percent_errors'][power][s])
 
