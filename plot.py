@@ -166,10 +166,40 @@ def plot_comparison(all_results, methods):
     plt.yscale('log')
     plt.xlabel('Average Runtime (seconds, log scale)')
     plt.ylabel('Average Percent Error (log scale)')
-    plt.title(f'Accuracy vs. Runtime Comparison Across Methods ({dataset_names[dataset]})')
+    plt.title(f'Percent Error vs. Runtime Comparison Across Methods ({dataset_names[dataset]})')
     plt.grid(True)
-    plt.legend()
-    plt.savefig(f'{plots_folder}/accuracy_vs_runtime_comparison.png')
+    plt.legend(bbox_to_anchor=(1.04, 1), loc="upper left")
+    plt.savefig(f'{plots_folder}/percent_error_vs_runtime_comparison.png', bbox_inches='tight')
+    plt.close()
+
+    plt.figure(figsize=(12, 6))
+
+    for method_idx, method in enumerate(methods):
+        color = colors[method_idx % len(markers)]
+        
+        for power_idx, power in enumerate(all_results[method]['avg_percent_errors']):
+            marker = markers[power_idx % len(colors)]
+            avg_percent_errors = []
+
+            s_values = sorted(all_results[method]['s_values'])
+
+            print("hello")
+            print(method)
+            print(s_values)
+            for s in s_values:
+                avg_percent_errors.append(all_results[method]['avg_percent_errors'][power][s])
+
+            # Plotting percent error vs sample size
+            plt.plot(s_values, avg_percent_errors, marker=marker, linestyle='-', color=color, label=f'{method} Power {power}')
+
+    plt.xscale('log')
+    plt.yscale('log')
+    plt.xlabel('Sample Size (log scale)')
+    plt.ylabel('Average Percent Error (log scale)')
+    plt.title(f'Percent Error vs. Sample Size Comparison Across Methods ({dataset_names[dataset]})')
+    plt.grid(True)
+    plt.legend(bbox_to_anchor=(1.04, 1), loc="upper left")
+    plt.savefig(f'{plots_folder}/percent_error_vs_sample_size_comparison.png', bbox_inches='tight')
     plt.close()
 
 if __name__ == '__main__':
