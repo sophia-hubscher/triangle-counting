@@ -184,6 +184,30 @@ def get_line_of_best_fit(A):
 
   return slope, intercept
 
+def get_line_of_best_fit_uniformly_sampled(A, s):
+  n = len(A)
+  sampled_nodes = gen_s_ints(s, n)
+  
+  degrees = np.array([sum(A[row]) for row in sampled_nodes])
+  triangles = np.zeros(s)
+
+  for counter, node in enumerate(sampled_nodes):
+    triangles[counter] = count_node_triangles(A, node)
+
+  valid_indices = (degrees > 0) & (triangles > 0)
+  filtered_degrees = degrees[valid_indices]
+  filtered_triangles = triangles[valid_indices]
+
+  if (len(filtered_degrees) == 0):
+    return 1, 1
+
+  log_degrees = np.log(filtered_degrees)
+  log_triangles = np.log(filtered_triangles)
+
+  slope, intercept = np.polyfit(log_degrees, log_triangles, 1)
+
+  return slope, intercept
+
 """# Variance Reduction """
 
 def estimate_variance_reduction_method(A, s, slope, intercept):
@@ -199,6 +223,10 @@ def estimate_variance_reduction_method(A, s, slope, intercept):
   sampled_m_i_vals = np.array([approx_triangles[i] for i in sampled_nodes])
 
   D = np.sum(sampled_node_triangles - sampled_m_i_vals) * (n/s)
+
+  return (M + D) / 3
+
+# scale by (size of the segment / (s/4))
 
   # PLOTS FOR DEBUGGING
 
@@ -239,10 +267,27 @@ def estimate_variance_reduction_method(A, s, slope, intercept):
   # plt.title('Histogram of True Triangle Counts (Δ_i)')
   # plt.show()
 
-  return (M + D) / 3
-
 def estimate_importance_variance_reduction_method(A, s, power, slope, intercept):
   n = len(A)
+
+  degree_array = np.sum(A, axis=1)
+  approx_triangles = np.power(degree_array, slope) * np.exp(intercept)
+  M = np.sum(approx_triangles)
+
+  probabilities, sampled_nodes = sample_by_degree(A, n, s, power)
+  sampled_node_probabilities = np.array([probabilities[i] for i in sampled_nodes])
+  sampled_node_triangles = np.array([count_node_triangles(A, i) for i in sampled_nodes])
+
+  sampled_m_i_vals = np.array([approx_triangles[i] for i in sampled_nodes])
+
+  D = np.sum((sampled_node_triangles - sampled_m_i_vals) * (1 / (s * sampled_node_probabilities)))
+
+  return (M + D) / 3
+
+def estimate_sampled_line_importance_variance_reduction_method(A, s, power, alpha_line_s):
+  n = len(A)
+
+  slope, intercept = get_line_of_best_fit_uniformly_sampled(A, alpha_line_s)
 
   degree_array = np.sum(A, axis=1)
   approx_triangles = np.power(degree_array, slope) * np.exp(intercept)
@@ -429,9 +474,11 @@ def run_sequential_estimation(s_values, powers, true_triangle_count, m, estimati
 if __name__ == '__main__':
   # file_path = 'data/facebook_combined.txt'
   # node_count = 4039
+  # true_triangle_count = 1612010
   
   # file_path = 'data/ca-GrQc_mapped.txt'
   # node_count = 5242
+  # true_triangle_count = 48296
 
   file_path = 'data/musae_crocodile.csv'
   node_count = 11631
