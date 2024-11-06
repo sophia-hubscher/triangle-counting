@@ -1,15 +1,15 @@
-\contentsline {section}{\numberline {1}Introduction}{2}{section.1}%
-\contentsline {section}{\numberline {2}Notation}{3}{section.2}%
-\contentsline {section}{\numberline {3}Background}{4}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Introduction}{4}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Types of Graphs}{4}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}Methods for Triangle Counting}{5}{subsection.3.3}%
-\contentsline {subsubsection}{\numberline {3.3.1}Sampling Methods}{5}{subsubsection.3.3.1}%
-\contentsline {subsubsection}{\numberline {3.3.2}Linear Algebraic Methods}{6}{subsubsection.3.3.2}%
-\contentsline {subsection}{\numberline {3.4}General Algorithmic Strategies}{9}{subsection.3.4}%
-\contentsline {subsubsection}{\numberline {3.4.1}Variance Reduction}{10}{subsubsection.3.4.1}%
-\contentsline {subsubsection}{\numberline {3.4.2}Learning-Augmented Algorithms}{12}{subsubsection.3.4.2}%
-\contentsline {section}{\numberline {4}Methods}{13}{section.4}%
-\contentsline {section}{\numberline {5}Evaluation}{14}{section.5}%
-\contentsline {section}{\numberline {6}Communication}{15}{section.6}%
-\contentsline {section}{\numberline {7}Timeline}{16}{section.7}%
+\contentsline {section}{\numberline {1}Introduction}{3}{section.1}%
+\contentsline {section}{\numberline {2}Notation}{4}{section.2}%
+\contentsline {section}{\numberline {3}Background}{5}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Introduction}{5}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Types of Graphs}{5}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Methods for Triangle Counting}{6}{subsection.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.1}Sampling Methods}{6}{subsubsection.3.3.1}%
+\contentsline {subsubsection}{\numberline {3.3.2}Linear Algebraic Methods}{7}{subsubsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.4}General Algorithmic Strategies}{10}{subsection.3.4}%
+\contentsline {subsubsection}{\numberline {3.4.1}Variance Reduction}{11}{subsubsection.3.4.1}%
+\contentsline {subsubsection}{\numberline {3.4.2}Learning-Augmented Algorithms}{13}{subsubsection.3.4.2}%
+\contentsline {section}{\numberline {4}Methods}{14}{section.4}%
+\contentsline {section}{\numberline {5}Evaluation}{15}{section.5}%
+\contentsline {section}{\numberline {6}Communication}{16}{section.6}%
+\contentsline {section}{\numberline {7}Timeline}{17}{section.7}%

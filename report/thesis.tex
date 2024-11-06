@@ -1,5 +1,6 @@
-\documentclass[12pt]{article}
+\documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
+\usepackage[colorlinks]{hyperref}
 \usepackage{graphicx}  % For including figures
 \usepackage{amsmath}   % For math symbols
 \usepackage{amssymb}   % For math symbols
@@ -27,11 +28,28 @@
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{1em}
 
+\hypersetup{
+    linkcolor = {teal},
+    citecolor = {violet},
+    urlcolor = {violet}
+}
+
+\title{Title}
+\date{}
+
+\author{
+  \textbf{Sophia Hubscher}\\
+  Manning College of Information and Computer Sciences\\
+  \texttt{shubscher@umass.edu}\\
+}
 \begin{document}
 
-\tableofcontents
+\maketitle
 
-\newpage
+\noindent\textbf{Committee Chair: }Cameron Musco
+\;\;\;\texttt{cmusco@cs.umass.edu} \\
+\textbf{Second Committee Member: } Ghazaleh Parvini\;\;\;\texttt{gparvini@cs.umass.edu} \\
+\textbf{Research Type: } Thesis \\
 
 \section{Introduction}
 
@@ -48,7 +66,7 @@ explain the importance of your topic to the advancement of knowledge in the disc
 
 Here's a draft for your introduction based on your project focus. I've integrated some key details on objectives, hypotheses, and significance, with room for you to add any specific theoretical or experimental details you'd like to highlight.
 
-\newpage
+\newpage 
 
 \section{Notation}
 
@@ -70,8 +88,6 @@ Here's a draft for your introduction based on your project focus. I've integrate
     \caption{List of notation used.}
     \label{tab:notation}
 \end{table}
-
-\newpage
 
 \section{Background}
 
@@ -500,8 +516,6 @@ However, when the predictor provides useful information on heavy edges, the algo
 
 In general, this method can be highly effective, as accurate predictions can significantly enhance algorithms' efficiency or result quality.
 
-\newpage
-
 \section{Methods}
 
 How are you conducting your research or creative endeavor?
@@ -512,8 +526,6 @@ Describe the resources or materials you are using in your research.
  
 If specialized training was required for your research manuscript or creative portfolio (e.g., lab safety certification or human/animal testing) describe the training you received.
 
-\newpage
-
 \section{Evaluation}
 
 How will your work be reviewed and graded?
@@ -522,8 +534,6 @@ List the measurable goals the Thesis Committee expects you to accomplish during 
 Indicate how your Thesis Committee will provide feedback regarding your progress.
 Indicate how your Thesis Committee will assess the viability of your research or creative endeavor in both the written and presentation formats.
 If you are registering for the Portfolio option, be specific about the artifact that you will produce in addition to the manuscript, such as a performance, musical score, architectural blueprint, engineering invention, screenplay, business case study, collection of original poetry, or art exhibition.
-
-\newpage
 
 \section{Communication}
 
@@ -537,8 +547,6 @@ In these meetings we will discuss my progress toward the project milestones and 
 
 \textbf{Weekly Time Commitment:} Outside of these meetings, I will be committing 6-10 hours each week of work to my thesis.
 The specific hours worked will vary depending on the goals set at each weekly meeting.
-
-\newpage
 
 \section{Timeline}
 
