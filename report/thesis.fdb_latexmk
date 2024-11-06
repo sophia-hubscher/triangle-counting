@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex thesis"] 1730748174.01445 "thesis.aux" "thesis.bbl" "thesis" 1730748211.61318 0
+["bibtex thesis"] 1730748174.01445 "thesis.aux" "thesis.bbl" "thesis" 1730912589.2326 0
   "./thesis_bib.bib" 1730666241.54045 23123 672c941409c68c5a7079feb3ca005bac ""
   "/usr/local/texlive/2024/texmf-dist/bibtex/bst/base/plain.bst" 1292289607 20613 bd3fbfa9f64872b81ac57a0dd2ed855f ""
-  "thesis.aux" 1730748210.9959 4919 c05556573d4f6654f2b653447760be34 "pdflatex"
+  "thesis.aux" 1730912588.87388 4919 c05556573d4f6654f2b653447760be34 "pdflatex"
   (generated)
   "thesis.bbl"
   "thesis.blg"
   (rewritten before read)
-["pdflatex"] 1730748209.81243 "/Users/sophiahubscher/Documents/triangle-counting/report/thesis.tex" "thesis.pdf" "thesis" 1730748211.61375 0
-  "/Users/sophiahubscher/Documents/triangle-counting/report/thesis.tex" 1730748209.59987 31343 60a21e5ba6b6e0cb2ce5a501a157de6c ""
+["pdflatex"] 1730912587.95699 "/Users/sophiahubscher/Documents/triangle-counting/report/thesis.tex" "thesis.pdf" "thesis" 1730912589.23275 0
+  "/Users/sophiahubscher/Documents/triangle-counting/report/thesis.tex" 1730912587.73298 31099 18b205e83f417c2a562049395ba3e859 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/tcrm1095.tfm" 1136768653 1536 02c06700a42be0f5a28664c7273f82e7 ""
@@ -188,10 +188,10 @@
   "/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1727563534.20416 5467645 128b85b7cde5f5edc5cb7f1dd7ff8736 ""
   "/usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1727563514 8221426 c278802e2645a4ad0c6fd7542466e085 ""
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
-  "thesis.aux" 1730748210.9959 4919 c05556573d4f6654f2b653447760be34 "pdflatex"
+  "thesis.aux" 1730912588.87388 4919 c05556573d4f6654f2b653447760be34 "pdflatex"
   "thesis.bbl" 1730748174.14327 4001 2556cd6624a8568e346a1056ad7f8b34 "bibtex thesis"
-  "thesis.out" 1730748211.00853 2044 5a0f49630b24df203d2381d62c7cd9d9 "pdflatex"
-  "thesis.tex" 1730748209.59987 31343 60a21e5ba6b6e0cb2ce5a501a157de6c ""
+  "thesis.out" 1730912588.8746 2044 5a0f49630b24df203d2381d62c7cd9d9 "pdflatex"
+  "thesis.tex" 1730912587.73298 31099 18b205e83f417c2a562049395ba3e859 ""
   (generated)
   "thesis.aux"
   "thesis.log"
