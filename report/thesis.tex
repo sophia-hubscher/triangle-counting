@@ -34,7 +34,7 @@
     urlcolor = {violet}
 }
 
-\title{Title}
+\title{Efficient Triangle Count Estimation in Large Networks}
 \date{}
 
 \author{
@@ -63,6 +63,8 @@ describe objectives, hypotheses, and/or other discipline-specific inquiry.
 Explain the significance of the research question or the creative endeavor (at least one page):
 relate the research question or creative endeavor to the key literature.
 explain the importance of your topic to the advancement of knowledge in the discipline.
+
+This thesis aims to use statistical methods such as variance reduction and randomized sampling to find fast, accurate ways to estimate triangle counts in real-world networks.
 
 \newpage 
 
@@ -193,7 +195,7 @@ A wedge is defined by three vertices $(u, v, w)$ where $u$ is adjacent to both $
 
 First, the algorithm counts the total number of wedges in the graph.
 To count these wedges, only one pass over all nodes is required, as at each node, every unique pair of outgoing edges from the node is counted as a single wedge.
-Thus, this operation takes $O(n)$ time where $n$ is the number of nodes in $G$.
+Thus, this operation takes $O(m)$ time where $m$ is the number of edges in $G$.
 
 Once wedges are sampled, the algorithm checks how many of them are closed (i.e., form triangles).
 The number of triangles can then be estimated by multiplying the number of total wedges by the fraction of all wedges that were closed in the sample.
