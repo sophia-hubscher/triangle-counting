@@ -210,8 +210,10 @@ def get_line_of_best_fit_uniformly_sampled(A, s):
 
 """# Variance Reduction """
 
-def estimate_variance_reduction_method(A, s, slope, intercept):
+def estimate_variance_reduction_method(A, s, power):
   n = len(A)
+
+  slope, intercept = get_line_of_best_fit(A)
 
   degree_array = np.sum(A, axis=1)
   approx_triangles = np.power(degree_array, slope) * np.exp(intercept)
@@ -267,8 +269,10 @@ def estimate_variance_reduction_method(A, s, slope, intercept):
   # plt.title('Histogram of True Triangle Counts (Δ_i)')
   # plt.show()
 
-def estimate_importance_variance_reduction_method(A, s, power, slope, intercept):
+def estimate_importance_variance_reduction_method(A, s, power):
   n = len(A)
+
+  slope, intercept = get_line_of_best_fit(A)
 
   degree_array = np.sum(A, axis=1)
   approx_triangles = np.power(degree_array, slope) * np.exp(intercept)
@@ -284,10 +288,10 @@ def estimate_importance_variance_reduction_method(A, s, power, slope, intercept)
 
   return (M + D) / 3
 
-def estimate_sampled_line_importance_variance_reduction_method(A, s, power, alpha_line_s):
+def estimate_sampled_line_importance_variance_reduction_method(A, s, power):
   n = len(A)
 
-  slope, intercept = get_line_of_best_fit_uniformly_sampled(A, alpha_line_s)
+  slope, intercept = get_line_of_best_fit_uniformly_sampled(A, 50)
 
   degree_array = np.sum(A, axis=1)
   approx_triangles = np.power(degree_array, slope) * np.exp(intercept)
@@ -484,6 +488,14 @@ if __name__ == '__main__':
   node_count = 11631
   true_triangle_count = 630879
 
+  # file_path = 'data/barabasi_albert.txt'
+  # node_count = 4000
+  # true_triangle_count = 1678322
+
+  # file_path = 'data/watts_strogatz_albert.txt'
+  # node_count = 4000
+  # true_triangle_count = 877830
+
   m = edges_to_adjacency_matrix_csv(file_path, node_count)
 
   s_values = [5, 100, 500, 1000, 2000, 3000, 4000]
@@ -492,13 +504,10 @@ if __name__ == '__main__':
   # true_triangle_count = count_triangles(m)
   print(f"True Triangle Count: {true_triangle_count}")
 
-  # slope, intercept = get_line_of_best_fit(m)
-  # estimate_variance_reduction_method(m, 500, slope, intercept)
-
-  results = run_parallel_estimation(s_values, powers, true_triangle_count, m, importance_estimate_per_node_method)
+  results = run_parallel_estimation(s_values, powers, true_triangle_count, m, estimate_importance_variance_reduction_method)
 
   output_file = 'estimation_results_croc.csv'
-  method_name = 'importance_estimate_per_node_method'
+  method_name = 'estimate_importance_variance_reduction_method'
   serialize_results_to_csv(results, s_values, powers, f'results/{output_file}', method_name)
 
   plot(s_values, results, powers)
