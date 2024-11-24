@@ -55,7 +55,7 @@
 
 Counting triangles is a fundamental problem in graph theory with widespread applications in social networks, bioinformatics, and more \cite{lovasz_large_2012}.
 These triangles, are formed by three mutually connected nodes, as shown in Figure~\ref{fig:triangles}, which contains three triangles.
-Triangles are a simple yet powerful structural motif that can reveal important insights the networks they are found in.
+While these triangles appear simple, they are a powerful structural motif that can reveal important insights the networks they are found in.
 
 \begin{figure}[H]
     \centering
@@ -83,15 +83,23 @@ Triangles are a simple yet powerful structural motif that can reveal important i
     \end{minipage}%
 \end{figure}
 
-These triangles are more than just theoretical constructs; in social network graphs, for example, they can represent closed friendships or tightly-knit groups, signaling levels of local connectivity in a network.
+These triangles are more than just theoretical constructs.
+In social network graphs, for example, they can represent closed friendships or tightly-knit groups, signaling levels of local connectivity in a network.
 This, in turn, can reflect greater patterns and structures within a network.
-For example, in social media platforms such as Twitter, triangles are used to model relationships between users, where closed triangles indicate strong communities or mutual interests.
-A study analyzing the effect of recommender systems on Twitter demonstrated how an increase in closed triangles following the introduction of a ``Who to Follow'' friend-to-friend recommendation algorithm served as evidence of the algorithm's efficacy \cite{su_effect_2016}.
-This illustrates how triangle metrics are not just useful for theoretical analysis but also for practical applications.
+For example, in social media platforms, triangles are used to model relationships between users, where closed triangles indicate strong communities or mutual interests.
+A study analyzing the effect of recommender systems on X (formerly Twitter) demonstrated how an increase in closed triangles following the introduction of a ``Who to Follow'' friend-to-friend recommendation algorithm served as evidence of the algorithm's efficacy \cite{su_effect_2016}.
+
+Additionally, triangles can be used to understand relationships within biological networks.
+For example, a study on yeast protein interaction networks used analysis of triangles to find transitive relationships between genes and proteins \cite{ye_commensurate_2005}.
+The researchers constructed graphs called ``genetic congruence networks," connecting genes that shared similar interaction partners.
+These networks showed a higher-than-expected occurrence of triangles, indicating a strong correlation between genetic congruence and protein interactions.
+This suggests that triangles can capture important structural patterns, such as proteins that function within the same biological pathway or complex.
+Like in the case of social network analysis, this example illustrates how triangle metrics are not just useful for theoretical analysis but also for practical applications.
 
 While the utility of triangle-based metrics is well-documented, counting triangles efficiently in large graphs remains computationally challenging.
 Direct enumeration methods involve inspecting all possible triples of nodes in the graph, a process with a worst-case time complexity of $O(n^3)$ where $n$ is the number of nodes \cite{al_hasan_triangle_2018}.
 On smaller networks, this runtime may not pose issues, but unfortunately, for large graphs, especially sparse ones, where the number of edges is much smaller compared to the number of possible edges (as illustrated in Figures \ref{fig:dense_graph} and \ref{fig:sparse_graph}), efficiently counting these triangles poses significant computational challenges.
+
 As graphs grow larger and more complex, direct methods for counting triangles become increasingly time-consuming, making it difficult to handle graphs of practical size in real-world applications.
 This issue is particularly relevant in the era of big data, where networks of millions or even billions of nodes and edges are common, and computational efficiency is critical.
 
@@ -106,14 +114,14 @@ This issue is particularly relevant in the era of big data, where networks of mi
             \node[circle, draw] (B) at (1, 1) {B};
             \node[circle, draw] (C) at (1, -1) {C};
             \node[circle, draw] (D) at (2, 0) {D};
-            \node[circle, draw] (E) at (2, -1) {E};
+            \node[circle, draw] (E) at (2, 1) {E};
             % Draw edges to form a dense graph
             \draw (A) -- (B);
             \draw (A) -- (C);
             \draw (A) -- (D);
-            \draw (A) -- (E);
             \draw (B) -- (C);
             \draw (B) -- (D);
+            \draw (B) -- (E);
             \draw (C) -- (D);
             \draw (C) -- (E);
             \draw (D) -- (E);
@@ -131,11 +139,10 @@ This issue is particularly relevant in the era of big data, where networks of mi
             \node[circle, draw] (B) at (1, 1) {B};
             \node[circle, draw] (C) at (1, -1) {C};
             \node[circle, draw] (D) at (2, 0) {D};
-            \node[circle, draw] (E) at (2, -1) {E};
+            \node[circle, draw] (E) at (2, 1) {E};
             % Draw edges to form a sparse graph
             \draw (A) -- (B);
-            \draw (B) -- (C);
-            \draw (C) -- (D);
+            \draw (B) -- (D);
         \end{tikzpicture}
         \caption{Sparse Graph with few edges relative to the number of nodes.}
         \label{fig:sparse_graph}
@@ -152,13 +159,21 @@ Thus, this thesis aims to use randomized algorithms to find new, fast, accurate 
 
 The specific objectives of this research include:
 
-\begin{enumerate}
-    \item Developing algorithms that use randomized sampling to estimate triangle counts in graphs.
-    This involves identifying subsets of edges or nodes to sample, then using these samples to approximate the total number of triangles.
-    \item Applying other techniques to improve the efficiency and/or accuracy of these methods.
-    \item Evaluating the performance of these methods on real-world networks.
-    The algorithms will be tested on various types of real-world graph data, such as social networks, to determine their practical applicability and scalability.
-\end{enumerate}
+\textbf{1. Developing algorithms that use randomized sampling to estimate triangle counts in graphs.}
+The first objective involves the design and implementation of algorithms that use randomized sampling to estimate triangle counts.
+The goal of these methods is to reduce algorithm's overall runtime by selecting a subset of the graph's nodes or edges for analysis.
+By focusing on smaller, strategically chosen portions of the graph, these approaches will estimate the total number of triangles without enumerating all possible combinations of three nodes.
+This will involve experimenting with various sampling strategies, such as uniform sampling, importance sampling, and other variance reduction techniques, to identify the most effective methods for different types of graphs.
+These specific techniques are outlined in more detail in the background section of this document.
+
+\textbf{2. Applying other techniques to improve the efficiency and/or accuracy of these methods.}
+In addition to these sampling methods, this thesis will explore other techniques to further improve performance.
+This process will involve finding ways to combine existing methods and implementing novel techniques that have not yet been applied to triangle counting on a large scale.
+By integrating these techniques, the goal is to further increase speed and accuracy.
+
+\textbf{3. Evaluating the performance of these methods on real-world networks.}
+The algorithms implemented will be tested on various types of real-world graph data, such as social networks and collaboration graphs, to determine their practical applicability.
+Metrics such as runtime, variance, and deviation from the true triangle counts will be collected, and the performance of these methods will be plotted against one another to allow for comparison.
 
 In summary, this thesis aims to advance the understanding of how to count triangles in large, sparse graphs efficiently, offering a contribution to both theoretical and practical aspects of network analysis.
 The methods developed here can be applied to real-world networks, making it a valuable addition to the field of computational graph theory.
@@ -587,7 +602,7 @@ The datasets used will consist of synthetic networks and real-world graphs from 
 Examples of real-world networks include:
 
 \begin{itemize}
-    \item Social Networks: Facebook and Twitter datasets.
+    \item Social Networks: Networks representing friendships on Facebook.
     \item Collaboration Networks: Co-authorship graphs in scientific publications.
     \item Web Graphs: Directed graphs of hyperlinks between websites.
 \end{itemize}
@@ -668,13 +683,13 @@ Compile a variety of networks to test on, and implement uniform sampling, import
 Test these methods on the networks selected.
 
 \textbf{Milestone 2:}
-Compare the various methods from milestone 2 across datasets.
+Compare the various methods from Milestone 2 across datasets.
 Based on this analysis, generate hybrid methods using the best performing algorithms.
 As before, test these methods on the networks selected.
 For example, if importance sampling and variance reduction both perform well, combine them in various ways and collect data on these hybrid methods' runtimes and errors across networks.
 
 \textbf{Milestone 3:}
-Extend the study to larger and more complex networks to evaluate generalizability.
+Extend the study to larger and more complex networks.
 Based on these findings, refine the hybrid methods and develop a set of recommendations or guidelines for choosing the most effective algorithm under different conditions.
 Summarize the results in a final report and prepare visualizations to support key conclusions.
 
@@ -684,9 +699,9 @@ This oral defense will be evaluated using the previous criteria, and any final f
 
 \section{Communication}
 
-\textbf{Meetings with Committee Chair:} I will meet with my Committee Chair for half an hour once a week throughout the semester.
+\textbf{Meetings with Committee Chair:} I will meet with my committee chair for half an hour once a week throughout the semester.
 In each meeting, I’ll bring an informal report of my progress that covers the experiments and research I’ve completed over the week.
-During each meeting, my Committee Chair and I will discuss experiments that can be run in the upcoming week.
+During each meeting, my committee chair and I will discuss experiments that can be run in the upcoming week.
 In addition, I will continuously update my thesis report, and will go over any questions relating to it at our weekly meetings.
 
 \textbf{Meetings with Full Committee:} Full committee meetings, where both of my committee members and I are present, will happen monthly.
@@ -701,7 +716,7 @@ The specific hours worked will vary depending on the goals set at each weekly me
     \item Week of 02/10/25: Milestone 1
     \item Week of 03/03/25: Milestone 2
     \item Week of 03/24/25: Milestone 3
-    \item Week of 04/07/25: 1st draft of thesis submitted Committee Chair
+    \item Week of 04/07/25: 1st draft of thesis submitted to committee chair
     \item Week of 04/21/25: 2nd draft of thesis submitted to CHC PATHS
     \item Week of 05/05/25: Oral defense
     \item Week of 05/10/25: Final submission to CHC (No later than last day of classes)

@@ -4,45 +4,45 @@ The top-level auxiliary file: thesis.aux
 The style file: plain.bst
 Database file #1: thesis_bib.bib
 Warning--empty booktitle in arifuzzaman_parallel_2012
-You've used 21 entries,
+You've used 22 entries,
             2118 wiz_defined-function locations,
-            625 strings with 7696 characters,
-and the built_in function-call counts, 7528 in all, are:
-= -- 761
-> -- 302
+            632 strings with 7919 characters,
+and the built_in function-call counts, 7871 in all, are:
+= -- 792
+> -- 325
 < -- 9
-+ -- 121
-- -- 97
-* -- 449
-:= -- 1173
-add.period$ -- 64
-call.type$ -- 21
-change.case$ -- 108
++ -- 130
+- -- 105
+* -- 478
+:= -- 1235
+add.period$ -- 67
+call.type$ -- 22
+change.case$ -- 115
 chr.to.int$ -- 0
-cite$ -- 22
-duplicate$ -- 325
-empty$ -- 622
-format.name$ -- 97
-if$ -- 1655
+cite$ -- 23
+duplicate$ -- 336
+empty$ -- 644
+format.name$ -- 105
+if$ -- 1722
 int.to.chr$ -- 0
-int.to.str$ -- 21
-missing$ -- 21
-newline$ -- 105
-num.names$ -- 44
-pop$ -- 143
+int.to.str$ -- 22
+missing$ -- 22
+newline$ -- 110
+num.names$ -- 46
+pop$ -- 148
 preamble$ -- 1
-purify$ -- 90
+purify$ -- 96
 quote$ -- 0
-skip$ -- 269
+skip$ -- 276
 stack$ -- 0
-substring$ -- 485
-swap$ -- 108
+substring$ -- 499
+swap$ -- 109
 text.length$ -- 9
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 78
+type$ -- 82
 warning$ -- 1
-while$ -- 77
-width$ -- 23
-write$ -- 227
+while$ -- 80
+width$ -- 24
+write$ -- 238
 (There was 1 warning)

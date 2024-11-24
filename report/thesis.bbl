@@ -102,4 +102,9 @@ Duncan~J. Watts and Steven~H. Strogatz.
 Virginia~Vassilevska Williams, Yinzhan Xu, Zixuan Xu, and Renfei Zhou.
 \newblock New {Bounds} for {Matrix} {Multiplication}: from {Alpha} to {Omega}, 2023.
 
+\bibitem{ye_commensurate_2005}
+Ping Ye, Brian~D. Peyser, Forrest~A. Spencer, and Joel~S. Bader.
+\newblock Commensurate distances and similar motifs in genetic congruence and protein interaction networks in yeast.
+\newblock {\em BMC Bioinformatics}, 6:270, November 2005.
+
 \end{thebibliography}
