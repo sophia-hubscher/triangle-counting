@@ -34,7 +34,7 @@
     urlcolor = {teal}
 }
 
-\title{Efficient and Accurate Triangle Count Estimation in Large Networks}
+\title{Proposal: Efficient and Accurate Triangle Count Estimation in Large Networks}
 \date{}
 
 \author{
@@ -83,10 +83,11 @@ Triangles are a simple yet powerful structural motif that can reveal important i
     \end{minipage}%
 \end{figure}
 
-These triangles can, in social network graphs, represent closed friendships, indicating a high level of local connectivity, which can give insight into the network as a whole.
-For example, in an analysis of the effect of recommender systems on the social network Twitter, an increase in the percentage of edges that closed triangles following the introduction of a ``Who to Follow'' friend-to-friend recommendation algorithm was used as evidence of the algorithm's efficacy \cite{su_effect_2016}.
-This highlights the importance of triangle metrics as a powerful tool for analyzing the structure of social networks and other similar graphs.
-This is just one of many examples of these triangles' use.
+These triangles are more than just theoretical constructs; in social network graphs, for example, they can represent closed friendships or tightly-knit groups, signaling levels of local connectivity in a network.
+This, in turn, can reflect greater patterns and structures within a network.
+For example, in social media platforms such as Twitter, triangles are used to model relationships between users, where closed triangles indicate strong communities or mutual interests.
+A study analyzing the effect of recommender systems on Twitter demonstrated how an increase in closed triangles following the introduction of a ``Who to Follow'' friend-to-friend recommendation algorithm served as evidence of the algorithm's efficacy \cite{su_effect_2016}.
+This illustrates how triangle metrics are not just useful for theoretical analysis but also for practical applications.
 
 While the utility of triangle-based metrics is well-documented, counting triangles efficiently in large graphs remains computationally challenging.
 Direct enumeration methods involve inspecting all possible triples of nodes in the graph, a process with a worst-case time complexity of $O(n^3)$ where $n$ is the number of nodes \cite{al_hasan_triangle_2018}.
@@ -141,7 +142,7 @@ This issue is particularly relevant in the era of big data, where networks of mi
     \end{minipage}
 \end{figure}
 
-To address this challenges, researchers have developed a variety of approaches to count or estimate triangles efficiently.
+To address these challenges, researchers have developed a variety of approaches to count triangles efficiently.
 Some deterministic methods outlined in more detail in the background section of this proposal decrease the time it takes to compute global triangle counts \cite{strassen_gaussian_1969}.
 However, these methods still face scalability issues.
 As a result, randomized algorithms \cite{tsourakakis_doulion_2009}, \cite{seshadhri_triadic_2013}, \cite{tsourakakis_fast_2008} have emerged as a promising alternative.
@@ -161,8 +162,6 @@ The specific objectives of this research include:
 
 In summary, this thesis aims to advance the understanding of how to count triangles in large, sparse graphs efficiently, offering a contribution to both theoretical and practical aspects of network analysis.
 The methods developed here can be applied to real-world networks, making it a valuable addition to the field of computational graph theory.
-
-\newpage 
 
 \section{Notation}
 
