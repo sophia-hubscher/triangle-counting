@@ -5,6 +5,11 @@ Mohammad Al~Hasan and Vachik~S. Dave.
 \newblock Triangle counting in large networks: a review.
 \newblock {\em WIREs Data Mining and Knowledge Discovery}, 2018.
 
+\bibitem{albert_statistical_2002}
+Reka Albert and Albert-Laszlo Barabasi.
+\newblock Statistical mechanics of complex networks.
+\newblock {\em Reviews of Modern Physics}, 74(1):47--97, January 2002.
+
 \bibitem{arifuzzaman_parallel_2012}
 SM~Arifuzzaman, Maleq Khan, and Madhav Marathe.
 \newblock Parallel {Algorithms} for {Counting} {Triangles} and {Computing} {Clustering} {Coefficients}.
@@ -82,6 +87,11 @@ Charalampos~E. Tsourakakis.
 Charalampos~E. Tsourakakis, U.~Kang, Gary~L. Miller, and Christos Faloutsos.
 \newblock {DOULION}: counting triangles in massive graphs with a coin.
 \newblock In {\em Proceedings of the 15th {ACM} {SIGKDD} international conference on {Knowledge} discovery and data mining}, {KDD} '09, pages 837--846. Association for Computing Machinery, 2009.
+
+\bibitem{watts_collective_1998}
+Duncan~J. Watts and Steven~H. Strogatz.
+\newblock Collective dynamics of ‘small-world’ networks.
+\newblock {\em Nature}, 393(6684):440--442, June 1998.
 
 \bibitem{williams_new_2023}
 Virginia~Vassilevska Williams, Yinzhan Xu, Zixuan Xu, and Renfei Zhou.

@@ -29,9 +29,9 @@
 \setlength{\parskip}{1em}
 
 \hypersetup{
-    linkcolor = {teal},
+    linkcolor = {violet},
     citecolor = {violet},
-    urlcolor = {violet}
+    urlcolor = {teal}
 }
 
 \title{Efficient Triangle Count Estimation in Large Networks}
@@ -518,22 +518,110 @@ In general, this method can be highly effective, as accurate predictions can sig
 
 \section{Methods}
 
-How are you conducting your research or creative endeavor?
+To evaluate different triangle count estimation methods, I will implement them in Python and then compare their accuracies, runtimes, and sample sizes on different networks.
+The first methods implemented will be uniform sampling, importance sampling, variance reduction, and hybrids between these, but as the methods are evaluated, more are likely to arise.
+These methods will be applied to a range of synthetic networks and real-world networks from the \href{https://snap.stanford.edu/index.html}{Stanford Network Analysis Platform (SNAP) library}, which includes graphs of different sizes, densities, and structural properties.
 
-Detail the procedures or techniques you are using to conduct your research or produce your artifact.
- 
-Describe the resources or materials you are using in your research. 
- 
-If specialized training was required for your research manuscript or creative portfolio (e.g., lab safety certification or human/animal testing) describe the training you received.
+\subsection{Datasets}
+
+The datasets used will consist of synthetic networks and real-world graphs from the SNAP library, encompassing diverse domains such as social networks, collaboration networks, and citation networks.
+Examples of real-world networks include:
+
+\begin{itemize}
+    \item Social Networks: Facebook and Twitter datasets.
+    \item Collaboration Networks: Co-authorship graphs in scientific publications.
+    \item Web Graphs: Directed graphs of hyperlinks between websites.
+\end{itemize}
+
+In addition to these real-world networks, synthetic networks such as Barabási–Albert \cite{albert_statistical_2002} and Watts-Strogatz \cite{watts_collective_1998} graphs will be generated using the \href{https://networkx.org/}{NetworkX library}.
+
+The synthetic networks will serve as controlled environments for testing the scalability and accuracy of the methods under varying structural parameters.
+For instance, Barabási–Albert graphs, which simulate preferential attachment, are used to model networks with power-law degree distributions, while Watts–Strogatz graphs capture small-world properties with tunable clustering and path lengths.
+These properties allow for targeted testing of the estimation methods under different conditions.
+
+The datasets used will vary in size, edge density (sparse and dense graphs), and clustering characteristics.
+This diversity will highlight the strengths and limitations of each method for triangle count estimation.
+
+For all of these datasets, ground-truth triangle counts will be computed using exact algorithms and compared against the approximate counts from the estimation methods tested.
+Using this, we can compare accuracy to metrics such as runtime and sample size.
+
+\subsection{Methods Evaluated}
+
+The initial methods evaluated are all outlined in the literature review above.
+As these strategies are evaluated, the most effective will be selected and used in hybrid methods.
+
+\textbf{Uniform Sampling:}
+This baseline method involves randomly sampling edges or nodes and scaling up the observed triangle counts proportionally.
+While simple, uniform sampling may struggle in graphs with skewed degree distributions.
+
+\textbf{Importance Sampling:}
+Edges or nodes more likely to form triangles are prioritized using properties such as degree.
+This method aims for higher accuracy with fewer samples, though determining optimal weights is a challenge.
+
+\textbf{Variance Reduction:}
+The primary goal of variance reduction techniques are to minimize variability in estimates.
+
+\textbf{Hybrid Approaches:}
+To combine the strengths of individual techniques, I will explore strategies that combine multiple of the above approaches.
+
+\subsection{Evaluation Metrics}
+
+The methods will be tested on real-world networks, measuring:
+
+\begin{itemize}
+    \item \textbf{Accuracy:} Difference between estimated and true triangle counts.
+    \item \textbf{Runtime:} Computational time for generating estimates.
+    \item \textbf{Sample size:} The number of graph nodes sampled.
+    \item \textbf{Variance:} The variability in triangle count estimates across multiple runs of the same method.
+\end{itemize}
+
+In addition to these metrics, the general structure of networks will be compared.
+For example, I will analyze which methods perform best on sparse versus dense networks and small versus large netowrks.
+
+\subsection{Implementation}
+
+Algorithms will be implemented in Python using NetworkX and SNAP.
+Experiments will run on consistent hardware, with multiple trials to ensure reliable comparisons.
 
 \section{Evaluation}
 
-How will your work be reviewed and graded?
+There are three major milestones that I plan to complete during 499T.
+These milestones are subject to change, but their descriptions outline the general goals of each month of research.
 
-List the measurable goals the Thesis Committee expects you to accomplish during the semester.
-Indicate how your Thesis Committee will provide feedback regarding your progress.
-Indicate how your Thesis Committee will assess the viability of your research or creative endeavor in both the written and presentation formats.
-If you are registering for the Portfolio option, be specific about the artifact that you will produce in addition to the manuscript, such as a performance, musical score, architectural blueprint, engineering invention, screenplay, business case study, collection of original poetry, or art exhibition.
+For each milestone, I will compile a report of what steps I took and what I learned from my findings.
+These reports will be presented to my full committee, and committee members will evaluate each of these reports on the following criteria:
+
+\begin{itemize}
+    \item Overall progress toward research goals
+    \item Soundness of methodology
+    \item Quality of data presentation
+    \item Quality of takeaways from findings
+    \item Clarity, neatness, and overall presentation
+\end{itemize}
+
+These evaluations will be delivered either in person or asynchronously after our meeting so that committee members have sufficient time to organize their thoughts.
+The feedback from these evaluations will be used to improve the overall quality of the next milestone's work and to rework any past steps taken.
+
+The three milestones will be as follows:
+
+\textbf{Milestone 1:}
+Compile a variety of networks to test on, and implement uniform sampling, importance sampling, and variance reduction.
+Test these methods on the networks selected.
+
+\textbf{Milestone 2:}
+Compare the various methods from milestone 2 across datasets.
+Based on this analysis, generate hybrid methods using the best performing algorithms.
+As before, test these methods on the networks selected.
+For example, if importance sampling and variance reduction both perform well, combine them in various ways and collect data on these hybrid methods' runtimes and errors across networks.
+
+\textbf{Milestone 3:}
+Extend the study to larger and more complex networks to evaluate generalizability.
+Based on these findings, refine the hybrid methods and develop a set of recommendations or guidelines for choosing the most effective algorithm under different conditions.
+Summarize the results in a final report and prepare visualizations to support key conclusions.
+
+At the end of the semester, I will hold an oral defense with my full committee.
+Before this defense, I will submit my thesis document to the committee so that they can review it in advance.
+This oral defense will be evaluated using the previous criteria, and any final feedback I receive during it will be incorporated into my final thesis document that will be submitted no later than the last day of classes.
 
 \section{Communication}
 
@@ -554,10 +642,10 @@ The specific hours worked will vary depending on the goals set at each weekly me
     \item Week of 02/10/25: Milestone 1
     \item Week of 03/03/25: Milestone 2
     \item Week of 03/24/25: Milestone 3
-    \item Week of 04/07/25: 1st Draft of thesis submitted Committee Chair
-    \item Week of 04/21/25: 2nd Draft of Thesis submitted to CHC PATHS
-    \item Week of 05/05/25: Oral Defense
-    \item Week of 05/10/25: Final Submission to CHC (No later than last day of classes)
+    \item Week of 04/07/25: 1st draft of thesis submitted Committee Chair
+    \item Week of 04/21/25: 2nd draft of thesis submitted to CHC PATHS
+    \item Week of 05/05/25: Oral defense
+    \item Week of 05/10/25: Final submission to CHC (No later than last day of classes)
 \end{itemize}
 
 \newpage
