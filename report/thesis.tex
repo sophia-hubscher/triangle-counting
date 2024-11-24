@@ -34,7 +34,7 @@
     urlcolor = {teal}
 }
 
-\title{Efficient Triangle Count Estimation in Large Networks}
+\title{Efficient and Accurate Triangle Count Estimation in Large Networks}
 \date{}
 
 \author{
@@ -53,48 +53,9 @@
 
 \section{Introduction}
 
-What are you investigating and why?
-
-Provide a general description of your Honors Thesis topic (about one page)
- 
-State the scientific question or creative endeavor (at least one page):
-describe objectives, hypotheses, and/or other discipline-specific inquiry.
- 
-Explain the significance of the research question or the creative endeavor (at least one page):
-relate the research question or creative endeavor to the key literature.
-explain the importance of your topic to the advancement of knowledge in the discipline.
-
-This thesis aims to use statistical methods such as variance reduction and randomized sampling to find fast, accurate ways to estimate triangle counts in real-world networks.
-
-\newpage 
-
-\section{Notation}
-
-\begin{table}[ht]
-    \centering
-    \begin{tabular}{ll}
-        \toprule
-        \textbf{Symbol} & \textbf{Description} \\
-        \midrule
-        $G(V, E)$       & Graph with $V$ vertices and $E$ edges. \\
-        $n = |V|$       & Number of vertices in graph $G$. \\
-        $m = |E|$       & Number of edges in graph $G$. \\
-        $A$             & The adjacency matrix for the graph $G$. \\
-        $\Delta_i$      & Number of triangles node $i$ participates in. \\
-        $\Delta$        & Total number of triangles in $G$. \\
-        $d_i$           & Degree of node $i$. \\
-        \bottomrule
-    \end{tabular}
-    \caption{List of notation used.}
-    \label{tab:notation}
-\end{table}
-
-\section{Background}
-
-\subsection{Introduction}
-
 Counting triangles is a fundamental problem in graph theory with widespread applications in social networks, bioinformatics, and more \cite{lovasz_large_2012}.
 These triangles, are formed by three mutually connected nodes, as shown in Figure~\ref{fig:triangles}, which contains three triangles.
+Triangles are a simple yet powerful structural motif that can reveal important insights the networks they are found in.
 
 \begin{figure}[H]
     \centering
@@ -123,9 +84,108 @@ These triangles, are formed by three mutually connected nodes, as shown in Figur
 \end{figure}
 
 These triangles can, in social network graphs, represent closed friendships, indicating a high level of local connectivity, which can give insight into the network as a whole.
-For example, in an analysis of the effect of recommender systems on the social network Twitter, an increase in the percentage of edges that closed triangles following the introduction of a ``Who to Follow'' friend-to-friend recommendation algorithm was used as evidence of the algorithm's efficacy.
+For example, in an analysis of the effect of recommender systems on the social network Twitter, an increase in the percentage of edges that closed triangles following the introduction of a ``Who to Follow'' friend-to-friend recommendation algorithm was used as evidence of the algorithm's efficacy \cite{su_effect_2016}.
+This highlights the importance of triangle metrics as a powerful tool for analyzing the structure of social networks and other similar graphs.
+This is just one of many examples of these triangles' use.
 
-Unfortunately, for large graphs, especially sparse ones, where the number of edges is much smaller compared to the number of possible edges, efficiently counting these triangles poses significant computational challenges.
+While the utility of triangle-based metrics is well-documented, counting triangles efficiently in large graphs remains computationally challenging.
+Direct enumeration methods involve inspecting all possible triples of nodes in the graph, a process with a worst-case time complexity of $O(n^3)$ where $n$ is the number of nodes \cite{al_hasan_triangle_2018}.
+On smaller networks, this runtime may not pose issues, but unfortunately, for large graphs, especially sparse ones, where the number of edges is much smaller compared to the number of possible edges (as illustrated in Figures \ref{fig:dense_graph} and \ref{fig:sparse_graph}), efficiently counting these triangles poses significant computational challenges.
+As graphs grow larger and more complex, direct methods for counting triangles become increasingly time-consuming, making it difficult to handle graphs of practical size in real-world applications.
+This issue is particularly relevant in the era of big data, where networks of millions or even billions of nodes and edges are common, and computational efficiency is critical.
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        % Dense graph
+        \begin{tikzpicture}[scale=1.5]
+            % Define vertices
+            \node[circle, draw] (A) at (0, 0) {A};
+            \node[circle, draw] (B) at (1, 1) {B};
+            \node[circle, draw] (C) at (1, -1) {C};
+            \node[circle, draw] (D) at (2, 0) {D};
+            \node[circle, draw] (E) at (2, -1) {E};
+            % Draw edges to form a dense graph
+            \draw (A) -- (B);
+            \draw (A) -- (C);
+            \draw (A) -- (D);
+            \draw (A) -- (E);
+            \draw (B) -- (C);
+            \draw (B) -- (D);
+            \draw (C) -- (D);
+            \draw (C) -- (E);
+            \draw (D) -- (E);
+        \end{tikzpicture}
+        \caption{Dense Graph with many edges relative to the number of nodes.}
+        \label{fig:dense_graph}
+    \end{minipage}%
+    \hspace{0.5cm}
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        % Sparse graph
+        \begin{tikzpicture}[scale=1.5]
+            % Define vertices
+            \node[circle, draw] (A) at (0, 0) {A};
+            \node[circle, draw] (B) at (1, 1) {B};
+            \node[circle, draw] (C) at (1, -1) {C};
+            \node[circle, draw] (D) at (2, 0) {D};
+            \node[circle, draw] (E) at (2, -1) {E};
+            % Draw edges to form a sparse graph
+            \draw (A) -- (B);
+            \draw (B) -- (C);
+            \draw (C) -- (D);
+        \end{tikzpicture}
+        \caption{Sparse Graph with few edges relative to the number of nodes.}
+        \label{fig:sparse_graph}
+    \end{minipage}
+\end{figure}
+
+To address this challenges, researchers have developed a variety of approaches to count or estimate triangles efficiently.
+Some deterministic methods outlined in more detail in the background section of this proposal decrease the time it takes to compute global triangle counts \cite{strassen_gaussian_1969}.
+However, these methods still face scalability issues.
+As a result, randomized algorithms \cite{tsourakakis_doulion_2009}, \cite{seshadhri_triadic_2013}, \cite{tsourakakis_fast_2008} have emerged as a promising alternative.
+By leveraging probabilistic techniques, these algorithms provide approximate triangle counts with significant reductions in runtime while maintaining a high degree of accuracy.
+
+Thus, this thesis aims to use randomized algorithms to find new, fast, accurate ways to estimate triangle counts that can be used in real-world applications.
+
+The specific objectives of this research include:
+
+\begin{enumerate}
+    \item Developing algorithms that use randomized sampling to estimate triangle counts in graphs.
+    This involves identifying subsets of edges or nodes to sample, then using these samples to approximate the total number of triangles.
+    \item Applying other techniques to improve the efficiency and/or accuracy of these methods.
+    \item Evaluating the performance of these methods on real-world networks.
+    The algorithms will be tested on various types of real-world graph data, such as social networks, to determine their practical applicability and scalability.
+\end{enumerate}
+
+In summary, this thesis aims to advance the understanding of how to count triangles in large, sparse graphs efficiently, offering a contribution to both theoretical and practical aspects of network analysis.
+The methods developed here can be applied to real-world networks, making it a valuable addition to the field of computational graph theory.
+
+\newpage 
+
+\section{Notation}
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{ll}
+        \toprule
+        \textbf{Symbol} & \textbf{Description} \\
+        \midrule
+        $G(V, E)$       & Graph with $V$ vertices and $E$ edges. \\
+        $n = |V|$       & Number of vertices in graph $G$. \\
+        $m = |E|$       & Number of edges in graph $G$. \\
+        $A$             & The adjacency matrix for the graph $G$. \\
+        $\Delta_i$      & Number of triangles node $i$ participates in. \\
+        $\Delta$        & Total number of triangles in $G$. \\
+        $d_i$           & Degree of node $i$. \\
+        \bottomrule
+    \end{tabular}
+    \caption{List of notation used.}
+    \label{tab:notation}
+\end{table}
+
+\section{Background}
 
 \subsection{Types of Graphs}
 

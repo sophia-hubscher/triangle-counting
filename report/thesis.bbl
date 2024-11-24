@@ -78,6 +78,11 @@ V.~Strassen.
 \newblock Gaussian {Elimination} is not {Optimal}.
 \newblock {\em Numerische Mathematik}, 13:354--356, 1969.
 
+\bibitem{su_effect_2016}
+Jessica Su, Aneesh Sharma, and Sharad Goel.
+\newblock The {Effect} of {Recommendations} on {Network} {Structure}.
+\newblock In {\em Proceedings of the 25th {International} {Conference} on {World} {Wide} {Web}}, {WWW} '16, pages 1157--1167, Republic and Canton of Geneva, CHE, 2016. International World Wide Web Conferences Steering Committee.
+
 \bibitem{tsourakakis_fast_2008}
 Charalampos~E. Tsourakakis.
 \newblock Fast {Counting} of {Triangles} in {Large} {Real} {Networks} without {Counting}: {Algorithms} and {Laws}.
