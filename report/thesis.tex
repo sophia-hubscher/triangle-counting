@@ -39,16 +39,17 @@
 
 \author{
   \textbf{Sophia Hubscher}\\
-  Manning College of Information and Computer Sciences\\
+  Robert and Donna Manning College of Information and Computer Sciences\\
+  University of Massachusetts Amherst\\
   \texttt{shubscher@umass.edu}\\
 }
 \begin{document}
 
 \maketitle
 
-\noindent\textbf{Committee Chair: }Cameron Musco
+\noindent\textbf{Committee Chair: }Professor Cameron Musco
 \;\;\;\texttt{cmusco@cs.umass.edu} \\
-\textbf{Second Committee Member: } Ghazaleh Parvini\;\;\;\texttt{gparvini@cs.umass.edu} \\
+\textbf{Second Committee Member: }Professor Ghazaleh Parvini\;\;\;\texttt{gparvini@cs.umass.edu} \\
 \textbf{Research Type: } Thesis \\
 
 \section{Introduction}
@@ -152,7 +153,7 @@ This issue is particularly relevant in the era of big data, where networks of mi
 To address these challenges, researchers have developed a variety of approaches to count triangles efficiently.
 Some deterministic methods outlined in more detail in the background section of this proposal decrease the time it takes to compute global triangle counts \cite{strassen_gaussian_1969}.
 However, these methods still face scalability issues.
-As a result, randomized algorithms \cite{tsourakakis_doulion_2009}, \cite{seshadhri_triadic_2013}, \cite{tsourakakis_fast_2008} have emerged as a promising alternative.
+As a result, randomized algorithms \cite{tsourakakis_doulion_2009, seshadhri_triadic_2013, tsourakakis_fast_2008} have emerged as a promising alternative.
 By leveraging probabilistic techniques, these algorithms provide approximate triangle counts with significant reductions in runtime while maintaining a high degree of accuracy.
 
 Thus, this thesis aims to use randomized algorithms to find new, fast, accurate ways to estimate triangle counts that can be used in real-world applications.
@@ -182,6 +183,7 @@ The methods developed here can be applied to real-world networks, making it a va
 
 \begin{table}[ht]
     \centering
+    \caption{List of notation used.}
     \begin{tabular}{ll}
         \toprule
         \textbf{Symbol} & \textbf{Description} \\
@@ -195,7 +197,6 @@ The methods developed here can be applied to real-world networks, making it a va
         $d_i$           & Degree of node $i$. \\
         \bottomrule
     \end{tabular}
-    \caption{List of notation used.}
     \label{tab:notation}
 \end{table}
 
