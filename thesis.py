@@ -307,6 +307,62 @@ def estimate_sampled_line_importance_variance_reduction_method(A, s, power):
 
   return (M + D) / 3
 
+"""# Simulated Methods"""
+
+def simulated_importance_estimate_per_node_method(A, s, std_dev):
+  slope = 2.0174801828672173
+  intercept = -3.2746434864734972
+  n = len(A)
+
+  # generate degrees and true triangle counts
+  degrees = np.sum(A, axis=1)
+  triangles = np.power(degrees, slope) * np.exp(intercept)
+
+  noise = np.random.normal(0, std_dev, triangles.shape)
+
+  triangles = triangles + noise
+
+  # run importance sampling
+  degrees_to_power = np.power(degrees, slope)
+  sum_of_degrees_to_power = np.sum(degrees_to_power)
+  
+  probabilities = degrees_to_power / sum_of_degrees_to_power
+
+  sampled_nodes = random.choices(range(n), weights=probabilities, k=s)
+
+  estimate = sum(triangles[i] * (1 / (s * probabilities[i])) for i in sampled_nodes) // 3
+  
+  return estimate
+
+def simulated_estimate_variance_reduction_method(A, s, power):
+  slope = 2.0174801828672173
+  intercept = -3.2746434864734972
+  n = len(A)
+  
+  # generate degrees and true triangle counts
+  degrees = np.sum(A, axis=1)
+  triangles = np.power(degrees, slope) * np.exp(intercept)
+
+  noise = np.random.normal(0, 1000, triangles.shape)
+
+  triangles = triangles + noise
+
+  # run variance reduction
+  approx_triangles = np.power(degrees, slope) * np.exp(intercept)
+
+  M = np.sum(approx_triangles)
+
+  sampled_nodes_variance_reduction = gen_s_ints(s, n)
+
+  sampled_node_triangles = np.array([triangles[i] for i in sampled_nodes_variance_reduction])
+  sampled_m_i_vals = np.array([approx_triangles[i] for i in sampled_nodes_variance_reduction])
+
+  D = np.sum(sampled_node_triangles - sampled_m_i_vals) * (n / s)
+
+  estimate = ((M + D) / 3)
+
+  return estimate
+
 """# Plotting"""
 
 def plot(s_values, results, powers):
@@ -474,6 +530,29 @@ def run_sequential_estimation(s_values, powers, true_triangle_count, m, estimati
       print(f"Power: {power}, s: {s}")
 
   return results
+
+def plot_histogram_of_triangle_diff(A, dataset_name):
+  n = len(A)
+
+  slope, intercept = get_line_of_best_fit(A)
+
+  degree_array = np.sum(A, axis=1)
+  approx_triangles = np.power(degree_array, slope) * np.exp(intercept)
+
+  true_triangles = [count_node_triangles(A, i) for i in range(n)]
+
+  diff_array = approx_triangles - true_triangles
+
+  np.savetxt(f'diff_array_{dataset_name}.csv', diff_array, delimiter=',', fmt='%.6f')
+
+  plt.hist(diff_array, bins=100, range=(-1000, 2000))
+
+  plt.xlabel('Difference')
+  plt.ylabel('Frequency')
+  plt.title('Difference Between Approximate and True Triangle Count')
+  plt.show()
+
+  return diff_array
 
 if __name__ == '__main__':
   # file_path = 'data/facebook_combined.txt'
