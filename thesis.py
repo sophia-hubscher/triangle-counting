@@ -309,18 +309,20 @@ def estimate_sampled_line_importance_variance_reduction_method(A, s, power):
 
 """# Simulated Methods"""
 
-def simulated_importance_estimate_per_node_method(A, s, std_dev):
-  slope = 2.0174801828672173
-  intercept = -3.2746434864734972
+def simulated_importance_estimate_per_node_method(A, s, noise_scale):
+  slope, intercept = 1.8419585833184278, -1.3012912193426571
   n = len(A)
 
   # generate degrees and true triangle counts
   degrees = np.sum(A, axis=1)
   triangles = np.power(degrees, slope) * np.exp(intercept)
 
-  noise = np.random.normal(0, std_dev, triangles.shape)
+  noise = np.random.normal(0, noise_scale, triangles.shape)
+  # noise = np.random.uniform(-noise_scale, noise_scale, size=triangles.shape)
 
   triangles = triangles + noise
+  # triangles = triangles * (1 + noise)
+  true_triangle_count = np.sum(triangles) // 3
 
   # run importance sampling
   degrees_to_power = np.power(degrees, slope)
@@ -332,20 +334,22 @@ def simulated_importance_estimate_per_node_method(A, s, std_dev):
 
   estimate = sum(triangles[i] * (1 / (s * probabilities[i])) for i in sampled_nodes) // 3
   
-  return estimate
+  return estimate, true_triangle_count
 
-def simulated_estimate_variance_reduction_method(A, s, power):
-  slope = 2.0174801828672173
-  intercept = -3.2746434864734972
+def simulated_estimate_variance_reduction_method(A, s, noise_scale):
+  slope, intercept = 1.8419585833184278, -1.3012912193426571
   n = len(A)
   
   # generate degrees and true triangle counts
   degrees = np.sum(A, axis=1)
   triangles = np.power(degrees, slope) * np.exp(intercept)
 
-  noise = np.random.normal(0, 1000, triangles.shape)
+  noise = np.random.normal(0, noise_scale, triangles.shape)
+  # noise = np.random.uniform(-noise_scale, noise_scale, size=triangles.shape)
 
   triangles = triangles + noise
+  # triangles = triangles * (1 + noise)
+  true_triangle_count = np.sum(triangles) // 3
 
   # run variance reduction
   approx_triangles = np.power(degrees, slope) * np.exp(intercept)
@@ -361,7 +365,7 @@ def simulated_estimate_variance_reduction_method(A, s, power):
 
   estimate = ((M + D) / 3)
 
-  return estimate
+  return estimate, true_triangle_count
 
 """# Plotting"""
 
@@ -575,7 +579,10 @@ if __name__ == '__main__':
   # node_count = 4000
   # true_triangle_count = 877830
 
-  m = edges_to_adjacency_matrix_csv(file_path, node_count)
+  m = edges_to_adjacency_matrix_txt(file_path, node_count)
+
+  slope, intercept = get_line_of_best_fit(m)
+  degrees = np.sum(m, axis=1)
 
   s_values = [5, 100, 500, 1000, 2000, 3000, 4000]
   powers = [0, 1, 1.5, get_line_of_best_fit(m)[0], 2]
