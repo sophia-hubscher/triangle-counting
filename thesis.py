@@ -547,14 +547,15 @@ def plot_histogram_of_triangle_diff(A, dataset_name):
 
   diff_array = approx_triangles - true_triangles
 
-  np.savetxt(f'diff_array_{dataset_name}.csv', diff_array, delimiter=',', fmt='%.6f')
+  # np.savetxt(f'diff_array_{dataset_name}.csv', diff_array, delimiter=',', fmt='%.6f')
 
   plt.hist(diff_array, bins=100, range=(-1000, 2000))
 
   plt.xlabel('Difference')
   plt.ylabel('Frequency')
-  plt.title('Difference Between Approximate and True Triangle Count')
-  plt.show()
+  plt.title(f'Difference Between Approximate and True Triangle Count for {dataset_name} Dataset')
+  plt.savefig(f'plots/triangle_diff_histograms/{dataset_name}_triangle_diff.png')
+  plt.close()
 
   return diff_array
 
@@ -563,13 +564,13 @@ if __name__ == '__main__':
   # node_count = 4039
   # true_triangle_count = 1612010
   
-  # file_path = 'data/ca-GrQc_mapped.txt'
-  # node_count = 5242
-  # true_triangle_count = 48296
+  file_path = 'data/ca-GrQc_mapped.txt'
+  node_count = 5242
+  true_triangle_count = 48296
 
-  file_path = 'data/musae_crocodile.csv'
-  node_count = 11631
-  true_triangle_count = 630879
+  # file_path = 'data/musae_crocodile.csv'
+  # node_count = 11631
+  # true_triangle_count = 630879
 
   # file_path = 'data/barabasi_albert.txt'
   # node_count = 4000
