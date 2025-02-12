@@ -559,6 +559,29 @@ def plot_histogram_of_triangle_diff(A, dataset_name):
 
   return diff_array
 
+def plot_degree_vs_noise(A, dataset_name):
+  n = len(A)
+
+  slope, intercept = get_line_of_best_fit(A)
+
+  degree_array = np.sum(A, axis=1)
+  approx_triangles = np.power(degree_array, slope) * np.exp(intercept)
+
+  true_triangles = [count_node_triangles(A, i) for i in range(n)]
+
+  diff_array = approx_triangles - true_triangles
+
+  plt.figure(figsize=(12, 5))
+  plt.scatter(degree_array, diff_array, marker='o')
+  plt.xscale('log')
+  plt.yscale('log')
+  plt.xlabel('Degree (log scale)')
+  plt.ylabel('|True Triangle Count - Approx Triangle Count| (log scale)')
+  plt.title(f'Degree vs. Noise for {dataset_name} Dataset')
+  plt.grid(True)
+  plt.savefig(f'plots/degree_vs_noise/{dataset_name}_degree_vs_noise.png')
+  plt.close()
+
 if __name__ == '__main__':
   # file_path = 'data/facebook_combined.txt'
   # node_count = 4039
