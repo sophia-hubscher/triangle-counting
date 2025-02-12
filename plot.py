@@ -35,6 +35,7 @@ def plot(s_values, results, powers, method):
     plt.grid(True)
     plt.legend()
     plt.savefig(f'{plots_folder}/avg_error_{method}.png')
+    plt.close()
 
     plt.figure(figsize=(12, 5))
     for i, power in enumerate(powers):
