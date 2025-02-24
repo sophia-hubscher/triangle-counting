@@ -567,9 +567,16 @@ def plot_degree_vs_noise(A, dataset_name):
   degree_array = np.sum(A, axis=1)
   approx_triangles = np.power(degree_array, slope) * np.exp(intercept)
 
-  true_triangles = [count_node_triangles(A, i) for i in range(n)]
+  true_triangles = np.array([count_node_triangles(A, i) for i in range(n)])
 
-  diff_array = approx_triangles - true_triangles
+  diff_array = np.abs(approx_triangles - true_triangles)
+
+  # filter out zero values to avoid log issues
+  valid_mask = (degree_array > 0) & (diff_array > 0)
+  log_degree = np.log(degree_array[valid_mask])
+  log_diff = np.log(diff_array[valid_mask])
+
+  slope, intercept = np.polyfit(log_degree, log_diff, 1)
 
   plt.figure(figsize=(12, 5))
   plt.scatter(degree_array, diff_array, marker='o')
@@ -577,19 +584,21 @@ def plot_degree_vs_noise(A, dataset_name):
   plt.yscale('log')
   plt.xlabel('Degree (log scale)')
   plt.ylabel('|True Triangle Count - Approx Triangle Count| (log scale)')
-  plt.title(f'Degree vs. Noise for {dataset_name} Dataset')
+  plt.title(f'Degree vs. Noise for {dataset_name} Dataset\nSlope: {slope:.4f}')
   plt.grid(True)
   plt.savefig(f'plots/degree_vs_noise/{dataset_name}_degree_vs_noise.png')
   plt.close()
 
+  print(f"Slope for {dataset_name}: {slope:.4f}")
+
 if __name__ == '__main__':
-  # file_path = 'data/facebook_combined.txt'
-  # node_count = 4039
-  # true_triangle_count = 1612010
+  file_path = 'data/facebook_combined.txt'
+  node_count = 4039
+  true_triangle_count = 1612010
   
-  file_path = 'data/ca-GrQc_mapped.txt'
-  node_count = 5242
-  true_triangle_count = 48296
+  # file_path = 'data/ca-GrQc_mapped.txt'
+  # node_count = 5242
+  # true_triangle_count = 48296
 
   # file_path = 'data/musae_crocodile.csv'
   # node_count = 11631
