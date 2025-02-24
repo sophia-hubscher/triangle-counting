@@ -559,7 +559,7 @@ def plot_histogram_of_triangle_diff(A, dataset_name):
 
   return diff_array
 
-def plot_degree_vs_noise(A, dataset_name):
+def generate_noise_plots(A, dataset_name):
   n = len(A)
 
   slope, intercept = get_line_of_best_fit(A)
@@ -576,7 +576,8 @@ def plot_degree_vs_noise(A, dataset_name):
   log_degree = np.log(degree_array[valid_mask])
   log_diff = np.log(diff_array[valid_mask])
 
-  slope, intercept = np.polyfit(log_degree, log_diff, 1)
+  degree_plot_slope, _ = np.polyfit(log_degree, log_diff, 1)
+  triangles_plot_slope, _ = np.polyfit(true_triangles, diff_array, 1)
 
   plt.figure(figsize=(12, 5))
   plt.scatter(degree_array, diff_array, marker='o')
@@ -584,12 +585,23 @@ def plot_degree_vs_noise(A, dataset_name):
   plt.yscale('log')
   plt.xlabel('Degree (log scale)')
   plt.ylabel('|True Triangle Count - Approx Triangle Count| (log scale)')
-  plt.title(f'Degree vs. Noise for {dataset_name} Dataset\nSlope: {slope:.4f}')
+  plt.title(f'Degree vs. Noise for {dataset_name} Dataset\nSlope: {degree_plot_slope:.4f}')
   plt.grid(True)
   plt.savefig(f'plots/degree_vs_noise/{dataset_name}_degree_vs_noise.png')
   plt.close()
 
-  print(f"Slope for {dataset_name}: {slope:.4f}")
+  plt.figure(figsize=(12, 5))
+  plt.scatter(true_triangles, diff_array, marker='o')
+  plt.xscale('linear')
+  plt.yscale('linear')
+  plt.xlabel('True Triangle Count')
+  plt.ylabel('|True Triangle Count - Approx Triangle Count|')
+  plt.title(f'Triangle Count vs. Noise for {dataset_name} Dataset\nSlope: {slope:.4f}')
+  plt.grid(True)
+  plt.savefig(f'plots/triangle_count_vs_noise/{dataset_name}_triangle_count_vs_noise.png')
+  plt.close()
+
+  print(f"Slopes for {dataset_name}: Degree: {degree_plot_slope:.4f} Triangle: {triangles_plot_slope:.4f}")
 
 if __name__ == '__main__':
   file_path = 'data/facebook_combined.txt'
