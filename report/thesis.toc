@@ -1,0 +1,17 @@
+\contentsline {section}{\numberline {1}Introduction}{4}{section.1}%
+\contentsline {section}{\numberline {2}Notation}{6}{section.2}%
+\contentsline {section}{\numberline {3}Background}{7}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Types of Graphs}{7}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Methods for Triangle Counting}{7}{subsection.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.1}Sampling Methods}{7}{subsubsection.3.2.1}%
+\contentsline {subsubsection}{\numberline {3.2.2}Linear Algebraic Methods}{8}{subsubsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.3}General Algorithmic Strategies}{11}{subsection.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.1}Variance Reduction}{11}{subsubsection.3.3.1}%
+\contentsline {subsubsection}{\numberline {3.3.2}Learning-Augmented Algorithms}{13}{subsubsection.3.3.2}%
+\contentsline {section}{\numberline {4}Methods}{14}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Datasets}{14}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Methods Evaluated}{15}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Evaluation Metrics}{15}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Implementation}{16}{subsection.4.4}%
+\contentsline {section}{\numberline {5}Results}{17}{section.5}%
+\contentsline {section}{\numberline {6}Conclusion}{18}{section.6}%
