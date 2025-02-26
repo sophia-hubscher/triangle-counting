@@ -81,28 +81,28 @@ def serialize_results_to_csv(results, s_values, powers, output_file, method_name
 def count_4_cliques(m):
     count = 0
     n = len(m)
-    degrees = [sum(row) for row in m]
     
     for i in range(n):
-        # loop through each pair of neighbors of node i
-        for j in range(n):
-            if m[i][j] == 1:
-                for k in range(j + 1, n):
-                    if m[i][k] == 1 and m[j][k] == 1:  # if j and k are neighbors of i and connected
-                        # take the node with the lowest degree
-                        triangle = sorted([i, j, k], key=lambda x: degrees[x])
-                        lowest_degree_node = triangle[0]
-                        
-                        # iterate through the neighbors of the node with the lowest degree
-                        for neighbor in range(k + 1, n):
-                            if m[lowest_degree_node][neighbor] == 1:
-                                # if the neighbor is connected to all nodes in the triangle, count a 4-clique
-                                if all(m[neighbor][node] == 1 for node in triangle):
-                                    count += 1
-                                    break
-
-        m[i] = [0] * n  # remove node i by setting its row to zero
-
+      neighbors_i = np.where(m[i] != 0)[0]
+      for j in neighbors_i:
+        if j <= i:
+          continue
+        
+        neighbors_j = np.where(m[j] != 0)[0]
+        common_neighbors_ij = np.intersect1d(neighbors_i, neighbors_j, assume_unique=True)
+        
+        for k in common_neighbors_ij:
+          if k <= j:
+            continue
+          
+          neighbors_k = np.where(m[k] != 0)[0]
+          common_neighbors_ijk = np.intersect1d(common_neighbors_ij, neighbors_k, assume_unique=True)
+          
+          for l in common_neighbors_ijk:
+            if l <= k:
+              continue
+            count += 1
+    
     return count
 
 def gen_s_ints(s, n):
@@ -372,35 +372,34 @@ def run_sequential_estimation(s_values, powers, true_4_clique_count, m, estimati
 if __name__ == '__main__':
     # file_path = 'data/facebook_combined.txt'
     # node_count = 4039
-    # true_4_clique_count = 1502405
+    # true_4_clique_count = 30004668
   
     file_path = 'data/ca-GrQc_mapped.txt'
     node_count = 5242
-    true_4_clique_count = 39101
+    true_4_clique_count = 329297
 
     # file_path = 'data/musae_crocodile.csv'
     # node_count = 11631
-    # true_4_clique_count = 451302
+    # true_4_clique_count = 3268191
 
     # file_path = 'data/barabasi_albert.txt'
     # node_count = 4000
-    # true_4_clique_count = 691107
+    # true_4_clique_count = 30004668
 
     # file_path = 'data/watts_strogatz_albert.txt'
     # node_count = 4000
-    # true_4_clique_count = 782479
+    # true_4_clique_count = 4906743
 
     m = edges_to_adjacency_matrix_txt(file_path, node_count)
 
-    slope, intercept = get_line_of_best_fit(m)
-    degrees = np.sum(m, axis=1)
+    # slope, intercept = get_line_of_best_fit(m)
+    # degrees = np.sum(m, axis=1)
     
-    s_values = [5, 100]
-    # s_values = [5, 100, 500, 1000, 2000, 3000, 4000]
-    powers = [0, 1, 1.5, get_line_of_best_fit(m)[0], 2]
+    s_values = [5, 100, 500, 1000, 2000, 3000, 4000]
+    powers = [0, 1, 1.5, get_line_of_best_fit(m)[0], 2, 3]
 
     results = run_parallel_estimation(s_values, powers, true_4_clique_count, m, importance_estimate_per_node_method)
 
-    output_file = 'estimation_results_croc.csv'
+    output_file = 'estimation_results_GrQc.csv'
     method_name = 'importance_estimate_per_node_method'
     serialize_results_to_csv(results, s_values, powers, f'results/4_clique/{output_file}', method_name)
