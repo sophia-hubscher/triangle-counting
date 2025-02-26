@@ -588,6 +588,8 @@ However, when the predictor provides useful information on heavy edges, the algo
 
 In general, this method can be highly effective, as accurate predictions can significantly enhance algorithms' efficiency or result quality.
 
+\newpage
+
 \section{Methods}
 
 \textbf{THIS SECTION HAS NOT BEEN CHANGED SINCE THE PROPOSAL -- WILL BE EDITED}
@@ -656,6 +658,81 @@ For example, I will analyze which methods perform best on sparse versus dense ne
 
 Algorithms will be implemented in Python using NetworkX and SNAP.
 Experiments will run on consistent hardware, with multiple trials to ensure reliable comparisons.
+
+\newpage
+
+\section{Variances}
+
+\subsection{Uniform Sampling}
+
+The global triangle count $\Delta$ can be estimated as $\tilde{\Delta}$ using the following formula:
+
+\[
+\tilde{\Delta} = \frac{n}{3s} \sum_{i = 1}^{s} \Delta_i,
+\]
+
+where $n$ is the number of nodes in our graph $G$, $s$ is our sample size, and $\sum_{i = 1}^{s} \Delta_i$ is the sum of all sampled triangle counts. 
+Using this, we can find the variance of $\tilde{\Delta}$ in terms of $n$, $s$, and $\mathrm{Var}(\Delta_i)$.
+
+\[
+\begin{aligned}
+\mathrm{Var}(\tilde{\Delta}) &= \mathrm{Var} \left( \frac{n}{3s} \sum_{i=1}^{s} \Delta_i \right) \\
+&= \frac{n^2}{9s^2} \mathrm{Var} \left( \sum_{i=1}^{s} \Delta_i \right) \\
+&= \frac{n^2}{9s^2} \sum_{i=1}^{s} \mathrm{Var}(\Delta_i)
+\end{aligned}
+\]
+
+Next, we find $\mathrm{Var}(\Delta_i)$.
+
+\[
+\mathrm{Var}(\Delta_i) = \mathbb{E}[(\Delta_i - \mathbb{E}[\Delta_i])^2]
+\]
+
+\[
+\mathbb{E}[\Delta_i] = \frac{1}{n} \Delta_1 + \frac{1}{n} \Delta_2 + \ldots + \frac{1}{n} \Delta_n = \frac{\Delta}{n}
+\]
+
+\[
+\begin{aligned}
+\mathbb{E}[(\Delta_i - \mathbb{E}[\Delta_i])^2] &= \mathbb{E}[(\Delta_i - \frac{\Delta}{n})^2] \\
+&= \sum_{i = 1}^{n} \frac{1}{n} (\Delta_i - \frac{\Delta}{n})^2 \\
+&= \sum_{i = 1}^{n} \frac{1}{n} (\Delta_i^2 - 2 \Delta_i \frac{\Delta}{n} + \frac{\Delta^2}{n^2}) \\
+&= \frac{1}{n} \sum_{i = 1}^{n} \Delta_i^2 - \frac{2}{n} \sum_{i = 1}^{n} \Delta_i \frac{\Delta}{n} + \frac{1}{n} \sum_{i = 1}^{n} \frac{\Delta^2}{n^2} \\
+&= \frac{1}{n} \sum_{i = 1}^{n} \Delta_i^2 - \frac{2}{n} \sum_{i = 1}^{n} \Delta_i \frac{\Delta}{n} + \frac{\Delta^2}{n^2} \\
+&= \frac{1}{n} \sum_{i = 1}^{n} \Delta_i^2 - \frac{2\Delta^2}{n^2} + \frac{\Delta^2}{n^2} \\
+&= \frac{1}{n} \sum_{i = 1}^{n} \Delta_i^2 - \frac{\Delta^2}{n^2}
+\end{aligned}
+\]
+
+Now, we can plug our value of $\mathrm{Var}(\Delta_i)$ into $\mathrm{Var}(\tilde{\Delta}) = \frac{n^2}{9s^2} \sum_{i=1}^{s} \mathrm{Var}(\Delta_i)$.
+
+\[
+\begin{aligned}
+\mathrm{Var}(\tilde{\Delta}) &= \frac{n^2}{9s^2} \sum_{i=1}^{s} [\frac{1}{n} \sum_{i = 1}^{n} \Delta_i^2 - \frac{\Delta^2}{n^2}] \\
+&= \frac{n^2}{9s^2} s [\frac{1}{n} \sum_{i = 1}^{n} \Delta_i^2 - \frac{\Delta^2}{n^2}] \\
+&= \frac{n^2}{9s} [\frac{1}{n} \sum_{i = 1}^{n} \Delta_i^2 - \frac{\Delta^2}{n^2}] \\
+&= \frac{n}{9s} [\sum_{i = 1}^{n} \Delta_i^2 - \frac{\Delta^2}{n}] \\
+\end{aligned}
+\]
+
+\subsection{Variance Reduction}
+
+Take the estimator of $\Delta_i$ to be denoted by $M$ where $M = \sum_{i = 1}^{n} m_i$ and $m_i = \Delta_i + N(0, \sigma^2)$.
+
+\[
+\tilde{\Delta} = \sum_{i = 1}^{n} m_i + \frac{n}{s} \sum_{i = 1}^{s} (m_i - \Delta_i)
+\]
+
+\[
+\begin{aligned}
+\mathrm{Var}(\tilde{\Delta}) &= \sum_{i = 1}^{n} \mathrm{Var}(m_i) + \mathrm{Var}(\frac{n}{s} \sum_{i = 1}^{s} (m_i - \Delta_i)) \\
+&= \sum_{i = 1}^{n} \mathrm{Var}(m_i) + \frac{n^2}{s^2} \mathrm{Var}(\sum_{i = 1}^{s} (m_i - \Delta_i)) \\
+&= \sum_{i = 1}^{n} \mathrm{Var}(m_i) + \frac{n^2}{s^2} \sum_{i = 1}^{s} \mathrm{Var}(m_i - \Delta_i) \\
+&= n \sigma^2 + \frac{n^2}{s^2} \sum_{i = 1}^{s} \mathrm{Var}(m_i - \Delta_i) \\
+&= n \sigma^2 + \frac{n^2}{s^2} s \sigma^2 \\
+&= n \sigma^2 + \frac{n^2}{s} \sigma^2 \\
+\end{aligned}
+\]
 
 \newpage
 

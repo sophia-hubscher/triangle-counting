@@ -8,10 +8,13 @@
 \contentsline {subsection}{\numberline {3.3}General Algorithmic Strategies}{11}{subsection.3.3}%
 \contentsline {subsubsection}{\numberline {3.3.1}Variance Reduction}{11}{subsubsection.3.3.1}%
 \contentsline {subsubsection}{\numberline {3.3.2}Learning-Augmented Algorithms}{13}{subsubsection.3.3.2}%
-\contentsline {section}{\numberline {4}Methods}{14}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Datasets}{14}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Methods Evaluated}{15}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3}Evaluation Metrics}{15}{subsection.4.3}%
+\contentsline {section}{\numberline {4}Methods}{15}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Datasets}{15}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Methods Evaluated}{16}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Evaluation Metrics}{16}{subsection.4.3}%
 \contentsline {subsection}{\numberline {4.4}Implementation}{16}{subsection.4.4}%
-\contentsline {section}{\numberline {5}Results}{17}{section.5}%
-\contentsline {section}{\numberline {6}Conclusion}{18}{section.6}%
+\contentsline {section}{\numberline {5}Variances}{17}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Uniform Sampling}{17}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Variance Reduction}{18}{subsection.5.2}%
+\contentsline {section}{\numberline {6}Results}{20}{section.6}%
+\contentsline {section}{\numberline {7}Conclusion}{21}{section.7}%
