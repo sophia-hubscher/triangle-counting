@@ -579,13 +579,17 @@ def generate_noise_plots(A, dataset_name):
   degree_plot_slope, _ = np.polyfit(log_degree, log_diff, 1)
   triangles_plot_slope, _ = np.polyfit(true_triangles, diff_array, 1)
 
+  degree_array_greater_than_1 = degree_array[degree_array > 1]
+
   plt.figure(figsize=(12, 5))
   plt.scatter(degree_array, diff_array, marker='o')
+  plt.plot(degree_array_greater_than_1, degree_array_greater_than_1 * (degree_array_greater_than_1 - 1) / 2, color='red', label="Degree Choose 2")
   plt.xscale('log')
   plt.yscale('log')
   plt.xlabel('Degree (log scale)')
   plt.ylabel('|True Triangle Count - Approx Triangle Count| (log scale)')
   plt.title(f'Degree vs. Noise for {dataset_name} Dataset\nSlope: {degree_plot_slope:.4f}')
+  plt.legend()
   plt.grid(True)
   plt.savefig(f'plots/degree_vs_noise/{dataset_name}_degree_vs_noise.png')
   plt.close()
