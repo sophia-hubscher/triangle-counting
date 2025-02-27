@@ -356,6 +356,9 @@ def simulated_estimate_variance_reduction_method(A, s, noise_scale):
 
   M = np.sum(approx_triangles)
 
+  if s == 0:
+    return M // 3, true_triangle_count
+  
   sampled_nodes_variance_reduction = gen_s_ints(s, n)
 
   sampled_node_triangles = np.array([triangles[i] for i in sampled_nodes_variance_reduction])
@@ -363,7 +366,7 @@ def simulated_estimate_variance_reduction_method(A, s, noise_scale):
 
   D = np.sum(sampled_node_triangles - sampled_m_i_vals) * (n / s)
 
-  estimate = ((M + D) / 3)
+  estimate = ((M + D) // 3)
 
   return estimate, true_triangle_count
 
@@ -641,7 +644,7 @@ if __name__ == '__main__':
 
   results = run_parallel_estimation(s_values, powers, true_triangle_count, m, estimate_importance_variance_reduction_method)
 
-  output_file = 'estimation_results_croc.csv'
+  output_file = 'estimation_results_fb.csv'
   method_name = 'estimate_importance_variance_reduction_method'
   serialize_results_to_csv(results, s_values, powers, f'results/{output_file}', method_name)
 
