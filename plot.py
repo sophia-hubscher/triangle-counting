@@ -11,6 +11,24 @@ dataset_names = {'fb': 'Facebook Dataset',
                  'ba': 'Synthetic Barabasi Albert Dataset',
                  'wsa': 'Synthetic Watts Strogatz Albert Dataset'}
 
+n_values = {'fb': 4039,
+                'croc': 11631,
+                'GrQc': 5242,
+                'ba': 4000,
+                'wsa': 4000}
+
+true_triangle_counts ={'fb': 1612010,
+                'croc': 630879,
+                'GrQc': 48296,
+                'ba': 1678322,
+                'wsa': 877830}
+
+sum_of_squared_node_triangle_counts ={'fb': 35518682856,
+                'croc': 8785005059,
+                'GrQc': 82839893,
+                'ba': 40244099146,
+                'wsa': 1749193288}
+
 def get_timestamped_subfolder(parent_folder):
     current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     new_subfolder = os.path.join(parent_folder, f'{dataset}/{current_time}')
@@ -78,6 +96,28 @@ def plot(s_values, results, powers, method):
     plt.legend()
     plt.savefig(f'{plots_folder}/percent_error_{method}.png')
     plt.close()
+
+    if method == 'importance_estimate_per_node_method': # only plots for power=1 (i.e. uniform sampling)
+        n = n_values[dataset]
+        true_triangle_count = true_triangle_counts[dataset]
+
+        plt.figure(figsize=(12, 5))
+
+        filtered_s_values = [s for s in s_values if s != 0]
+
+        squared_node_triangle_counts_sum = np.sum(sum_of_squared_node_triangle_counts[dataset])
+        estimated_squared_errors = [(n / (9 * s)) * (np.sum(squared_node_triangle_counts_sum) - (true_triangle_count ** 2 / n)) for s in filtered_s_values]
+        avg_variances = [results["avg_variances"][1][s] for s in filtered_s_values]
+
+        plt.plot(avg_variances, estimated_squared_errors, marker='o', linestyle='-', color=colors[0])
+        plt.xscale('log')
+        plt.yscale('log')
+        plt.xlabel('Average Variance (log scale)')
+        plt.ylabel('Estimated Variance (log scale)')
+        plt.title(f'Actual Average Variance vs. Estimated Variance for Uniform Sampling')
+        plt.grid(True)
+        plt.savefig(f'{plots_folder}/avg_vs_estimated_variance_{method}.png')
+        plt.close()
 
     for i, power in enumerate(powers):
         plt.figure(figsize=(12, 6))
