@@ -689,18 +689,18 @@ Next, we find $\mathrm{Var}(\Delta_i)$.
 \]
 
 \[
-\mathbb{E}[\Delta_i] = \frac{1}{n} \Delta_1 + \frac{1}{n} \Delta_2 + \ldots + \frac{1}{n} \Delta_n = \frac{\Delta}{n}
+\mathbb{E}[\Delta_i] = 3(\frac{1}{n} \Delta_1 + \frac{1}{n} \Delta_2 + \ldots + \frac{1}{n} \Delta_n) = \frac{3\Delta}{n}
 \]
 
 \[
 \begin{aligned}
-\mathbb{E}[(\Delta_i - \mathbb{E}[\Delta_i])^2] &= \mathbb{E}[(\Delta_i - \frac{\Delta}{n})^2] \\
-&= \sum_{i = 1}^{n} \frac{1}{n} (\Delta_i - \frac{\Delta}{n})^2 \\
-&= \sum_{i = 1}^{n} \frac{1}{n} (\Delta_i^2 - 2 \Delta_i \frac{\Delta}{n} + \frac{\Delta^2}{n^2}) \\
-&= \frac{1}{n} \sum_{i = 1}^{n} \Delta_i^2 - \frac{2}{n} \sum_{i = 1}^{n} \Delta_i \frac{\Delta}{n} + \frac{1}{n} \sum_{i = 1}^{n} \frac{\Delta^2}{n^2} \\
-&= \frac{1}{n} \sum_{i = 1}^{n} \Delta_i^2 - \frac{2}{n} \sum_{i = 1}^{n} \Delta_i \frac{\Delta}{n} + \frac{\Delta^2}{n^2} \\
-&= \frac{1}{n} \sum_{i = 1}^{n} \Delta_i^2 - \frac{2\Delta^2}{n^2} + \frac{\Delta^2}{n^2} \\
-&= \frac{1}{n} \sum_{i = 1}^{n} \Delta_i^2 - \frac{\Delta^2}{n^2}
+\mathbb{E}[(\Delta_i - \mathbb{E}[\Delta_i])^2] &= \mathbb{E}[(\Delta_i - \frac{3\Delta}{n})^2] \\
+&= \sum_{i = 1}^{n} \frac{1}{n} (\Delta_i - \frac{3\Delta}{n})^2 \\
+&= \sum_{i = 1}^{n} \frac{1}{n} (\Delta_i^2 - 6 \Delta_i \frac{\Delta}{n} + \frac{9\Delta^2}{n^2}) \\
+&= \frac{1}{n} \sum_{i = 1}^{n} \Delta_i^2 - \frac{6}{n} \sum_{i = 1}^{n} \Delta_i \frac{\Delta}{n} + \frac{1}{n} \sum_{i = 1}^{n} \frac{9\Delta^2}{n^2} \\
+&= \frac{1}{n} \sum_{i = 1}^{n} \Delta_i^2 - \frac{6}{n} \sum_{i = 1}^{n} \Delta_i \frac{\Delta}{n} + \frac{9\Delta^2}{n^2} \\
+&= \frac{1}{n} \sum_{i = 1}^{n} \Delta_i^2 - \frac{18\Delta^2}{n^2} + \frac{9\Delta^2}{n^2} \\
+&= \frac{1}{n} \sum_{i = 1}^{n} \Delta_i^2 - \frac{9\Delta^2}{n^2}
 \end{aligned}
 \]
 
@@ -708,10 +708,11 @@ Now, we can plug our value of $\mathrm{Var}(\Delta_i)$ into $\mathrm{Var}(\tilde
 
 \[
 \begin{aligned}
-\mathrm{Var}(\tilde{\Delta}) &= \frac{n^2}{9s^2} \sum_{i=1}^{s} [\frac{1}{n} \sum_{i = 1}^{n} \Delta_i^2 - \frac{\Delta^2}{n^2}] \\
-&= \frac{n^2}{9s^2} s [\frac{1}{n} \sum_{i = 1}^{n} \Delta_i^2 - \frac{\Delta^2}{n^2}] \\
-&= \frac{n^2}{9s} [\frac{1}{n} \sum_{i = 1}^{n} \Delta_i^2 - \frac{\Delta^2}{n^2}] \\
-&= \frac{n}{9s} [\sum_{i = 1}^{n} \Delta_i^2 - \frac{\Delta^2}{n}] \\
+\mathrm{Var}(\tilde{\Delta}) &= \frac{n^2}{9s^2} \sum_{i=1}^{s} [\frac{1}{n} \sum_{i = 1}^{n} \Delta_i^2 - \frac{9\Delta^2}{n^2}] \\
+&= \frac{n^2}{9s^2} s [\frac{1}{n} \sum_{i = 1}^{n} \Delta_i^2 - \frac{9\Delta^2}{n^2}] \\
+&= \frac{n^2}{9s} [\frac{1}{n} \sum_{i = 1}^{n} \Delta_i^2 - \frac{9\Delta^2}{n^2}] \\
+&= \frac{n}{s} [\frac{1}{9}\sum_{i = 1}^{n} \Delta_i^2 - \frac{\Delta^2}{n}] \\
+&= \frac{n}{9s} \sum_{i = 1}^{n} \Delta_i^2 - \frac{\Delta^2}{s} \\
 \end{aligned}
 \]
 

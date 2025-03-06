@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import csv
 from datetime import datetime
 
-dataset = 'GrQc'
+dataset = 'ba'
 dataset_names = {'fb': 'Facebook Dataset',
                  'croc': 'Crocodile Wikipedia Dataset',
                  'GrQc': 'Collaboration Network Dataset',
@@ -106,15 +106,15 @@ def plot(s_values, results, powers, method):
         filtered_s_values = [s for s in s_values if s != 0]
 
         squared_node_triangle_counts_sum = np.sum(sum_of_squared_node_triangle_counts[dataset])
-        estimated_squared_errors = [(n / (9 * s)) * (np.sum(squared_node_triangle_counts_sum) - (true_triangle_count ** 2 / n)) for s in filtered_s_values]
-        avg_variances = [results["avg_variances"][1][s] for s in filtered_s_values]
+        estimated_squared_errors = [((n / (9 * s)) * np.sum(squared_node_triangle_counts_sum)) - (true_triangle_count ** 2 / s) for s in filtered_s_values]
+        avg_variances = [results["avg_variances"][0][s] for s in filtered_s_values]
 
         plt.plot(avg_variances, estimated_squared_errors, marker='o', linestyle='-', color=colors[0])
         plt.xscale('log')
         plt.yscale('log')
-        plt.xlabel('Average Variance (log scale)')
+        plt.xlabel('Variance (log scale)')
         plt.ylabel('Estimated Variance (log scale)')
-        plt.title(f'Actual Average Variance vs. Estimated Variance for Uniform Sampling')
+        plt.title(f'Actual Variance vs. Estimated Variance for Uniform Sampling')
         plt.grid(True)
         plt.savefig(f'{plots_folder}/avg_vs_estimated_variance_{method}.png')
         plt.close()
