@@ -549,27 +549,30 @@ def run_sequential_estimation(s_values, powers, true_triangle_count, m, estimati
 
 def plot_histogram_of_triangle_diff(A, dataset_name):
   n = len(A)
-
+  
   slope, intercept = get_line_of_best_fit(A)
-
+  
   degree_array = np.sum(A, axis=1)
   approx_triangles = np.power(degree_array, slope) * np.exp(intercept)
-
-  true_triangles = [count_node_triangles(A, i) for i in range(n)]
-
+  
+  true_triangles = np.array([count_node_triangles(A, i) for i in range(n)])
+  
   diff_array = approx_triangles - true_triangles
-
-  # np.savetxt(f'diff_array_{dataset_name}.csv', diff_array, delimiter=',', fmt='%.6f')
-
-  plt.hist(diff_array, bins=100, range=(-1000, 2000))
-
+  
+  # remove outliers
+  lower_percentile = 5
+  upper_percentile = 95
+  lower_bound, upper_bound = np.percentile(diff_array, [lower_percentile, upper_percentile])
+  filtered_diff = diff_array[(diff_array >= lower_bound) & (diff_array <= upper_bound)]
+  
+  plt.hist(filtered_diff, bins=n//15)
   plt.xlabel('Difference')
   plt.ylabel('Frequency')
   plt.title(f'Difference Between Approximate and True Triangle Count for {dataset_name} Dataset')
   plt.savefig(f'plots/triangle_diff_histograms/{dataset_name}_triangle_diff.png')
   plt.close()
-
-  return diff_array
+  
+  return filtered_diff
 
 def generate_noise_plots(A, dataset_name):
   n = len(A)
