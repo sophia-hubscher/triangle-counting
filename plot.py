@@ -5,6 +5,7 @@ import csv
 from datetime import datetime
 
 dataset = 'ba'
+four_clique = False
 dataset_names = {'fb': 'Facebook Dataset',
                  'croc': 'Crocodile Wikipedia Dataset',
                  'GrQc': 'Collaboration Network Dataset',
@@ -36,7 +37,8 @@ def get_timestamped_subfolder(parent_folder):
 
     return new_subfolder
 
-plots_folder = get_timestamped_subfolder('plots')
+parent_folder_name = 'plots/4-clique' if four_clique else 'plots'
+plots_folder = get_timestamped_subfolder(parent_folder_name)
 
 def plot(s_values, results, powers, method):
     colors = ['b', 'r', 'g', 'c', 'm', 'y']
@@ -97,7 +99,7 @@ def plot(s_values, results, powers, method):
     plt.savefig(f'{plots_folder}/percent_error_{method}.png')
     plt.close()
 
-    if method == 'importance_estimate_per_node_method': # only plots for power=1 (i.e. uniform sampling)
+    if method == 'importance_estimate_per_node_method' and not four_clique: # only plots for power=1 (i.e. uniform sampling)
         n = n_values[dataset]
         true_triangle_count = true_triangle_counts[dataset]
 
@@ -136,8 +138,9 @@ def plot_csv():
 
     # This stores results for each method separately
     all_results = {}
+    results_folder_name = 'results/4_clique' if four_clique else 'results'
 
-    with open(f'results/estimation_results_{dataset}.csv', mode='r') as file:
+    with open(f'{results_folder_name}/estimation_results_{dataset}.csv', mode='r') as file:
         reader = csv.DictReader(file)
 
         for row in reader:
@@ -183,7 +186,7 @@ def plot_csv():
         plot(s_values, all_results[method], sorted(all_results[method]['avg_percent_errors'].keys()), method)
 
     plot_comparison(all_results, methods)
-    plot_comparison(all_results, ["estimate_variance_reduction_method", "estimate_sampled_line_importance_variance_reduction_method_50", "importance_estimate_per_node_method", "estimate_importance_variance_reduction_method"], True)
+    # plot_comparison(all_results, ["estimate_variance_reduction_method", "estimate_sampled_line_importance_variance_reduction_method_50", "importance_estimate_per_node_method", "estimate_importance_variance_reduction_method"], True)
 
 def plot_comparison(all_results, methods, only_power_2=False):
     colors = ['b', 'r', 'g', 'c', 'm', 'y']
