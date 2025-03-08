@@ -369,6 +369,50 @@ def run_sequential_estimation(s_values, powers, true_4_clique_count, m, estimati
 
   return results
 
+def generate_noise_plots(A, dataset_name):
+  n = len(A)
+
+  slope, intercept = get_line_of_best_fit(A)
+
+  degree_array = np.sum(A, axis=1)
+  approx_four_cliques = np.power(degree_array, slope) * np.exp(intercept)
+
+  true_four_cliques = np.array([count_node_4_cliques(A, i) for i in range(n)])
+
+  diff_array = np.abs(approx_four_cliques - true_four_cliques)
+
+  # filter out zero values to avoid log issues
+  valid_mask = (degree_array > 0) & (diff_array > 0)
+  log_degree = np.log(degree_array[valid_mask])
+  log_diff = np.log(diff_array[valid_mask])
+
+  degree_plot_slope, _ = np.polyfit(log_degree, log_diff, 1)
+  four_clique_plot_slope, _ = np.polyfit(true_four_cliques, diff_array, 1)
+
+  plt.figure(figsize=(12, 5))
+  plt.scatter(degree_array, diff_array, marker='o')
+  plt.xscale('log')
+  plt.yscale('log')
+  plt.xlabel('Degree (log scale)')
+  plt.ylabel('|True 4-Clique Count - Approx 4-Clique Count| (log scale)')
+  plt.title(f'Degree vs. Noise for {dataset_name} Dataset\nSlope: {degree_plot_slope:.4f}')
+  plt.grid(True)
+  plt.savefig(f'plots/4-clique/degree_vs_noise/{dataset_name}_degree_vs_noise.png')
+  plt.close()
+
+  plt.figure(figsize=(12, 5))
+  plt.scatter(true_four_cliques, diff_array, marker='o')
+  plt.xscale('linear')
+  plt.yscale('linear')
+  plt.xlabel('True 4-Clique Count')
+  plt.ylabel('|True 4-Clique Count - Approx 4-Clique Count|')
+  plt.title(f'4-Clique Count vs. Noise for {dataset_name} Dataset\nSlope: {slope:.4f}')
+  plt.grid(True)
+  plt.savefig(f'plots/4-clique/4-clique_count_vs_noise/{dataset_name}_4-clique_count_vs_noise.png')
+  plt.close()
+
+  print(f"Slopes for {dataset_name}: Degree: {degree_plot_slope:.4f} 4-Clique: {four_clique_plot_slope:.4f}")
+
 if __name__ == '__main__':
     # file_path = 'data/facebook_combined.txt'
     # node_count = 4039
