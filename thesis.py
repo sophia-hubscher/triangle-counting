@@ -648,16 +648,18 @@ if __name__ == '__main__':
   slope, intercept = get_line_of_best_fit(m)
   degrees = np.sum(m, axis=1)
 
-  s_values = [5, 100, 500, 1000, 2000, 3000, 4000]
-  powers = [0, 1, 1.5, get_line_of_best_fit(m)[0], 2]
+  s_values = [4000]
+  # s_values = [5, 100, 500, 1000, 2000, 3000, 4000]
+  powers = [1, 1.5, get_line_of_best_fit(m)[0]]
+  # powers = [0, 1, 1.5, get_line_of_best_fit(m)[0], 2]
 
   # true_triangle_count = count_triangles(m)
   print(f"True Triangle Count: {true_triangle_count}")
 
-  results = run_parallel_estimation(s_values, powers, true_triangle_count, m, estimate_variance_reduction_method)
+  results = run_parallel_estimation(s_values, powers, true_triangle_count, m, estimate_importance_variance_reduction_method)
 
   output_file = 'estimation_results_fb.csv'
-  method_name = 'estimate_variance_reduction_method'
+  method_name = 'Variance Reduction + Importance Sampling'
   serialize_results_to_csv(results, s_values, powers, f'results/{output_file}', method_name)
 
   plot(s_values, results, powers)

@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import csv
 from datetime import datetime
 
-dataset = 'ba'
+dataset = 'fb'
 four_clique = False
 dataset_names = {'fb': 'Facebook Dataset',
                  'croc': 'Crocodile Wikipedia Dataset',
@@ -186,7 +186,7 @@ def plot_csv():
         plot(s_values, all_results[method], sorted(all_results[method]['avg_percent_errors'].keys()), method)
 
     plot_comparison(all_results, methods)
-    # plot_comparison(all_results, ["estimate_variance_reduction_method", "estimate_sampled_line_importance_variance_reduction_method_50", "importance_estimate_per_node_method", "estimate_importance_variance_reduction_method"], True)
+    plot_comparison(all_results, ["Variance Reduction", "Importance Sampling", "Variance Reduction + Importance Sampling"], True)
 
 def plot_comparison(all_results, methods, only_power_2=False):
     colors = ['b', 'r', 'g', 'c', 'm', 'y']
@@ -206,7 +206,7 @@ def plot_comparison(all_results, methods, only_power_2=False):
             avg_times = []
 
             for s in sorted(all_results[method]['s_values']):
-                if (method == "estimate_variance_reduction_method"):
+                if (method == "Variance Reduction"):
                     power = 1
                 
                 avg_percent_errors.append(all_results[method]['avg_percent_errors'][power][s])
@@ -246,7 +246,7 @@ def plot_comparison(all_results, methods, only_power_2=False):
             s_values = sorted(all_results[method]['s_values'])
 
             for s in s_values:
-                if (method == "estimate_variance_reduction_method"):
+                if (method == "Variance Reduction"):
                     power = 1
                 avg_percent_errors.append(all_results[method]['avg_percent_errors'][power][s])
 
