@@ -213,7 +213,7 @@ def plot_comparison(all_results, methods, only_power_2=False):
                 avg_times.append(all_results[method]['avg_times'][power][s])
 
             # Plotting accuracy vs runtime
-            method_label = method == f'{method}' if "Variance Reduction" else f'{method} Power {power}'
+            method_label = f'{method}' if method == "Variance Reduction" else f'{method} Power {power}'
             plt.plot(avg_times, avg_percent_errors, marker=marker, linestyle='-', color=color, label=method_label)
 
             if only_power_2:
@@ -252,7 +252,8 @@ def plot_comparison(all_results, methods, only_power_2=False):
                 avg_percent_errors.append(all_results[method]['avg_percent_errors'][power][s])
 
             # Plotting percent error vs sample size
-            plt.plot(s_values, avg_percent_errors, marker=marker, linestyle='-', color=color, label=f'{method} Power {power}')
+            method_label = f'{method}' if method == "Variance Reduction" else f'{method} Power {power}'
+            plt.plot(s_values, avg_percent_errors, marker=marker, linestyle='-', color=color, label=method_label)
 
             if only_power_2:
                 break
