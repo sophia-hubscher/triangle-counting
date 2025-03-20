@@ -16,6 +16,7 @@
 \usepackage{caption}   % For captions
 \usepackage{float}     % For placing figures
 \usepackage{subcaption} % For subfigures
+\usepackage{listings}
 
 \newcommand{\subsubsubsection}[1]{
   \vspace{1em} % Space above the section
@@ -29,10 +30,33 @@
 \setlength{\parskip}{1em}
 
 \hypersetup{
-    linkcolor = {black},
+    linkcolor = {violet},
     citecolor = {violet},
     urlcolor = {teal}
 }
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+
+\lstdefinestyle{mystyle}{
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{violet},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{green},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+}
+
+\lstset{style=mystyle}
 
 \title{Efficient and Accurate Triangle Count Estimation in Large Networks}
 \date{}
@@ -497,6 +521,7 @@ This allows TraceTriangle to scale effectively with the size of the graph, ultim
 Beyond specific algorithms for triangle counting, various general techniques from theoretical computer science have been adapted for this problem, particularly in designing faster algorithms.
 
 \subsubsection{Variance Reduction}
+\label{sec:variance-reduction-background}
 
 Variance reduction \cite{prescott_monte_1965} is another general technique that can be applied to triangle estimation, improving accuracy without increasing the number of samples needed.
 
@@ -534,7 +559,8 @@ Lastly, we take the sum of our estimate and our error, and divide this sum by th
 
 Thus, by applying this variance reduction technique, we arrive at an estimate for the triangle count $\Delta$.
 
-\subsubsubsection{Importance Sampling}
+\subsubsection{Importance Sampling}
+\label{sec:importance-sampling-background}
 
 One example of a variance reduction method is importance sampling.
 When estimating a metric relating to a large population using uniform sampling, where all edges/nodes/wedges/etc. are sampled with the same probability, often a very large number of samples is required to ensure a good relative approximation \cite{lovasz_large_2012}.
@@ -621,24 +647,168 @@ This diversity will highlight the strengths and limitations of each method for t
 For all of these datasets, ground-truth triangle counts will be computed using exact algorithms and compared against the approximate counts from the estimation methods tested.
 Using this, we can compare accuracy to metrics such as runtime and sample size.
 
-\subsection{Methods Evaluated}
+\subsection{Sampling Methods Evaluated}
 
-The initial methods evaluated are all outlined in the literature review above.
-As these strategies are evaluated, the most effective will be selected and used in hybrid methods.
+\subsubsubsection{Uniform Sampling:}
 
-\textbf{Uniform Sampling:}
 This baseline method involves randomly sampling edges or nodes and scaling up the observed triangle counts proportionally.
-While simple, uniform sampling may struggle in graphs with skewed degree distributions.
+While simple, uniform sampling often struggle in graphs with skewed degree distributions.
+
+Code for this method is given below, where $A$ is the adjacency matrix of our graph $G$ and $s$ is the number of nodes of $G$ being sampled.
+
+\begin{lstlisting}[language=Python]
+import numpy as np
+import random
+
+def gen_s_ints(s, n):
+choice_arr = sorted(random.choices(range(n), k=s))
+return choice_arr
+
+def estimate_uniformly_per_node_method(A, s):
+    n = len(A)
+    sampled_nodes = gen_s_ints(s, n)
+
+    triangle_count = 0
+    for i in sampled_nodes:
+        triangle_count += count_node_triangles(A, i)
+
+    return triangle_count * (n / s) // 3
+
+\end{lstlisting}
 
 \textbf{Importance Sampling:}
-Edges or nodes more likely to form triangles are prioritized using properties such as degree.
-This method aims for higher accuracy with fewer samples, though determining optimal weights is a challenge.
+
+In this method, we attempt to prioritize the sampling of nodes that are likely to form more triangles.
+This is done by sampling proportionally to the degree of nodes.
+This method aims for higher accuracy with fewer samples.
+
+
+As written in section \ref{sec:importance-sampling-background}, in importance sampling, after we select a value $\alpha$ to indicate the strength of the relationship between the degree and triangle count of nodes, we can use this value $\alpha$ to ascribe each node a probability $p_i$ to each node based in its degree $d_i$:
+
+\[
+D = \sum_{i = 1}^{n} d_i^\alpha
+\]
+\[
+p_i = \frac{d_i^\alpha}{D}.
+\]
+
+We can then sample each node $n_i$ with probability $p_i$.
+The code for this sampling and estimation process is given below where, like before $A$ is the adjacency matrix of $G$ and $s$ is our sample size.
+We also introduce the parameter $\alpha$, which in the code snippet, is represented by the variable ``power''.
+
+\begin{lstlisting}[language=Python]
+def sample_by_degree(A, n, s, power):
+    degrees = np.sum(A, axis=1)
+    degrees_to_power = np.power(degrees, power)
+
+    sum_of_degrees_to_power = np.sum(degrees_to_power)
+    probabilities = degrees_to_power / sum_of_degrees_to_power
+
+    sampled_nodes = random.choices(range(n), weights=probabilities, k=s)
+
+    return probabilities, sampled_nodes
+
+def importance_estimate_per_node_method(A, s, power):
+    n = len(A)
+    probabilities, sampled_nodes = sample_by_degree(A, n, s, power)
+
+    estimate = 0
+    for i in sampled_nodes:
+    triangle_count = count_node_triangles(A, i)
+    estimate += triangle_count * (1 / (s * probabilities[i]))
+
+    return estimate // 3
+\end{lstlisting}
 
 \textbf{Variance Reduction:}
-The primary goal of variance reduction techniques are to minimize variability in estimates.
 
-\textbf{Hybrid Approaches:}
-To combine the strengths of individual techniques, I will explore strategies that combine multiple of the above approaches.
+Our next method is variance reduction, which aims minimize the variability of our estimates.
+The high variance in uniform or importance sampling methods can lead to inaccurate triangle count estimations, particularly in graphs with skewed degree distributions.
+To address this, we leverage additional information about the relationship between node degrees and triangle counts.
+
+In many real-world graphs, nodes with higher degrees tend to form more triangles, suggesting a potential correlation between the log of the degree and the log of the triangle count.
+Thus, by performing a linear regression in log-log space, we can obtain a line of best fit that estimates triangle counts as a function of node degree, and use that to arrive an an estimate of our triangle count.
+
+However, the number arrived at using our linear regression may either over- or under-count the number of triangles depending on the relationship between degree and triangle count.
+Thus, we sample $s$ additional nodes and calculate the difference between their actual triangle counts and those predicted by our line of best fit.
+Then, scaling this up, we can combine our predicted triangle count and predicted error to arrive at a final estimate for $\Delta$.
+
+The specific math for this method is given in section \ref{sec:variance-reduction-background} and the code for it is given below.
+
+\begin{lstlisting}[language=Python]
+def get_line_of_best_fit(A):
+    n = len(A)
+    degrees = np.sum(A, axis=1)
+    triangles = np.zeros(n)
+
+    for i in range(n):
+        triangles[i] = count_node_triangles(A, i)
+
+    valid_indices = (degrees > 0) & (triangles > 0)
+    filtered_degrees = degrees[valid_indices]
+    filtered_triangles = triangles[valid_indices]
+
+    log_degrees = np.log(filtered_degrees)
+    log_triangles = np.log(filtered_triangles)
+
+    slope, intercept = np.polyfit(log_degrees, log_triangles, 1)
+
+    return slope, intercept
+
+def estimate_variance_reduction_method(A, s, power):
+    n = len(A)
+  
+    slope, intercept = get_line_of_best_fit(A)
+  
+    # obtain M from the line of best fit
+    degree_array = np.sum(A, axis=1)
+    approx_triangles = np.power(degree_array, slope) * np.exp(intercept)
+    M = np.sum(approx_triangles)
+  
+    if s == 0:
+        return M // 3
+  
+    # sample s nodes, and use them to adjust our estimate M
+    sampled_nodes = gen_s_ints(s, n)
+    sampled_node_triangles = np.array([count_node_triangles(A, i) for i in sampled_nodes])
+  
+    sampled_m_i_vals = np.array([approx_triangles[i] for i in sampled_nodes])
+  
+    D = np.sum(sampled_node_triangles - sampled_m_i_vals) * (n/s)
+  
+    return (M + D) // 3
+\end{lstlisting}
+
+\textbf{Hybrid Approach:}
+
+The hybrid approach combines elements from both importance sampling and variance reduction techniques.
+It functions by running the variance reduction method as before, but using importance sampling instead of uniform sampling to generate the $s$ nodes used in correcting our triangle count estimate.
+
+The differences between the following code snippet and that in variance reduction begins on line 13.
+
+\begin{lstlisting}[language=Python]
+def estimate_importance_variance_reduction_method(A, s, power):
+    n = len(A)
+
+    slope, intercept = get_line_of_best_fit(A)
+
+    degree_array = np.sum(A, axis=1)
+    approx_triangles = np.power(degree_array, slope) * np.exp(intercept)
+    M = np.sum(approx_triangles)
+
+    if s == 0:
+        return M // 3
+
+    probabilities, sampled_nodes = sample_by_degree(A, n, s, power)
+    sampled_node_probabilities = np.array([probabilities[i] for i in sampled_nodes])
+    sampled_node_triangles = np.array([count_node_triangles(A, i) for i in sampled_nodes])
+
+    sampled_m_i_vals = np.array([approx_triangles[i] for i in sampled_nodes])
+
+    D = np.sum((sampled_node_triangles - sampled_m_i_vals) * (1 / (s * sampled_node_probabilities)))
+
+    return (M + D) // 3
+\end{lstlisting}
 
 \subsection{Evaluation Metrics}
 
