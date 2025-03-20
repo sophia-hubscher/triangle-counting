@@ -10,10 +10,10 @@
 \contentsline {subsubsection}{\numberline {3.3.2}Importance Sampling}{12}{subsubsection.3.3.2}%
 \contentsline {subsubsection}{\numberline {3.3.3}Learning-Augmented Algorithms}{13}{subsubsection.3.3.3}%
 \contentsline {section}{\numberline {4}Methods}{15}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Datasets}{15}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Sampling Methods Evaluated}{16}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3}Evaluation Metrics}{19}{subsection.4.3}%
-\contentsline {subsection}{\numberline {4.4}Implementation}{19}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.1}Implementation}{15}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Datasets}{15}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Sampling Methods Evaluated}{16}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Evaluation Metrics}{19}{subsection.4.4}%
 \contentsline {section}{\numberline {5}Variances}{20}{section.5}%
 \contentsline {subsection}{\numberline {5.1}Uniform Sampling}{20}{subsection.5.1}%
 \contentsline {subsection}{\numberline {5.2}Variance Reduction}{21}{subsection.5.2}%

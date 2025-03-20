@@ -35,11 +35,15 @@
     urlcolor = {teal}
 }
 
+\hypersetup{
+    linkcolor=black
+}
+
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 
 \lstdefinestyle{mystyle}{
-    commentstyle=\color{codegreen},
+    commentstyle=\color{teal},
     keywordstyle=\color{violet},
     numberstyle=\tiny\color{codegray},
     stringstyle=\color{green},
@@ -618,34 +622,34 @@ In general, this method can be highly effective, as accurate predictions can sig
 
 \section{Methods}
 
-\textbf{THIS SECTION HAS NOT BEEN CHANGED SINCE THE PROPOSAL -- WILL BE EDITED}
+To evaluate different triangle count estimation methods, I implemented them in Python and compared their accuracies, runtimes, and sample sizes on a diverse set of networks.
+The primary methods implemented were uniform sampling, importance sampling, a variance reduction method, and a hybrid method that combines elements of these approaches. 
 
-To evaluate different triangle count estimation methods, I will implement them in Python and then compare their accuracies, runtimes, and sample sizes on different networks.
-The first methods implemented will be uniform sampling, importance sampling, variance reduction, and hybrids between these, but as the methods are evaluated, more are likely to arise.
-These methods will be applied to a range of synthetic networks and real-world networks from the \href{https://snap.stanford.edu/index.html}{Stanford Network Analysis Platform (SNAP) library}, which includes graphs of different sizes, densities, and structural properties.
+The implemented methods were applied to both synthetic and real-world networks sourced from the \href{https://snap.stanford.edu/index.html}{Stanford Network Analysis Platform (SNAP) library}.
+These networks span a range of sizes, densities, and structural properties to ensure robust comparisons.
+
+\subsection{Implementation}
+
+Algorithms were implemented in Python using NetworkX and SNAP, and experiments were run on consistent hardware, with multiple trials to ensure reliable comparisons.
 
 \subsection{Datasets}
 
-The datasets used will consist of synthetic networks and real-world graphs from the SNAP library, encompassing diverse domains such as social networks, collaboration networks, and citation networks.
-Examples of real-world networks include:
+The datasets used in this study include both synthetic networks and real-world graphs from the SNAP library, covering various domains such as social networks, collaboration networks, and web graphs.
+Specifically, methods were evaluated on these three networks:
 
 \begin{itemize}
-    \item Social Networks: Networks representing friendships on Facebook.
-    \item Collaboration Networks: Co-authorship graphs in scientific publications.
-    \item Web Graphs: Directed graphs of hyperlinks between websites.
+    \item \href{https://snap.stanford.edu/data/ego-Facebook.html}{Social Network}: Social circles (or 'friends lists') are represented in this graph, where each user is a node, and each edge is a friendship between users.
+    \item \href{https://snap.stanford.edu/data/ca-GrQc.html}{Collaboration Network}: This graph represents a network of co-authorships from the General Relativity and Quantum Cosmology collaboration network, where nodes represent authors and edges indicate co-authored papers.
+    \item \href{https://snap.stanford.edu/data/wikipedia-article-networks.html}{Wikipedia Article Network}: This graph represents a network of Wikipedia articles relating to crocodiles, where nodes represent articles and edges represent links between them.
 \end{itemize}
 
-In addition to these real-world networks, synthetic networks such as Barabási–Albert \cite{albert_statistical_2002} and Watts-Strogatz \cite{watts_collective_1998} graphs will be generated using the \href{https://networkx.org/}{NetworkX library}.
+Synthetic networks were generated using the \href{https://networkx.org/}{NetworkX library} to create Barabási–Albert \cite{albert_statistical_2002} and Watts-Strogatz \cite{watts_collective_1998} graphs.
+Barabási–Albert graphs model preferential attachment, exhibiting power-law degree distributions, while Watts–Strogatz graphs represent small-world properties with adjustable clustering and path lengths.
+These synthetic datasets served as controlled environments to evaluate the scalability and accuracy of the methods under varying structural parameters.
 
-The synthetic networks will serve as controlled environments for testing the scalability and accuracy of the methods under varying structural parameters.
-For instance, Barabási–Albert graphs, which simulate preferential attachment, are used to model networks with power-law degree distributions, while Watts–Strogatz graphs capture small-world properties with tunable clustering and path lengths.
-These properties allow for targeted testing of the estimation methods under different conditions.
-
-The datasets used will vary in size, edge density (sparse and dense graphs), and clustering characteristics.
-This diversity will highlight the strengths and limitations of each method for triangle count estimation.
-
-For all of these datasets, ground-truth triangle counts will be computed using exact algorithms and compared against the approximate counts from the estimation methods tested.
-Using this, we can compare accuracy to metrics such as runtime and sample size.
+To assess accuracy, ground-truth triangle counts were computed using exact algorithms and compared against the approximate counts produced by each estimation method.
+The evaluation metrics included accuracy, runtime efficiency, and the sample size required to achieve a specified error margin.
+By examining performance across different graph characteristics, the study identifies the strengths and weaknesses of each method in diverse scenarios.
 
 \subsection{Sampling Methods Evaluated}
 
@@ -731,7 +735,7 @@ Thus, by performing a linear regression in log-log space, we can obtain a line o
 
 However, the number arrived at using our linear regression may either over- or under-count the number of triangles depending on the relationship between degree and triangle count.
 Thus, we sample $s$ additional nodes and calculate the difference between their actual triangle counts and those predicted by our line of best fit.
-Then, scaling this up, we can combine our predicted triangle count and predicted error to arrive at a final estimate for $\Delta$.
+Then, scaling this up, we can combine our predicted triangle count and predicted error to arrive at a final estimate of the triangle count $\Delta$.
 
 The specific math for this method is given in section \ref{sec:variance-reduction-background} and the code for it is given below.
 
@@ -812,22 +816,14 @@ def estimate_importance_variance_reduction_method(A, s, power):
 
 \subsection{Evaluation Metrics}
 
-The methods will be tested on real-world networks, measuring:
+To assess the performance of the triangle count estimation methods, the following evaluation metrics were measured on real-world and synthetic networks:
 
 \begin{itemize}
-    \item Accuracy: Difference between estimated and true triangle counts.
-    \item Runtime: Computational time for generating estimates.
-    \item Sample size: The number of graph nodes sampled.
-    \item Variance: The variability in triangle count estimates across multiple runs of the same method.
+\item Accuracy: The difference between the estimated and true triangle counts, calculated as the relative error.
+\item Runtime: The computational time required to generate triangle count estimates.
+\item Sample size: The number of nodes or edges sampled to produce an estimate.
+\item Variance: The variability in triangle count estimates across multiple independent runs of the same method.
 \end{itemize}
-
-In addition to these metrics, the general structure of networks will be compared.
-For example, I will analyze which methods perform best on sparse versus dense networks and small versus large netowrks.
-
-\subsection{Implementation}
-
-Algorithms will be implemented in Python using NetworkX and SNAP.
-Experiments will run on consistent hardware, with multiple trials to ensure reliable comparisons.
 
 \newpage
 
