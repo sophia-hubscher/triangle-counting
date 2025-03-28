@@ -884,6 +884,20 @@ Now, we can plug our value of $\mathrm{Var}(\Delta_i)$ into $\mathrm{Var}(\tilde
 
 \subsection{Variance Reduction}
 
+Across this section, we will use the fact that $\mathrm{Var}[X+Y] \leq 2(\mathrm{Var}[X] + \mathrm{Var}[Y])$. We derive that as follows:
+
+\[
+\begin{aligned}
+    \mathrm{Var}[X+Y] &= \mathbb{E}[(X+Y)^2] \\
+    &= \mathbb{E}[X^2] + \mathbb{E}[Y^2] + 2\mathbb{E}[XY] \\
+    &\leq \mathbb{E}[X^2] + \mathbb{E}[Y^2] + (\mathbb{E}[X^2] + \mathbb{E}[Y^2]) \\
+    &= 2(\mathbb{E}[X^2] + \mathbb{E}[Y^2]) \\
+    &= 2(\mathrm{Var}[X] + \mathrm{Var}[Y])
+\end{aligned}
+\]
+
+\subsubsection{Variance Reduction with Uniform Noise}
+
 Take the estimator of $\Delta_i$ to be denoted by $M$ where $M = \sum_{i = 1}^{n} m_i$ and $m_i = \Delta_i + N(0, \sigma^2)$.
 
 \[
@@ -892,13 +906,75 @@ Take the estimator of $\Delta_i$ to be denoted by $M$ where $M = \sum_{i = 1}^{n
 
 \[
 \begin{aligned}
-\mathrm{Var}(\tilde{\Delta}) &= \sum_{i = 1}^{n} \mathrm{Var}(m_i) + \mathrm{Var}(\frac{n}{s} \sum_{i = 1}^{s} (m_i - \Delta_i)) \\
-&= \sum_{i = 1}^{n} \mathrm{Var}(m_i) + \frac{n^2}{s^2} \mathrm{Var}(\sum_{i = 1}^{s} (m_i - \Delta_i)) \\
-&= \sum_{i = 1}^{n} \mathrm{Var}(m_i) + \frac{n^2}{s^2} \sum_{i = 1}^{s} \mathrm{Var}(m_i - \Delta_i) \\
-&= n \sigma^2 + \frac{n^2}{s^2} \sum_{i = 1}^{s} \mathrm{Var}(m_i - \Delta_i) \\
-&= n \sigma^2 + \frac{n^2}{s^2} s \sigma^2 \\
-&= n \sigma^2 + \frac{n^2}{s} \sigma^2 \\
+\mathrm{Var}(\tilde{\Delta}) &= \mathrm{Var}( \sum_{i = 1}^{n} m_i + \frac{n}{s} \sum_{i = 1}^{s} (m_i - \Delta_i)) \\
+&\leq 2\sum_{i = 1}^{n} \mathrm{Var}(m_i) + 2\mathrm{Var}(\frac{n}{s} \sum_{i = 1}^{s} (m_i - \Delta_i)) \\
+&= 2\sum_{i = 1}^{n} \mathrm{Var}(m_i) + \frac{2n^2}{s^2} \mathrm{Var}(\sum_{i = 1}^{s} (m_i - \Delta_i)) \\
+&= 2\sum_{i = 1}^{n} \mathrm{Var}(m_i) + \frac{2n^2}{s^2} \sum_{i = 1}^{s} \mathrm{Var}(m_i - \Delta_i) \\
+&= 2n \sigma^2 + \frac{2n^2}{s^2} \sum_{i = 1}^{s} \mathrm{Var}(m_i - \Delta_i) \\
+&= 2n \sigma^2 + \frac{2n^2}{s^2} s \sigma^2 \\
+&= 2n \sigma^2 + \frac{2n^2}{s} \sigma^2 \\
 \end{aligned}
+\]
+
+To allow for better comparison with other methods, assume $\sigma^2$ is the average squared error when using the trivial predictor of $m_i = 0$.
+In this case, $\sigma^2 = \frac{\sum_{i = 1}^{n}\Delta_i^2}{n}$.
+
+Plugging this value for $\sigma^2$ into our result, we get:
+
+\[
+\begin{aligned}
+\mathrm{Var}(\tilde{\Delta}) &= 2n \sigma^2 + \frac{2n^2}{s} \sigma^2 \\
+&= 2n \frac{\sum_{i = 1}^{n}\Delta_i^2}{n} + \frac{2n^2}{s} \frac{\sum_{i = 1}^{n}\Delta_i^2}{n} \\
+&= 2\sum_{i = 1}^{n}\Delta_i^2 + \frac{2n}{s} \sum_{i = 1}^{n}\Delta_i^2 \\
+&= 2\sum_{i = 1}^{n}\Delta_i^2(1 + \frac{n}{s}) \\
+\end{aligned}
+\]
+
+This is the variance expression reached with the trivial predictor, but a better predictor $\sigma^2 = \frac{\sum_{i = 1}^{n}\Delta_i^2}{n} \epsilon$ for some small value $\epsilon$ would lead to a far smaller variance of:
+
+\[
+\mathrm{Var}(\tilde{\Delta}) = 2\sum_{i = 1}^{n}\Delta_i^2 \epsilon (1 + \frac{n}{s})
+\]
+
+\subsubsection{Variance Reduction with Multiplicative Noise}
+
+Here, take the estimator of $\Delta_i$ to be denoted by $M$ where $M = \sum_{i = 1}^{n} m_i$ and $m_i = \Delta_i + \sigma_i^2$ with $\sigma_i^2 = \Delta_i^2 \sigma^2$.
+i.e., as the size of $\Delta_i$ increases, so does the noise $m_i$.
+
+\[
+\tilde{\Delta} = \sum_{i = 1}^{n} m_i + \frac{n}{s} \sum_{i = 1}^{s} (m_i - \Delta_i)
+\]
+
+\[
+\begin{aligned}
+\mathrm{Var}(\tilde{\Delta}) &= \mathrm{Var}( \sum_{i = 1}^{n} m_i + \frac{n}{s} \sum_{i = 1}^{s} (m_i - \Delta_i)) \\
+&\leq 2\sum_{i = 1}^{n} \mathrm{Var}(m_i) + 2\mathrm{Var}(\frac{n}{s} \sum_{i = 1}^{s} (m_i - \Delta_i)) \\
+&= 2\sum_{i = 1}^{n} \mathrm{Var}(m_i) + \frac{2n^2}{s^2} \mathrm{Var}(\sum_{i = 1}^{s} (m_i - \Delta_i)) \\
+&= 2\sum_{i = 1}^{n} \sigma_i^2 + \frac{2n^2}{s^2} \mathrm{Var}(\sum_{i = 1}^{s} (m_i - \Delta_i)) \\
+&= 2\sigma^2\sum_{i = 1}^{n} \Delta_i^2 + \frac{2n^2}{s^2} \mathrm{Var}(\sum_{i = 1}^{s} (m_i - \Delta_i)) \\
+&= 2\sigma^2\sum_{i = 1}^{n} \Delta_i^2 + \frac{2n^2}{s^2}\sum_{i = 1}^{s} (\frac{1}{n}\sum_{i = 1}^{n}\sigma^2\Delta_i^2) \\
+&= 2\sigma^2\sum_{i = 1}^{n} \Delta_i^2 + \frac{2n}{s}\sigma^2\sum_{i = 1}^{n}\Delta_i^2 \\
+&= 2\sigma^2(\sum_{i = 1}^{n} \Delta_i^2 + \frac{n}{s}\sum_{i = 1}^{n}\Delta_i^2) \\
+&= 2\sigma^2\sum_{i = 1}^{n} \Delta_i^2(1 + \frac{n}{s}) \\
+\end{aligned}
+\]
+
+As with uniform noise, we will plug in the value $\sigma^2 = \frac{\sum_{i = 1}^{n}\Delta_i^2}{n}$.
+This yields the following:
+
+\[
+\begin{aligned}
+\mathrm{Var}(\tilde{\Delta}) &= 2\sigma^2\sum_{i = 1}^{n} \Delta_i^2(1 + \frac{n}{s}) \\
+&= 2\frac{\sum_{i = 1}^{n}\Delta_i^2}{n}\sum_{i = 1}^{n} \Delta_i^2(1 + \frac{n}{s}) \\
+&= \frac{2}{n}(\sum_{i = 1}^{n}\Delta_i^2)^2(1 + \frac{n}{s}) \\
+&= 2(\sum_{i = 1}^{n}\Delta_i^2)^2(\frac{1}{n} + \frac{1}{s}) \\
+\end{aligned}
+\]
+
+As before, with a better predictor of $\sigma^2 = \frac{\sum_{i = 1}^{n}\Delta_i^2}{n} \epsilon$ for some small value $\epsilon$ we can recompute the variance as:
+
+\[
+\mathrm{Var}(\tilde{\Delta}) = 2\epsilon(\sum_{i = 1}^{n}\Delta_i^2)^2(\frac{1}{n} + \frac{1}{s})
 \]
 
 \newpage
