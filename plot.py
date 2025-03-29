@@ -186,7 +186,7 @@ def plot_csv():
         plot(s_values, all_results[method], sorted(all_results[method]['avg_percent_errors'].keys()), method)
 
     plot_comparison(all_results, methods)
-    plot_comparison(all_results, ["Variance Reduction", "Importance Sampling", "Variance Reduction + Importance Sampling"], True)
+    plot_comparison(all_results, ["Uniform Sampling", "Importance Sampling", "Variance Reduction", "Variance Reduction + Importance Sampling"], True)
 
 def plot_comparison(all_results, methods, only_power_2=False):
     colors = ['b', 'r', 'g', 'c', 'm', 'y']
@@ -208,6 +208,8 @@ def plot_comparison(all_results, methods, only_power_2=False):
             for s in sorted(all_results[method]['s_values']):
                 if (method == "Variance Reduction"):
                     power = 1
+                if (method == "Uniform Sampling"):
+                    power = 0
                 
                 avg_percent_errors.append(all_results[method]['avg_percent_errors'][power][s])
                 avg_times.append(all_results[method]['avg_times'][power][s])
@@ -252,7 +254,7 @@ def plot_comparison(all_results, methods, only_power_2=False):
                 avg_percent_errors.append(all_results[method]['avg_percent_errors'][power][s])
 
             # Plotting percent error vs sample size
-            method_label = f'{method}' if method == "Variance Reduction" else f'{method} Power {power}'
+            method_label = f'{method}' if (method == "Variance Reduction" or method == "Uniform Sampling") else f'{method} Power {power}'
             plt.plot(s_values, avg_percent_errors, marker=marker, linestyle='-', color=color, label=method_label)
 
             if only_power_2:
