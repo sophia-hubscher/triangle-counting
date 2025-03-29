@@ -21,12 +21,12 @@ plots_folder = get_timestamped_subfolder('plots/simulated_plots')
 
 methods = {
     "Multiplicative": (
-        "estimate_variance_reduction_method_multiplicative_noise",
-        "importance_estimate_per_node_method_multiplicative_noise",
+        "Variance Reduction (Multiplicative Noise)",
+        "Importance Sampling (Multiplicative Noise)",
     ),
     "Gaussian": (
-        "estimate_variance_reduction_method_gaussian_noise",
-        "importance_estimate_per_node_method_gaussian_noise",
+        "Variance Reduction (Gaussian Noise)",
+        "Importance Sampling (Gaussian Noise)",
     ),
 }
 
