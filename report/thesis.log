@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.9.28)  29 MAR 2025 08:32
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.9.28)  29 MAR 2025 10:42
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -649,39 +649,97 @@ Underfull \hbox (badness 10000) in paragraph at lines 80--84
 
 [1
 
-{/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] (./thesis.toc)
+{/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] (./thesis.toc [3])
 \tf@toc=\write5
 \openout5 = `thesis.toc'.
 
- [3] [4] [5] [6] [7]
+ [4] [5] [6] [7]
 
 Package amsmath Warning: Foreign command \atopwithdelims;
 (amsmath)                \frac or \genfrac should be used instead
-(amsmath)                 on input line 245.
+(amsmath)                 on input line 285.
 
-[8] [9] [10] [11] [12] [13] [14] [15] [16{/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}] (/usr/local/texlive/2024/texmf-dist/tex/latex/listings/lstlang1.sty
+[8]
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[9] [10] [11] [12] [13] [14] [15] [16{/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}] (/usr/local/texlive/2024/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2024/02/21 1.10 listings language file
-) [17] [18] [19] [20] [21] [22] [23] [24] [25] [26] [27] (./thesis.bbl [28]) [29] (./thesis.aux)
+) [17] [18] [19]
+Overfull \hbox (2.11372pt too wide) in paragraph at lines 873--875
+\OT1/cmr/m/n/10.95 cliques. To adapt the pre-vi-ous meth-ods to count 4-cliques, we sim-ply re-place the []
+ []
+
+[20] [21]
+<plots/simulated/percent_error_vs_sample_size_comparison_gaussian_10.0.png, id=446, 620.7993pt x 395.3169pt>
+File: plots/simulated/percent_error_vs_sample_size_comparison_gaussian_10.0.png Graphic file (type png)
+<use plots/simulated/percent_error_vs_sample_size_comparison_gaussian_10.0.png>
+Package pdftex.def Info: plots/simulated/percent_error_vs_sample_size_comparison_gaussian_10.0.png  used on input line 918.
+(pdftex.def)             Requested size: 328.82707pt x 209.3963pt.
+<plots/simulated/percent_error_vs_sample_size_comparison_gaussian_100.0.png, id=448, 627.3036pt x 395.3169pt>
+File: plots/simulated/percent_error_vs_sample_size_comparison_gaussian_100.0.png Graphic file (type png)
+<use plots/simulated/percent_error_vs_sample_size_comparison_gaussian_100.0.png>
+Package pdftex.def Info: plots/simulated/percent_error_vs_sample_size_comparison_gaussian_100.0.png  used on input line 925.
+(pdftex.def)             Requested size: 328.82707pt x 207.22478pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<plots/simulated/percent_error_vs_sample_size_comparison_gaussian_500.0.png, id=449, 633.0852pt x 395.3169pt>
+File: plots/simulated/percent_error_vs_sample_size_comparison_gaussian_500.0.png Graphic file (type png)
+<use plots/simulated/percent_error_vs_sample_size_comparison_gaussian_500.0.png>
+Package pdftex.def Info: plots/simulated/percent_error_vs_sample_size_comparison_gaussian_500.0.png  used on input line 932.
+(pdftex.def)             Requested size: 328.82707pt x 205.3307pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[22 <./plots/simulated/percent_error_vs_sample_size_comparison_gaussian_10.0.png>]
+<plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.01.png, id=456, 627.3036pt x 395.3169pt>
+File: plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.01.png Graphic file (type png)
+<use plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.01.png>
+Package pdftex.def Info: plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.01.png  used on input line 949.
+(pdftex.def)             Requested size: 328.82707pt x 207.22478pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.1.png, id=457, 627.3036pt x 395.3169pt>
+File: plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.1.png Graphic file (type png)
+<use plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.1.png>
+Package pdftex.def Info: plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.1.png  used on input line 956.
+(pdftex.def)             Requested size: 328.82707pt x 207.22478pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.5.png, id=458, 633.0852pt x 395.3169pt>
+File: plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.5.png Graphic file (type png)
+<use plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.5.png>
+Package pdftex.def Info: plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.5.png  used on input line 963.
+(pdftex.def)             Requested size: 328.82707pt x 205.3307pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[23 <./plots/simulated/percent_error_vs_sample_size_comparison_gaussian_100.0.png> <./plots/simulated/percent_error_vs_sample_size_comparison_gaussian_500.0.png>] [24 <./plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.01.png> <./plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.1.png>] [25 <./plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.5.png>] [26] [27] [28] [29] [30] (./thesis.bbl [31]) [32] (./thesis.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
  ***********
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: C73740B0E240D73A109DD094549E7D55;3495.
+(rerunfilecheck)             Checksum: 75D8E9B4F8CC85E644B747F16F2C0D3A;4637.
  ) 
 Here is how much of TeX's memory you used:
- 25321 strings out of 474116
- 459014 string characters out of 5743682
+ 25403 strings out of 474116
+ 463196 string characters out of 5743682
  2199187 words of memory out of 5000000
- 47101 multiletter control sequences out of 15000+600000
+ 47165 multiletter control sequences out of 15000+600000
  567579 words of font info for 72 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,11n,93p,585b,2029s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
-Output written on thesis.pdf (29 pages, 308619 bytes).
+Output written on thesis.pdf (32 pages, 592630 bytes).
 PDF statistics:
- 563 PDF objects out of 1000 (max. 8388607)
- 487 compressed objects within 5 object streams
- 184 named destinations out of 1000 (max. 500000)
- 197 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 642 PDF objects out of 1000 (max. 8388607)
+ 550 compressed objects within 6 object streams
+ 202 named destinations out of 1000 (max. 500000)
+ 291 words of extra memory for PDF output out of 10000 (max. 10000000)
 

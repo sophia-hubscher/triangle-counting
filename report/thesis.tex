@@ -235,6 +235,46 @@ In contrast, a \emph{directed graph}, or digraph, has edges with a defined direc
 This directional property is particularly relevant when calculating triangle counts, as a triangle in a directed graph can follow a specific directional sequence.  
 In this discussion, we generally refer to undirected graphs unless otherwise specified, although the methods described can be extended to directed graphs as well.
 
+\subsection{Graph Motifs}
+
+Graph motifs are subgraphs that occur frequently within a larger graph and carry significant structural information.
+One such motif is the \emph{clique}, a subset of vertices such that every pair of vertices is connected by an edge.
+Triangles, for example, are a clique, as they consist of 3 mutually-connected nodes.
+Another common example of a clique is the \emph{4-clique}, denoted as \( K_4 \), which consists of four vertices with edges connecting each pair of vertices.
+
+Formally, we define a 4-clique, \( K_4 \), as the complete graph on four vertices, meaning every pair of vertices is connected by an edge. The set of vertices \( V \) and edges \( E \) for \( K_4 \) are given by:
+\[
+K_4 = (V, E)
+\]
+where  
+\[
+V = \{ v_1, v_2, v_3, v_4 \}, \quad
+E = \{ (v_i, v_j) \mid 1 \leq i < j \leq 4 \}.
+\]
+
+Figure~\ref{fig:k4} illustrates the structure of \( K_4 \), where each vertex is connected to every other vertex, representing the maximal level of connectivity between four vertices.
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[scale=1, every node/.style={circle, draw, fill=black, inner sep=2pt}]
+        % Define the four vertices of K_4
+        \node (A) at (0,0) {};
+        \node (B) at (2,0) {};
+        \node (C) at (1,1.732) {};  % sqrt(3) ≈ 1.732 for equilateral triangle
+        \node (D) at (1,0.577) {};  % Center vertex
+
+        % Draw edges to form a complete graph K_4
+        \draw (A) -- (B);
+        \draw (A) -- (C);
+        \draw (A) -- (D);
+        \draw (B) -- (C);
+        \draw (B) -- (D);
+        \draw (C) -- (D);
+    \end{tikzpicture}
+    \caption{The complete graph \( K_4 \) on four vertices.}
+    \label{fig:k4}
+\end{figure}
+
 \subsection{Methods for Triangle Counting}
 
 Triangle counting can be approached in a variety of ways, each with its own advantages and disadvantages. 
@@ -665,8 +705,8 @@ import numpy as np
 import random
 
 def gen_s_ints(s, n):
-choice_arr = sorted(random.choices(range(n), k=s))
-return choice_arr
+    choice_arr = sorted(random.choices(range(n), k=s))
+    return choice_arr
 
 def estimate_uniformly_per_node_method(A, s):
     n = len(A)
@@ -725,6 +765,7 @@ def importance_estimate_per_node_method(A, s, power):
 \end{lstlisting}
 
 \textbf{Variance Reduction:}
+\label{variance-reduction-algo}
 
 Our next method is variance reduction, which aims minimize the variability of our estimates.
 The high variance in uniform or importance sampling methods can lead to inaccurate triangle count estimations, particularly in graphs with skewed degree distributions.
@@ -825,11 +866,115 @@ To assess the performance of the triangle count estimation methods, the followin
 \item Variance: The variability in triangle count estimates across multiple independent runs of the same method.
 \end{itemize}
 
+\subsection{Additional Explorations}
+
+\subsubsection{4-Clique Variant}
+
+To evaluate how well these methods generalize, the code for each algorithm was adapted to count 4-cliques.
+To adapt the previous methods to count 4-cliques, we simply replace the \lstinline{count_node_triangles()} method with a \lstinline{count_node_4_cliques()} method, and scale final results by 4 instead of by 3.
+
+\subsubsection{Simulated Method Tests}
+
+In order to learn more about when importance sampling and variance reduction perform best, I ran these algorithms on manually defined triangle-degree relationships.
+
+The methods were tested on two different degree-triangle relationships.
+First, I set a variable \lstinline{degrees} to be the degree distribution of a real-world dataset.
+I also defined \lstinline{noise} as \lstinline{noise = np.random.normal(0, noise_scale, triangles.shape)}.
+This noise is normally distributed with a mean of zero and a standard deviation of \lstinline{noise_scale}, allowing for random fluctuations around the expected triangle and maintaining a symmetric distribution.
+
+The two relationships defined using these degrees and noise values are the \textbf{Gaussian noise} and \textbf{multiplicative noise} relationships.
+For the first, artificial triangle counts for the degree distributions were set to \lstinline{np.power(degrees, slope) * np.exp(intercept) + noise} where the slope and intercept are the outputs from the \lstinline{get_line_of_best()} function defined in section \ref{variance-reduction-algo}.
+Thus, in this relationship, noise does not grow with degree.
+
+For the second relationship, the \textbf{multiplicative noise} relationship, the artificial triangle counts were set to \lstinline{np.power(degrees, slope) * np.exp(intercept) * (1 + noise)} where the slope, intercept, and noise are defined as before.
+In this relationship, noise grows as the degree does too, distinguishing this degree-triangle relationship from the former.
+
+These noise models allow us to analyze how different types of randomness impact the performance of variance reduction and importance sampling techniques.
+
 \newpage
 
-\section{Variances}
+\section{Results}
 
-\subsection{Uniform Sampling}
+\subsection{}
+
+\subsection{4-Clique Counting}
+
+\subsection{Simulated Method Tests}
+
+To assess the performance of importance sampling and variance reduction, we tested these algorithms under two different triangle-degree relationships: Gaussian noise and multiplicative noise. In this section, we present the results of these tests, focusing on the relationship between sample size and average error for both types of noise across various scales.
+
+\subsubsection{Gaussian Noise Relationship}
+
+In this subsection, we examine the performance of the algorithms with Gaussian noise. The degree distribution was derived from the Facebook dataset, and the triangle counts were generated using the formula:
+
+\[
+\text{triangle counts} = \text{np.power(degrees, slope)} \times \text{np.exp(intercept)} + \text{noise},
+\]
+
+where \text{noise} is normally distributed with mean zero and standard deviation defined by three scales: 10, 100, and 500. The following figures display the relationship between sample size and average error for each of these noise scales.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.7\textwidth]{plots/simulated/percent_error_vs_sample_size_comparison_gaussian_10.0.png}
+    \caption{Sample size vs. average error with Gaussian noise (scale = 10).}
+    \label{fig:gaussian_noise_10}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.7\textwidth]{plots/simulated/percent_error_vs_sample_size_comparison_gaussian_100.0.png}
+    \caption{Sample size vs. average error with Gaussian noise (scale = 100).}
+    \label{fig:gaussian_noise_100}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.7\textwidth]{plots/simulated/percent_error_vs_sample_size_comparison_gaussian_500.0.png}
+    \caption{Sample size vs. average error with Gaussian noise (scale = 500).}
+    \label{fig:gaussian_noise_500}
+\end{figure}
+
+\subsubsection{Multiplicative Noise Relationship}
+
+Next, we consider the performance of the algorithms with multiplicative noise. The triangle counts were generated using the following formula:
+
+\[
+\text{triangle counts} = \text{np.power(degrees, slope)} \times \text{np.exp(intercept)} \times (1 + \text{noise}),
+\]
+
+where \text{noise} is again normally distributed and grows with the degree, and the noise scale was tested at three values: 0.01, 0.1, and 0.5. Below are the figures for sample size vs. average error for each noise scale in the multiplicative noise case.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.7\textwidth]{plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.01.png}
+    \caption{Sample size vs. average error with multiplicative noise (scale = 0.01).}
+    \label{fig:multiplicative_noise_001}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.7\textwidth]{plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.1.png}
+    \caption{Sample size vs. average error with multiplicative noise (scale = 0.1).}
+    \label{fig:multiplicative_noise_01}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.7\textwidth]{plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.5.png}
+    \caption{Sample size vs. average error with multiplicative noise (scale = 0.5).}
+    \label{fig:multiplicative_noise_05}
+\end{figure}
+
+\newpage
+
+\section{Discussion}
+
+\subsection{Theoretical Analysis of Variances}
+
+Understanding the variance of the algorithms tested is crucial for evaluating their reliability.
+Thus, in this section, we derive expressions for the variance of the estimated triangle count across methods.
+
+\subsubsection{Uniform Sampling}
 
 The global triangle count $\Delta$ can be estimated as $\tilde{\Delta}$ using the following formula:
 
@@ -882,7 +1027,7 @@ Now, we can plug our value of $\mathrm{Var}(\Delta_i)$ into $\mathrm{Var}(\tilde
 \end{aligned}
 \]
 
-\subsection{Variance Reduction}
+\subsubsection{Variance Reduction}
 
 Across this section, we will use the fact that $\mathrm{Var}[X+Y] \leq 2(\mathrm{Var}[X] + \mathrm{Var}[Y])$. We derive that as follows:
 
@@ -896,7 +1041,7 @@ Across this section, we will use the fact that $\mathrm{Var}[X+Y] \leq 2(\mathrm
 \end{aligned}
 \]
 
-\subsubsection{Variance Reduction with Uniform Noise}
+\subsubsubsection{Variance Reduction with Uniform Noise}
 
 Take the estimator of $\Delta_i$ to be denoted by $M$ where $M = \sum_{i = 1}^{n} m_i$ and $m_i = \Delta_i + N(0, \sigma^2)$.
 
@@ -936,7 +1081,7 @@ This is the variance expression reached with the trivial predictor, but a better
 \mathrm{Var}(\tilde{\Delta}) \leq 2\sum_{i = 1}^{n}\Delta_i^2 \epsilon (1 + \frac{n}{s})
 \]
 
-\subsubsection{Variance Reduction with Multiplicative Noise}
+\subsubsubsection{Variance Reduction with Multiplicative Noise}
 
 Here, take the estimator of $\Delta_i$ to be denoted by $M$ where $M = \sum_{i = 1}^{n} m_i$ and $m_i = \Delta_i + \sigma_i^2$ with $\sigma_i^2 = \Delta_i^2 \sigma^2$.
 i.e., as the size of $\Delta_i$ increases, so does the noise $m_i$.
@@ -976,10 +1121,6 @@ As before, with a better predictor of $\sigma^2 = \frac{\sum_{i = 1}^{n}\Delta_i
 \[
 \mathrm{Var}(\tilde{\Delta}) \leq 2\epsilon(\sum_{i = 1}^{n}\Delta_i^2)^2(\frac{1}{n} + \frac{1}{s})
 \]
-
-\newpage
-
-\section{Results}
 
 \newpage
 

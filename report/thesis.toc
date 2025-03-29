@@ -2,22 +2,30 @@
 \contentsline {section}{\numberline {2}Notation}{7}{section.2}%
 \contentsline {section}{\numberline {3}Background}{8}{section.3}%
 \contentsline {subsection}{\numberline {3.1}Types of Graphs}{8}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Methods for Triangle Counting}{8}{subsection.3.2}%
-\contentsline {subsubsection}{\numberline {3.2.1}Sampling Methods}{8}{subsubsection.3.2.1}%
-\contentsline {subsubsection}{\numberline {3.2.2}Linear Algebraic Methods}{9}{subsubsection.3.2.2}%
-\contentsline {subsection}{\numberline {3.3}General Algorithmic Strategies}{12}{subsection.3.3}%
-\contentsline {subsubsection}{\numberline {3.3.1}Variance Reduction}{12}{subsubsection.3.3.1}%
-\contentsline {subsubsection}{\numberline {3.3.2}Importance Sampling}{13}{subsubsection.3.3.2}%
-\contentsline {subsubsection}{\numberline {3.3.3}Learning-Augmented Algorithms}{14}{subsubsection.3.3.3}%
+\contentsline {subsection}{\numberline {3.2}Graph Motifs}{8}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Methods for Triangle Counting}{8}{subsection.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.1}Sampling Methods}{9}{subsubsection.3.3.1}%
+\contentsline {subsubsection}{\numberline {3.3.2}Linear Algebraic Methods}{10}{subsubsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.4}General Algorithmic Strategies}{13}{subsection.3.4}%
+\contentsline {subsubsection}{\numberline {3.4.1}Variance Reduction}{13}{subsubsection.3.4.1}%
+\contentsline {subsubsection}{\numberline {3.4.2}Importance Sampling}{14}{subsubsection.3.4.2}%
+\contentsline {subsubsection}{\numberline {3.4.3}Learning-Augmented Algorithms}{15}{subsubsection.3.4.3}%
 \contentsline {section}{\numberline {4}Methods}{16}{section.4}%
 \contentsline {subsection}{\numberline {4.1}Implementation}{16}{subsection.4.1}%
 \contentsline {subsection}{\numberline {4.2}Datasets}{16}{subsection.4.2}%
 \contentsline {subsection}{\numberline {4.3}Sampling Methods Evaluated}{17}{subsection.4.3}%
 \contentsline {subsection}{\numberline {4.4}Evaluation Metrics}{20}{subsection.4.4}%
-\contentsline {section}{\numberline {5}Variances}{21}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Uniform Sampling}{21}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}Variance Reduction}{22}{subsection.5.2}%
-\contentsline {subsubsection}{\numberline {5.2.1}Variance Reduction with Uniform Noise}{23}{subsubsection.5.2.1}%
-\contentsline {subsubsection}{\numberline {5.2.2}Variance Reduction with Multiplicative Noise}{24}{subsubsection.5.2.2}%
-\contentsline {section}{\numberline {6}Results}{26}{section.6}%
-\contentsline {section}{\numberline {7}Conclusion}{27}{section.7}%
+\contentsline {subsection}{\numberline {4.5}Additional Explorations}{20}{subsection.4.5}%
+\contentsline {subsubsection}{\numberline {4.5.1}4-Clique Variant}{20}{subsubsection.4.5.1}%
+\contentsline {subsubsection}{\numberline {4.5.2}Simulated Method Tests}{20}{subsubsection.4.5.2}%
+\contentsline {section}{\numberline {5}Results}{22}{section.5}%
+\contentsline {subsection}{\numberline {5.1}}{22}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}4-Clique Counting}{22}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Simulated Method Tests}{22}{subsection.5.3}%
+\contentsline {subsubsection}{\numberline {5.3.1}Gaussian Noise Relationship}{22}{subsubsection.5.3.1}%
+\contentsline {subsubsection}{\numberline {5.3.2}Multiplicative Noise Relationship}{23}{subsubsection.5.3.2}%
+\contentsline {section}{\numberline {6}Discussion}{24}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Theoretical Analysis of Variances}{24}{subsection.6.1}%
+\contentsline {subsubsection}{\numberline {6.1.1}Uniform Sampling}{25}{subsubsection.6.1.1}%
+\contentsline {subsubsection}{\numberline {6.1.2}Variance Reduction}{26}{subsubsection.6.1.2}%
+\contentsline {section}{\numberline {7}Conclusion}{30}{section.7}%
