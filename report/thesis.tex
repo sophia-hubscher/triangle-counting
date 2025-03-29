@@ -899,41 +899,103 @@ These noise models allow us to analyze how different types of randomness impact 
 
 \subsubsection{Accuracy and Runtime Comparisons}
 
+This section presents the accuracy and runtime comparisons of different sampling methods across various datasets.
+Tables \ref{tab:percent_error_100} and \ref{tab:percent_error_4000} summarize the average percent error for different sampling methods across various datasets with sample sizes of 100 and 4000, respectively.
+The most accurate method is highlighted in bold for each dataset.
+
 \begin{table}[ht]
 \centering
+\caption{Percent Errors for Different Methods on Various Datasets (Sample Size = 100)}
+\label{tab:percent_error_100}
 \begin{tabular}{|c|c|c|c|c|}
-\hline
-& \multicolumn{4}{c|}{\textbf{Average Percent Error (Power = 2, Sample Size = 100)}} \\
 \hline
 \textbf{Dataset} & \textbf{Unif. Sampling} & \textbf{Imp. Sampling} & \textbf{Var. Reduction} & \textbf{Hybrid} \\
 \hline
-Social Network & 0.17471 & 0.03741 & 0.18911 & \textbf{0.03267} \\
+Social Network (FB) & 0.17471 & 0.03741 & 0.18911 & \textbf{0.03267} \\
 Collaboration Network & 0.39456 & \textbf{0.04186} & 0.22566 & 0.04470 \\
 Wikipedia Article Network & 0.36941 & 0.25732 & 0.85303 & \textbf{0.18180} \\
-Barabási–Albert & 0.17220 & 0.01243 & 0.01377 & \textbf{0.00791} \\
+Barab\'asi--Albert & 0.17220 & 0.01243 & 0.01377 & \textbf{0.00791} \\
 \hline
 \end{tabular}
-\caption{Percent Errors for Different Methods on Various Datasets (Sample Size = 100)}
 \end{table}
 
 \begin{table}[ht]
 \centering
+\caption{Percent Errors for Different Methods on Various Datasets (Sample Size = 4000)}
+\label{tab:percent_error_4000}
 \begin{tabular}{|c|c|c|c|c|}
-\hline
-& \multicolumn{4}{c|}{\textbf{Average Percent Error (Power = 2, Sample Size = 4000)}} \\
 \hline
 \textbf{Dataset} & \textbf{Unif. Sampling} & \textbf{Imp. Sampling} & \textbf{Var. Reduction} & \textbf{Hybrid} \\
 \hline
-Social Network & 0.02551 & 0.00608 & 0.05014 & \textbf{0.00482} \\
+Social Network (FB) & 0.02551 & 0.00608 & 0.05014 & \textbf{0.00482} \\
 Collaboration Network & 0.03359 & \textbf{0.00932} & 0.02316 & 0.00944 \\
-Wikipedia Article Network & 0.06177 & 0.import & 0.14815 & 0.hybrid \\
-Barabási–Albert & 0.03299 & 0.00163 & 0.00280 & \textbf{0.00132} \\
+Wikipedia Article Network & 0.06177 & 0.04821 & 0.14815 & \textbf{0.03789} \\
+Barab\'asi--Albert & 0.03299 & 0.00163 & 0.00280 & \textbf{0.00132} \\
 \hline
 \end{tabular}
-\caption{Percent Errors for Different Methods on Various Datasets (Sample Size = 4000)}
 \end{table}
 
-\subsubsection{Differences Across Sample Sizes}
+Figures \ref{fig:fb_runtime}--\ref{fig:ba_sample_size} provide visual comparisons of percent error versus runtime and percent error versus sample size for multiple datasets.
+
+\textbf{Percent Error vs. Runtime}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\linewidth]{plots/comparisons/fb/limited_method_percent_error_vs_runtime_comparison.png}
+\caption{Percent Error vs. Runtime for Facebook Dataset}
+\label{fig:fb_runtime}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\linewidth]{plots/comparisons/GrQc/limited_method_percent_error_vs_runtime_comparison.png}
+\caption{Percent Error vs. Runtime for Collaboration Network Dataset}
+\label{fig:grqc_runtime}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\linewidth]{plots/comparisons/croc/limited_method_percent_error_vs_runtime_comparison.png}
+\caption{Percent Error vs. Runtime for Crocodile Wikipedia Dataset}
+\label{fig:croc_runtime}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\linewidth]{plots/comparisons/ba/limited_method_percent_error_vs_runtime_comparison.png}
+\caption{Percent Error vs. Runtime for Synthetic Barabási–Albert Dataset}
+\label{fig:ba_runtime}
+\end{figure}
+
+\textbf{Percent Error vs. Sample Size}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\linewidth]{plots/comparisons/fb/limited_method_percent_error_vs_sample_size_comparison.png}
+\caption{Percent Error vs. Sample Size for Facebook Dataset}
+\label{fig:fb_sample_size}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\linewidth]{plots/comparisons/GrQc/limited_method_percent_error_vs_sample_size_comparison.png}
+\caption{Percent Error vs. Sample Size for Collaboration Network Dataset}
+\label{fig:grqc_sample_size}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\linewidth]{plots/comparisons/croc/limited_method_percent_error_vs_sample_size_comparison.png}
+\caption{Percent Error vs. Sample Size for Crocodile Wikipedia Dataset}
+\label{fig:croc_sample_size}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\linewidth]{plots/comparisons/ba/limited_method_percent_error_vs_sample_size_comparison.png}
+\caption{Percent Error vs. Sample Size for Synthetic Barabási–Albert Dataset}
+\label{fig:ba_sample_size}
+\end{figure}
 
 \subsubsection{Differences Across Powers}
 
