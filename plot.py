@@ -99,7 +99,7 @@ def plot(s_values, results, powers, method):
     plt.savefig(f'{plots_folder}/percent_error_{method}.png')
     plt.close()
 
-    if method == 'importance_estimate_per_node_method' and not four_clique: # only plots for power=1 (i.e. uniform sampling)
+    if method == 'Importance Sampling' and not four_clique: # only plots for power=1 (i.e. uniform sampling)
         n = n_values[dataset]
         true_triangle_count = true_triangle_counts[dataset]
 
