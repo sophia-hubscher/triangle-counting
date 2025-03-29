@@ -19,13 +19,14 @@
 \contentsline {subsubsection}{\numberline {4.5.1}4-Clique Variant}{20}{subsubsection.4.5.1}%
 \contentsline {subsubsection}{\numberline {4.5.2}Simulated Method Tests}{20}{subsubsection.4.5.2}%
 \contentsline {section}{\numberline {5}Results}{22}{section.5}%
-\contentsline {subsection}{\numberline {5.1}}{22}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}4-Clique Counting}{22}{subsection.5.2}%
-\contentsline {subsection}{\numberline {5.3}Simulated Method Tests}{22}{subsection.5.3}%
-\contentsline {subsubsection}{\numberline {5.3.1}Gaussian Noise Relationship}{22}{subsubsection.5.3.1}%
-\contentsline {subsubsection}{\numberline {5.3.2}Multiplicative Noise Relationship}{23}{subsubsection.5.3.2}%
-\contentsline {section}{\numberline {6}Discussion}{24}{section.6}%
-\contentsline {subsection}{\numberline {6.1}Theoretical Analysis of Variances}{24}{subsection.6.1}%
-\contentsline {subsubsection}{\numberline {6.1.1}Uniform Sampling}{25}{subsubsection.6.1.1}%
-\contentsline {subsubsection}{\numberline {6.1.2}Variance Reduction}{26}{subsubsection.6.1.2}%
-\contentsline {section}{\numberline {7}Conclusion}{30}{section.7}%
+\contentsline {subsection}{\numberline {5.1}SECTION}{22}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}SECTION}{22}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}4-Clique Counting}{22}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Simulated Method Tests}{24}{subsection.5.4}%
+\contentsline {subsubsection}{\numberline {5.4.1}Gaussian Noise Relationship}{24}{subsubsection.5.4.1}%
+\contentsline {subsubsection}{\numberline {5.4.2}Multiplicative Noise Relationship}{25}{subsubsection.5.4.2}%
+\contentsline {section}{\numberline {6}Discussion}{28}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Theoretical Analysis of Variances}{28}{subsection.6.1}%
+\contentsline {subsubsection}{\numberline {6.1.1}Uniform Sampling}{28}{subsubsection.6.1.1}%
+\contentsline {subsubsection}{\numberline {6.1.2}Variance Reduction}{29}{subsubsection.6.1.2}%
+\contentsline {section}{\numberline {7}Conclusion}{33}{section.7}%

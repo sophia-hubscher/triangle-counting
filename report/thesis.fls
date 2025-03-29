@@ -316,6 +316,31 @@ INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/listings/lstlang1.sty
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/listings/lstlang1.sty
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmtt9.tfm
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmr9.tfm
+INPUT ./plots/4-clique/comparison/percent_error_vs_runtime_comparison.png
+INPUT ./plots/4-clique/comparison/percent_error_vs_runtime_comparison.png
+INPUT ./plots/4-clique/comparison/percent_error_vs_runtime_comparison.png
+INPUT ./plots/4-clique/comparison/percent_error_vs_runtime_comparison.png
+INPUT ./plots/4-clique/comparison/percent_error_vs_runtime_comparison.png
+INPUT ./plots/4-clique/comparison/percent_error_vs_sample_size_comparison.png
+INPUT ./plots/4-clique/comparison/percent_error_vs_sample_size_comparison.png
+INPUT ./plots/4-clique/comparison/percent_error_vs_sample_size_comparison.png
+INPUT ./plots/4-clique/comparison/percent_error_vs_sample_size_comparison.png
+INPUT ./plots/4-clique/comparison/percent_error_vs_sample_size_comparison.png
+INPUT ./plots/4-clique/importance-sampling/avg_duration_Importance Sampling.png
+INPUT ./plots/4-clique/importance-sampling/avg_duration_Importance Sampling.png
+INPUT ./plots/4-clique/importance-sampling/avg_duration_Importance Sampling.png
+INPUT ./plots/4-clique/importance-sampling/avg_duration_Importance Sampling.png
+INPUT ./plots/4-clique/importance-sampling/avg_duration_Importance Sampling.png
+INPUT ./plots/4-clique/importance-sampling/avg_error_Importance Sampling.png
+INPUT ./plots/4-clique/importance-sampling/avg_error_Importance Sampling.png
+INPUT ./plots/4-clique/importance-sampling/avg_error_Importance Sampling.png
+INPUT ./plots/4-clique/importance-sampling/avg_error_Importance Sampling.png
+INPUT ./plots/4-clique/importance-sampling/avg_error_Importance Sampling.png
+INPUT ./plots/4-clique/importance-sampling/avg_variance_Importance Sampling.png
+INPUT ./plots/4-clique/importance-sampling/avg_variance_Importance Sampling.png
+INPUT ./plots/4-clique/importance-sampling/avg_variance_Importance Sampling.png
+INPUT ./plots/4-clique/importance-sampling/avg_variance_Importance Sampling.png
+INPUT ./plots/4-clique/importance-sampling/avg_variance_Importance Sampling.png
 INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_gaussian_10.0.png
 INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_gaussian_10.0.png
 INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_gaussian_10.0.png

@@ -254,7 +254,7 @@ E = \{ (v_i, v_j) \mid 1 \leq i < j \leq 4 \}.
 
 Figure~\ref{fig:k4} illustrates the structure of \( K_4 \), where each vertex is connected to every other vertex, representing the maximal level of connectivity between four vertices.
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \begin{tikzpicture}[scale=1, every node/.style={circle, draw}]
         % Define the four vertices of K_4
@@ -314,7 +314,7 @@ In all of these algorithms though, the key piece of their efficiency and efficac
 Wedge sampling \cite{seshadhri_triadic_2013} focuses on estimating wedges—triplets of nodes that form two edges but not necessarily a triangle.
 A wedge is defined by three vertices $(u, v, w)$ where $u$ is adjacent to both $v$ and $w$, but $v$ and $w$ may or may not be adjacent (see Figure~\ref{fig:wedge_diagram}).
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \begin{tikzpicture}[scale = 1.2]
         % Nodes
@@ -895,9 +895,50 @@ These noise models allow us to analyze how different types of randomness impact 
 
 \section{Results}
 
-\subsection{}
+\subsection{SECTION}
+
+\subsection{SECTION}
 
 \subsection{4-Clique Counting}
+
+In this section, we present the results of our experiments on 4-clique counting.
+We compare importance sampling and variance reduction, and illustrate how the power in importance sampling impacts percent error, sample size, and runtime in 4-clique counting.
+All shown results are from the Collaboration Network dataset.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{plots/4-clique/comparison/percent_error_vs_runtime_comparison.png}
+    \caption{Comparison of percent error versus runtime for different methods in 4-clique counting.}
+    \label{fig:4_clique_percent_error_runtime_comparison}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{plots/4-clique/comparison/percent_error_vs_sample_size_comparison.png}
+    \caption{Comparison of percent error versus sample size for different 4-clique counting methods.}
+    \label{fig:4_clique_percent_error_sample_size_comparison}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{plots/4-clique/importance-sampling/avg_duration_Importance Sampling.png}
+    \caption{Average duration of the importance sampling method across powers for 4-clique counting.}
+    \label{fig:4_clique_avg_duration_importance_sampling}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{plots/4-clique/importance-sampling/avg_error_Importance Sampling.png}
+    \caption{Average error of the importance sampling method across powers for 4-clique counting.}
+    \label{fig:4_clique_avg_error_importance_sampling}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{plots/4-clique/importance-sampling/avg_variance_Importance Sampling.png}
+    \caption{Average variance of the importance sampling method across powers for 4-clique counting.}
+    \label{fig:4_clique_avg_variance_importance_sampling}
+\end{figure}
 
 \subsection{Simulated Method Tests}
 
@@ -905,7 +946,7 @@ To assess the performance of importance sampling and variance reduction, we test
 
 \subsubsection{Gaussian Noise Relationship}
 
-In this subsection, we examine the performance of the algorithms with Gaussian noise. The degree distribution was derived from the Facebook dataset, and the triangle counts were generated using the formula:
+In this subsection, we examine the performance of the algorithms with Gaussian noise. The degree distribution was derived from the Collaboration Network dataset, and the triangle counts were generated using the formula:
 
 \[
 \text{triangle counts} = \text{np.power(degrees, slope)} \times \text{np.exp(intercept)} + \text{noise},
@@ -913,21 +954,21 @@ In this subsection, we examine the performance of the algorithms with Gaussian n
 
 where \text{noise} is normally distributed with mean zero and standard deviation defined by three scales: 10, 100, and 500. The following figures display the relationship between sample size and average error for each of these noise scales.
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{plots/simulated/percent_error_vs_sample_size_comparison_gaussian_10.0.png}
     \caption{Sample size vs. average error with Gaussian noise (scale = 10).}
     \label{fig:gaussian_noise_10}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{plots/simulated/percent_error_vs_sample_size_comparison_gaussian_100.0.png}
     \caption{Sample size vs. average error with Gaussian noise (scale = 100).}
     \label{fig:gaussian_noise_100}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{plots/simulated/percent_error_vs_sample_size_comparison_gaussian_500.0.png}
     \caption{Sample size vs. average error with Gaussian noise (scale = 500).}
@@ -944,21 +985,21 @@ Next, we consider the performance of the algorithms with multiplicative noise. T
 
 where \text{noise} is again normally distributed and grows with the degree, and the noise scale was tested at three values: 0.01, 0.1, and 0.5. Below are the figures for sample size vs. average error for each noise scale in the multiplicative noise case.
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.01.png}
     \caption{Sample size vs. average error with multiplicative noise (scale = 0.01).}
     \label{fig:multiplicative_noise_001}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.1.png}
     \caption{Sample size vs. average error with multiplicative noise (scale = 0.1).}
     \label{fig:multiplicative_noise_01}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.5.png}
     \caption{Sample size vs. average error with multiplicative noise (scale = 0.5).}

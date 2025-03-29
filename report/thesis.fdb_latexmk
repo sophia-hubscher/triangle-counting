@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex thesis"] 1743259286.68453 "thesis.aux" "thesis.bbl" "thesis" 1743259880.94614 0
+["bibtex thesis"] 1743261503.24482 "thesis.aux" "thesis.bbl" "thesis" 1743261925.63317 0
   "./thesis_bib.bib" 1740498645.39749 27019 635bdb03c1229e41e17174d9e09fa52c ""
   "/usr/local/texlive/2024/texmf-dist/bibtex/bst/base/plain.bst" 1292289607 20613 bd3fbfa9f64872b81ac57a0dd2ed855f ""
-  "thesis.aux" 1743259880.6489 10535 9fa4809f6f54c9a640a5c9f82e924117 "pdflatex"
+  "thesis.aux" 1743261925.32224 12575 ebad0b6522edab1dd7b8a931240a0796 "pdflatex"
   (generated)
   "thesis.bbl"
   "thesis.blg"
   (rewritten before read)
-["pdflatex"] 1743259879.21592 "/Users/sophiahubscher/Documents/triangle-counting/report/thesis.tex" "thesis.pdf" "thesis" 1743259880.94629 0
-  "/Users/sophiahubscher/Documents/triangle-counting/report/thesis.tex" 1743259878.97031 58074 94aa7a27f70601640f582ac2795dfbde ""
+["pdflatex"] 1743261923.51131 "/Users/sophiahubscher/Documents/triangle-counting/report/thesis.tex" "thesis.pdf" "thesis" 1743261925.63334 0
+  "/Users/sophiahubscher/Documents/triangle-counting/report/thesis.tex" 1743261923.21962 60027 af20b08de4caa908acbe8a67fbf5a793 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/tcrm1095.tfm" 1136768653 1536 02c06700a42be0f5a28664c7273f82e7 ""
@@ -198,17 +198,22 @@
   "/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1727563534.20416 5467645 128b85b7cde5f5edc5cb7f1dd7ff8736 ""
   "/usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1727563514 8221426 c278802e2645a4ad0c6fd7542466e085 ""
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
-  "plots/simulated/percent_error_vs_sample_size_comparison_gaussian_10.0.png" 1743258756.82348 53861 7a9eb6f7e0f37c7cdec7d09dfda343c0 ""
-  "plots/simulated/percent_error_vs_sample_size_comparison_gaussian_100.0.png" 1743258756.83222 60480 67922221b93373b2257f8bae46cb53d6 ""
-  "plots/simulated/percent_error_vs_sample_size_comparison_gaussian_500.0.png" 1743258756.83968 58893 4019ff3404d19175fe7e8bc9e4619be0 ""
-  "plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.01.png" 1743258819.01101 52553 e48af74d4357d7bf6b855ac534a985f8 ""
-  "plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.1.png" 1743258819.00078 56046 4a730c6ca8bcb2e917fc4c5d3b037991 ""
-  "plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.5.png" 1743258819.01569 53848 7a64dad8753bc94dfb3281284254050f ""
-  "thesis.aux" 1743259880.6489 10535 9fa4809f6f54c9a640a5c9f82e924117 "pdflatex"
-  "thesis.bbl" 1743259286.78662 5030 c218211c35d2b33fa45706a15d4af5bd "bibtex thesis"
-  "thesis.out" 1743259880.65074 4637 75d8e9b4f8cc85e644b747f16f2c0d3a "pdflatex"
-  "thesis.tex" 1743259878.97031 58074 94aa7a27f70601640f582ac2795dfbde ""
-  "thesis.toc" 1743259880.65095 2659 48b17d8252556c1a4a98439ac0add8d6 "pdflatex"
+  "plots/4-clique/comparison/percent_error_vs_runtime_comparison.png" 1743260800.1039 74261 20f674414827c6159e8ba559a59105f5 ""
+  "plots/4-clique/comparison/percent_error_vs_sample_size_comparison.png" 1743260800.11031 79881 648abf2738b7cad0511f91cd19b9627d ""
+  "plots/4-clique/importance-sampling/avg_duration_Importance Sampling.png" 1743260628.08517 65341 1f84eab8ac5c1bc6567ee8d71f347ad7 ""
+  "plots/4-clique/importance-sampling/avg_error_Importance Sampling.png" 1743260592.52258 62432 43e7050989b1f484336f70a38c81d599 ""
+  "plots/4-clique/importance-sampling/avg_variance_Importance Sampling.png" 1743260615.02586 64992 96a2355ab79cefad77e4dd6243505daf ""
+  "plots/simulated/percent_error_vs_sample_size_comparison_gaussian_10.0.png" 1743261889.08023 53154 775545f78cdde899e2cfe94e98b3c82a ""
+  "plots/simulated/percent_error_vs_sample_size_comparison_gaussian_100.0.png" 1743261889.08782 53958 7fbeec85202bba69d65d75a6db142f3b ""
+  "plots/simulated/percent_error_vs_sample_size_comparison_gaussian_500.0.png" 1743261889.09176 53390 08ebc25a252027ac02164df96bd632ee ""
+  "plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.01.png" 1743261905.58573 53718 c768992cc13f64de164667358551c33f ""
+  "plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.1.png" 1743261905.58149 54720 828b586bb603d5ccf97dbca6326a5f30 ""
+  "plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.5.png" 1743261905.58964 53633 044ecd33d6f1ea894f794631155dc6e8 ""
+  "thesis.aux" 1743261925.32224 12575 ebad0b6522edab1dd7b8a931240a0796 "pdflatex"
+  "thesis.bbl" 1743261503.34365 5030 c218211c35d2b33fa45706a15d4af5bd "bibtex thesis"
+  "thesis.out" 1743261925.32343 4773 4e5eedde376eea2eb826f38fe94a8c59 "pdflatex"
+  "thesis.tex" 1743261923.21962 60027 af20b08de4caa908acbe8a67fbf5a793 ""
+  "thesis.toc" 1743261925.32365 2740 adf5307103f07018fdc02eb04cca1138 "pdflatex"
   (generated)
   "thesis.aux"
   "thesis.log"
