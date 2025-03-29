@@ -93,11 +93,6 @@ Charalampos~E. Tsourakakis, U.~Kang, Gary~L. Miller, and Christos Faloutsos.
 \newblock {DOULION}: counting triangles in massive graphs with a coin.
 \newblock In {\em Proceedings of the 15th {ACM} {SIGKDD} international conference on {Knowledge} discovery and data mining}, {KDD} '09, pages 837--846. Association for Computing Machinery, 2009.
 
-\bibitem{watts_collective_1998}
-Duncan~J. Watts and Steven~H. Strogatz.
-\newblock Collective dynamics of ‘small-world’ networks.
-\newblock {\em Nature}, 393(6684):440--442, June 1998.
-
 \bibitem{williams_new_2023}
 Virginia~Vassilevska Williams, Yinzhan Xu, Zixuan Xu, and Renfei Zhou.
 \newblock New {Bounds} for {Matrix} {Multiplication}: from {Alpha} to {Omega}, 2023.
