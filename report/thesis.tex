@@ -923,7 +923,7 @@ Plugging this value for $\sigma^2$ into our result, we get:
 
 \[
 \begin{aligned}
-\mathrm{Var}(\tilde{\Delta}) &= 2n \sigma^2 + \frac{2n^2}{s} \sigma^2 \\
+\mathrm{Var}(\tilde{\Delta}) &\leq 2n \sigma^2 + \frac{2n^2}{s} \sigma^2 \\
 &= 2n \frac{\sum_{i = 1}^{n}\Delta_i^2}{n} + \frac{2n^2}{s} \frac{\sum_{i = 1}^{n}\Delta_i^2}{n} \\
 &= 2\sum_{i = 1}^{n}\Delta_i^2 + \frac{2n}{s} \sum_{i = 1}^{n}\Delta_i^2 \\
 &= 2\sum_{i = 1}^{n}\Delta_i^2(1 + \frac{n}{s}) \\
@@ -933,7 +933,7 @@ Plugging this value for $\sigma^2$ into our result, we get:
 This is the variance expression reached with the trivial predictor, but a better predictor $\sigma^2 = \frac{\sum_{i = 1}^{n}\Delta_i^2}{n} \epsilon$ for some small value $\epsilon$ would lead to a far smaller variance of:
 
 \[
-\mathrm{Var}(\tilde{\Delta}) = 2\sum_{i = 1}^{n}\Delta_i^2 \epsilon (1 + \frac{n}{s})
+\mathrm{Var}(\tilde{\Delta}) \leq 2\sum_{i = 1}^{n}\Delta_i^2 \epsilon (1 + \frac{n}{s})
 \]
 
 \subsubsection{Variance Reduction with Multiplicative Noise}
@@ -964,7 +964,7 @@ This yields the following:
 
 \[
 \begin{aligned}
-\mathrm{Var}(\tilde{\Delta}) &= 2\sigma^2\sum_{i = 1}^{n} \Delta_i^2(1 + \frac{n}{s}) \\
+\mathrm{Var}(\tilde{\Delta}) &\leq 2\sigma^2\sum_{i = 1}^{n} \Delta_i^2(1 + \frac{n}{s}) \\
 &= 2\frac{\sum_{i = 1}^{n}\Delta_i^2}{n}\sum_{i = 1}^{n} \Delta_i^2(1 + \frac{n}{s}) \\
 &= \frac{2}{n}(\sum_{i = 1}^{n}\Delta_i^2)^2(1 + \frac{n}{s}) \\
 &= 2(\sum_{i = 1}^{n}\Delta_i^2)^2(\frac{1}{n} + \frac{1}{s}) \\
@@ -974,7 +974,7 @@ This yields the following:
 As before, with a better predictor of $\sigma^2 = \frac{\sum_{i = 1}^{n}\Delta_i^2}{n} \epsilon$ for some small value $\epsilon$ we can recompute the variance as:
 
 \[
-\mathrm{Var}(\tilde{\Delta}) = 2\epsilon(\sum_{i = 1}^{n}\Delta_i^2)^2(\frac{1}{n} + \frac{1}{s})
+\mathrm{Var}(\tilde{\Delta}) \leq 2\epsilon(\sum_{i = 1}^{n}\Delta_i^2)^2(\frac{1}{n} + \frac{1}{s})
 \]
 
 \newpage
