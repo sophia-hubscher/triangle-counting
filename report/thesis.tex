@@ -997,7 +997,63 @@ Figures \ref{fig:fb_runtime}--\ref{fig:ba_sample_size} provide visual comparison
 \label{fig:ba_sample_size}
 \end{figure}
 
-\subsubsection{Differences Across Powers}
+\subsubsubsection{Average Duration By Method}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{plots/durations/avg_duration_Uniform Sampling.png}
+    \caption{Average Duration - Uniform Sampling}
+    \label{fig:avg_duration_uniform}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{plots/durations/avg_duration_Importance Sampling.png}
+    \caption{Average Duration - Importance Sampling}
+    \label{fig:avg_duration_importance}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{plots/durations/avg_duration_Variance Reduction.png}
+    \caption{Average Duration - Variance Reduction}
+    \label{fig:avg_duration_variance}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{plots/durations/avg_duration_Variance Reduction + Importance Sampling.png}
+    \caption{Average Duration - Variance Reduction + Importance Sampling}
+    \label{fig:avg_duration_variance_importance}
+\end{figure}
+
+\subsubsubsection{Percent Error By Method}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{plots/percent-errors/percent_error_Uniform Sampling.png}
+    \caption{Percent Error - Uniform Sampling}
+    \label{fig:percent_error_uniform}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{plots/percent-errors/percent_error_Importance Sampling.png}
+    \caption{Percent Error - Importance Sampling}
+    \label{fig:percent_error_importance}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{plots/percent-errors/percent_error_Variance Reduction.png}
+    \caption{Percent Error - Variance Reduction}
+    \label{fig:percent_error_variance}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{plots/percent-errors/percent_error_Variance Reduction + Importance Sampling.png}
+    \caption{Percent Error - Variance Reduction + Importance Sampling}
+    \label{fig:percent_error_variance_importance}
+\end{figure}
 
 \subsection{4-Clique Counting}
 
@@ -1184,7 +1240,7 @@ Across this section, we will use the fact that $\mathrm{Var}[X+Y] \leq 2(\mathrm
 
 \subsubsubsection{Variance Reduction with Uniform Noise}
 
-Take the estimator of $\Delta_i$ to be denoted by $M$ where $M = \sum_{i = 1}^{n} m_i$ and $m_i = \Delta_i + N(0, \sigma^2)$.
+Take the estimator of $\Delta$ to be denoted by $M$ where $M = \sum_{i = 1}^{n} m_i$ and $m_i = \Delta_i + N(0, \sigma^2)$.
 
 \[
 \tilde{\Delta} = \sum_{i = 1}^{n} m_i + \frac{n}{s} \sum_{i = 1}^{s} (m_i - \Delta_i)
@@ -1224,7 +1280,7 @@ This is the variance expression reached with the trivial predictor, but a better
 
 \subsubsubsection{Variance Reduction with Multiplicative Noise}
 
-Here, take the estimator of $\Delta_i$ to be denoted by $M$ where $M = \sum_{i = 1}^{n} m_i$ and $m_i = \Delta_i + \sigma_i^2$ with $\sigma_i^2 = \Delta_i^2 \sigma^2$.
+Here, take the estimator of $\Delta$ to be denoted by $M$ where $M = \sum_{i = 1}^{n} m_i$ and $m_i = \Delta_i + \sigma_i^2$ with $\sigma_i^2 = \Delta_i^2 \sigma^2$.
 i.e., as the size of $\Delta_i$ increases, so does the noise $m_i$.
 
 \[
