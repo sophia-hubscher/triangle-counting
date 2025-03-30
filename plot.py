@@ -53,7 +53,8 @@ def plot(s_values, results, powers, method):
     plt.ylabel('Average Error (log scale)')
     plt.title(f'Average Error vs. Sample Size for Method: {method} ({dataset_names[dataset]})')
     plt.grid(True)
-    plt.legend()
+    if len(powers) > 1:
+        plt.legend()
     plt.savefig(f'{plots_folder}/avg_error_{method}.png')
     plt.close()
 
@@ -67,7 +68,8 @@ def plot(s_values, results, powers, method):
     plt.ylabel('Average Duration (seconds, log scale)')
     plt.title(f'Average Duration vs. Sample Size for Method: {method} ({dataset_names[dataset]})')
     plt.grid(True)
-    plt.legend()
+    if len(powers) > 1:
+        plt.legend()
     plt.savefig(f'{plots_folder}/avg_duration_{method}.png')
     plt.close()
 
@@ -81,7 +83,8 @@ def plot(s_values, results, powers, method):
     plt.ylabel('Average Variance (log scale)')
     plt.title(f'Average Variance vs. Sample Size for Method: {method} ({dataset_names[dataset]})')
     plt.grid(True)
-    plt.legend()
+    if len(powers) > 1:
+        plt.legend()
     plt.savefig(f'{plots_folder}/avg_variance_{method}.png')
     plt.close()
 
@@ -95,7 +98,8 @@ def plot(s_values, results, powers, method):
     plt.ylabel('Percent Error (log scale)')
     plt.title(f'Percent Error vs. Sample Size for Method: {method} ({dataset_names[dataset]})')
     plt.grid(True)
-    plt.legend()
+    if len(powers) > 1:
+        plt.legend()
     plt.savefig(f'{plots_folder}/percent_error_{method}.png')
     plt.close()
 
