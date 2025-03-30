@@ -24,9 +24,9 @@
 \contentsline {subsection}{\numberline {5.2}4-Clique Counting}{28}{subsection.5.2}%
 \contentsline {subsection}{\numberline {5.3}Simulated Method Tests}{30}{subsection.5.3}%
 \contentsline {subsubsection}{\numberline {5.3.1}Gaussian Noise Relationship}{30}{subsubsection.5.3.1}%
-\contentsline {subsubsection}{\numberline {5.3.2}Multiplicative Noise Relationship}{31}{subsubsection.5.3.2}%
-\contentsline {section}{\numberline {6}Discussion}{34}{section.6}%
-\contentsline {subsection}{\numberline {6.1}Theoretical Analysis of Variances}{34}{subsection.6.1}%
-\contentsline {subsubsection}{\numberline {6.1.1}Uniform Sampling}{34}{subsubsection.6.1.1}%
-\contentsline {subsubsection}{\numberline {6.1.2}Variance Reduction}{35}{subsubsection.6.1.2}%
-\contentsline {section}{\numberline {7}Conclusion}{39}{section.7}%
+\contentsline {subsubsection}{\numberline {5.3.2}Multiplicative Noise Relationship}{32}{subsubsection.5.3.2}%
+\contentsline {section}{\numberline {6}Discussion}{35}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Theoretical Analysis of Variances}{35}{subsection.6.1}%
+\contentsline {subsubsection}{\numberline {6.1.1}Uniform Sampling}{35}{subsubsection.6.1.1}%
+\contentsline {subsubsection}{\numberline {6.1.2}Variance Reduction}{36}{subsubsection.6.1.2}%
+\contentsline {section}{\numberline {7}Conclusion}{40}{section.7}%
