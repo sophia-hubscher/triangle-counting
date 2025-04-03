@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.9.28)  30 MAR 2025 16:52
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.9.28)  2 APR 2025 12:39
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -676,173 +676,173 @@ Overfull \hbox (12.53304pt too wide) in paragraph at lines 926--936
  [][] 
  []
 
-<plots/comparisons/fb/limited_method_percent_error_vs_runtime_comparison.png, id=453, 1061.6463pt x 398.9304pt>
+<plots/comparisons/fb/limited_method_percent_error_vs_runtime_comparison.png, id=458, 1061.6463pt x 398.9304pt>
 File: plots/comparisons/fb/limited_method_percent_error_vs_runtime_comparison.png Graphic file (type png)
 <use plots/comparisons/fb/limited_method_percent_error_vs_runtime_comparison.png>
 Package pdftex.def Info: plots/comparisons/fb/limited_method_percent_error_vs_runtime_comparison.png  used on input line 944.
 (pdftex.def)             Requested size: 422.77664pt x 158.86322pt.
-<plots/comparisons/GrQc/limited_method_percent_error_vs_runtime_comparison.png, id=455, 1061.6463pt x 398.9304pt>
+<plots/comparisons/GrQc/limited_method_percent_error_vs_runtime_comparison.png, id=460, 1061.6463pt x 398.9304pt>
 File: plots/comparisons/GrQc/limited_method_percent_error_vs_runtime_comparison.png Graphic file (type png)
 <use plots/comparisons/GrQc/limited_method_percent_error_vs_runtime_comparison.png>
 Package pdftex.def Info: plots/comparisons/GrQc/limited_method_percent_error_vs_runtime_comparison.png  used on input line 951.
 (pdftex.def)             Requested size: 422.77664pt x 158.86322pt.
 [22 <./plots/comparisons/fb/limited_method_percent_error_vs_runtime_comparison.png>]
-<plots/comparisons/croc/limited_method_percent_error_vs_runtime_comparison.png, id=465, 1055.8647pt x 398.9304pt>
+<plots/comparisons/croc/limited_method_percent_error_vs_runtime_comparison.png, id=470, 1055.8647pt x 398.9304pt>
 File: plots/comparisons/croc/limited_method_percent_error_vs_runtime_comparison.png Graphic file (type png)
 <use plots/comparisons/croc/limited_method_percent_error_vs_runtime_comparison.png>
 Package pdftex.def Info: plots/comparisons/croc/limited_method_percent_error_vs_runtime_comparison.png  used on input line 958.
 (pdftex.def)             Requested size: 422.77664pt x 159.73369pt.
-<plots/comparisons/ba/limited_method_percent_error_vs_runtime_comparison.png, id=466, 1061.6463pt x 398.9304pt>
+<plots/comparisons/ba/limited_method_percent_error_vs_runtime_comparison.png, id=471, 1061.6463pt x 398.9304pt>
 File: plots/comparisons/ba/limited_method_percent_error_vs_runtime_comparison.png Graphic file (type png)
 <use plots/comparisons/ba/limited_method_percent_error_vs_runtime_comparison.png>
 Package pdftex.def Info: plots/comparisons/ba/limited_method_percent_error_vs_runtime_comparison.png  used on input line 965.
 (pdftex.def)             Requested size: 422.77664pt x 158.86322pt.
-<plots/comparisons/fb/limited_method_percent_error_vs_sample_size_comparison.png, id=467, 1061.6463pt x 398.9304pt>
+<plots/comparisons/fb/limited_method_percent_error_vs_sample_size_comparison.png, id=472, 1061.6463pt x 398.9304pt>
 File: plots/comparisons/fb/limited_method_percent_error_vs_sample_size_comparison.png Graphic file (type png)
 <use plots/comparisons/fb/limited_method_percent_error_vs_sample_size_comparison.png>
 Package pdftex.def Info: plots/comparisons/fb/limited_method_percent_error_vs_sample_size_comparison.png  used on input line 974.
 (pdftex.def)             Requested size: 422.77664pt x 158.86322pt.
  [23 <./plots/comparisons/GrQc/limited_method_percent_error_vs_runtime_comparison.png> <./plots/comparisons/croc/limited_method_percent_error_vs_runtime_comparison.png> <./plots/comparisons/ba/limited_method_percent_error_vs_runtime_comparison.png>]
-<plots/comparisons/GrQc/limited_method_percent_error_vs_sample_size_comparison.png, id=478, 1061.6463pt x 398.9304pt>
+<plots/comparisons/GrQc/limited_method_percent_error_vs_sample_size_comparison.png, id=483, 1061.6463pt x 398.9304pt>
 File: plots/comparisons/GrQc/limited_method_percent_error_vs_sample_size_comparison.png Graphic file (type png)
 <use plots/comparisons/GrQc/limited_method_percent_error_vs_sample_size_comparison.png>
 Package pdftex.def Info: plots/comparisons/GrQc/limited_method_percent_error_vs_sample_size_comparison.png  used on input line 981.
 (pdftex.def)             Requested size: 422.77664pt x 158.86322pt.
-<plots/comparisons/croc/limited_method_percent_error_vs_sample_size_comparison.png, id=479, 1055.8647pt x 398.9304pt>
+<plots/comparisons/croc/limited_method_percent_error_vs_sample_size_comparison.png, id=484, 1055.8647pt x 398.9304pt>
 File: plots/comparisons/croc/limited_method_percent_error_vs_sample_size_comparison.png Graphic file (type png)
 <use plots/comparisons/croc/limited_method_percent_error_vs_sample_size_comparison.png>
 Package pdftex.def Info: plots/comparisons/croc/limited_method_percent_error_vs_sample_size_comparison.png  used on input line 988.
 (pdftex.def)             Requested size: 422.77664pt x 159.73369pt.
-<plots/comparisons/ba/limited_method_percent_error_vs_sample_size_comparison.png, id=480, 1061.6463pt x 398.9304pt>
+<plots/comparisons/ba/limited_method_percent_error_vs_sample_size_comparison.png, id=485, 1061.6463pt x 398.9304pt>
 File: plots/comparisons/ba/limited_method_percent_error_vs_sample_size_comparison.png Graphic file (type png)
 <use plots/comparisons/ba/limited_method_percent_error_vs_sample_size_comparison.png>
 Package pdftex.def Info: plots/comparisons/ba/limited_method_percent_error_vs_sample_size_comparison.png  used on input line 995.
 (pdftex.def)             Requested size: 422.77664pt x 158.86322pt.
  [24 <./plots/comparisons/fb/limited_method_percent_error_vs_sample_size_comparison.png> <./plots/comparisons/GrQc/limited_method_percent_error_vs_sample_size_comparison.png> <./plots/comparisons/croc/limited_method_percent_error_vs_sample_size_comparison.png>]
-<plots/durations/avg_duration_Uniform Sampling.png, id=491, 867.24pt x 361.35pt>
+<plots/durations/avg_duration_Uniform Sampling.png, id=496, 867.24pt x 361.35pt>
 File: plots/durations/avg_duration_Uniform Sampling.png Graphic file (type png)
 <use plots/durations/avg_duration_Uniform Sampling.png>
 Package pdftex.def Info: plots/durations/avg_duration_Uniform Sampling.png  used on input line 1007.
 (pdftex.def)             Requested size: 375.80544pt x 156.58498pt.
-<plots/durations/avg_duration_Importance Sampling.png, id=492, 867.24pt x 361.35pt>
+<plots/durations/avg_duration_Importance Sampling.png, id=497, 867.24pt x 361.35pt>
 File: plots/durations/avg_duration_Importance Sampling.png Graphic file (type png)
 <use plots/durations/avg_duration_Importance Sampling.png>
 Package pdftex.def Info: plots/durations/avg_duration_Importance Sampling.png  used on input line 1014.
 (pdftex.def)             Requested size: 375.80544pt x 156.58498pt.
  [25 <./plots/comparisons/ba/limited_method_percent_error_vs_sample_size_comparison.png> <./plots/durations/avg_duration_Uniform Sampling.png>]
-<plots/durations/avg_duration_Variance Reduction.png, id=501, 867.24pt x 361.35pt>
+<plots/durations/avg_duration_Variance Reduction.png, id=506, 867.24pt x 361.35pt>
 File: plots/durations/avg_duration_Variance Reduction.png Graphic file (type png)
 <use plots/durations/avg_duration_Variance Reduction.png>
 Package pdftex.def Info: plots/durations/avg_duration_Variance Reduction.png  used on input line 1021.
 (pdftex.def)             Requested size: 375.80544pt x 156.58498pt.
-<plots/durations/avg_duration_Variance Reduction + Importance Sampling.png, id=502, 867.24pt x 361.35pt>
+<plots/durations/avg_duration_Variance Reduction + Importance Sampling.png, id=507, 867.24pt x 361.35pt>
 File: plots/durations/avg_duration_Variance Reduction + Importance Sampling.png Graphic file (type png)
 <use plots/durations/avg_duration_Variance Reduction + Importance Sampling.png>
 Package pdftex.def Info: plots/durations/avg_duration_Variance Reduction + Importance Sampling.png  used on input line 1028.
 (pdftex.def)             Requested size: 375.80544pt x 156.58498pt.
  [26 <./plots/durations/avg_duration_Importance Sampling.png> <./plots/durations/avg_duration_Variance Reduction.png> <./plots/durations/avg_duration_Variance Reduction + Importance Sampling.png>]
-<plots/percent-errors/percent_error_Uniform Sampling.png, id=513, 867.24pt x 361.35pt>
+<plots/percent-errors/percent_error_Uniform Sampling.png, id=518, 867.24pt x 361.35pt>
 File: plots/percent-errors/percent_error_Uniform Sampling.png Graphic file (type png)
 <use plots/percent-errors/percent_error_Uniform Sampling.png>
 Package pdftex.def Info: plots/percent-errors/percent_error_Uniform Sampling.png  used on input line 1040.
 (pdftex.def)             Requested size: 375.80544pt x 156.58498pt.
-<plots/percent-errors/percent_error_Importance Sampling.png, id=514, 867.24pt x 361.35pt>
+<plots/percent-errors/percent_error_Importance Sampling.png, id=519, 867.24pt x 361.35pt>
 File: plots/percent-errors/percent_error_Importance Sampling.png Graphic file (type png)
 <use plots/percent-errors/percent_error_Importance Sampling.png>
 Package pdftex.def Info: plots/percent-errors/percent_error_Importance Sampling.png  used on input line 1047.
 (pdftex.def)             Requested size: 375.80544pt x 156.58498pt.
-<plots/percent-errors/percent_error_Variance Reduction.png, id=515, 867.24pt x 361.35pt>
+<plots/percent-errors/percent_error_Variance Reduction.png, id=520, 867.24pt x 361.35pt>
 File: plots/percent-errors/percent_error_Variance Reduction.png Graphic file (type png)
 <use plots/percent-errors/percent_error_Variance Reduction.png>
 Package pdftex.def Info: plots/percent-errors/percent_error_Variance Reduction.png  used on input line 1054.
 (pdftex.def)             Requested size: 375.80544pt x 156.58498pt.
-<plots/percent-errors/percent_error_Variance Reduction + Importance Sampling.png, id=516, 867.24pt x 361.35pt>
+<plots/percent-errors/percent_error_Variance Reduction + Importance Sampling.png, id=521, 867.24pt x 361.35pt>
 File: plots/percent-errors/percent_error_Variance Reduction + Importance Sampling.png Graphic file (type png)
 <use plots/percent-errors/percent_error_Variance Reduction + Importance Sampling.png>
 Package pdftex.def Info: plots/percent-errors/percent_error_Variance Reduction + Importance Sampling.png  used on input line 1061.
 (pdftex.def)             Requested size: 375.80544pt x 156.58498pt.
  [27 <./plots/percent-errors/percent_error_Uniform Sampling.png> <./plots/percent-errors/percent_error_Importance Sampling.png> <./plots/percent-errors/percent_error_Variance Reduction.png>]
-<plots/4-clique/comparison/percent_error_vs_runtime_comparison.png, id=527, 959.7456pt x 398.9304pt>
+<plots/4-clique/comparison/percent_error_vs_runtime_comparison.png, id=532, 959.7456pt x 398.9304pt>
 File: plots/4-clique/comparison/percent_error_vs_runtime_comparison.png Graphic file (type png)
 <use plots/4-clique/comparison/percent_error_vs_runtime_comparison.png>
 Package pdftex.def Info: plots/4-clique/comparison/percent_error_vs_runtime_comparison.png  used on input line 1074.
 (pdftex.def)             Requested size: 375.80544pt x 156.2092pt.
-<plots/4-clique/comparison/percent_error_vs_sample_size_comparison.png, id=528, 959.7456pt x 398.9304pt>
+<plots/4-clique/comparison/percent_error_vs_sample_size_comparison.png, id=533, 959.7456pt x 398.9304pt>
 File: plots/4-clique/comparison/percent_error_vs_sample_size_comparison.png Graphic file (type png)
 <use plots/4-clique/comparison/percent_error_vs_sample_size_comparison.png>
 Package pdftex.def Info: plots/4-clique/comparison/percent_error_vs_sample_size_comparison.png  used on input line 1081.
 (pdftex.def)             Requested size: 375.80544pt x 156.2092pt.
  [28 <./plots/percent-errors/percent_error_Variance Reduction + Importance Sampling.png> <./plots/4-clique/comparison/percent_error_vs_runtime_comparison.png>]
-<plots/4-clique/importance-sampling/avg_duration_Importance Sampling.png, id=537, 867.24pt x 361.35pt>
+<plots/4-clique/importance-sampling/avg_duration_Importance Sampling.png, id=542, 867.24pt x 361.35pt>
 File: plots/4-clique/importance-sampling/avg_duration_Importance Sampling.png Graphic file (type png)
 <use plots/4-clique/importance-sampling/avg_duration_Importance Sampling.png>
 Package pdftex.def Info: plots/4-clique/importance-sampling/avg_duration_Importance Sampling.png  used on input line 1088.
 (pdftex.def)             Requested size: 375.80544pt x 156.58498pt.
-<plots/4-clique/importance-sampling/avg_error_Importance Sampling.png, id=538, 867.24pt x 361.35pt>
+<plots/4-clique/importance-sampling/avg_error_Importance Sampling.png, id=543, 867.24pt x 361.35pt>
 File: plots/4-clique/importance-sampling/avg_error_Importance Sampling.png Graphic file (type png)
 <use plots/4-clique/importance-sampling/avg_error_Importance Sampling.png>
 Package pdftex.def Info: plots/4-clique/importance-sampling/avg_error_Importance Sampling.png  used on input line 1095.
 (pdftex.def)             Requested size: 375.80544pt x 156.58498pt.
-<plots/4-clique/importance-sampling/avg_variance_Importance Sampling.png, id=539, 867.24pt x 361.35pt>
+<plots/4-clique/importance-sampling/avg_variance_Importance Sampling.png, id=544, 867.24pt x 361.35pt>
 File: plots/4-clique/importance-sampling/avg_variance_Importance Sampling.png Graphic file (type png)
 <use plots/4-clique/importance-sampling/avg_variance_Importance Sampling.png>
 Package pdftex.def Info: plots/4-clique/importance-sampling/avg_variance_Importance Sampling.png  used on input line 1102.
 (pdftex.def)             Requested size: 375.80544pt x 156.58498pt.
  [29 <./plots/4-clique/comparison/percent_error_vs_sample_size_comparison.png> <./plots/4-clique/importance-sampling/avg_duration_Importance Sampling.png> <./plots/4-clique/importance-sampling/avg_error_Importance Sampling.png>]
-<plots/simulated/percent_error_vs_sample_size_comparison_gaussian_10.0.png, id=550, 627.3036pt x 395.3169pt>
+<plots/simulated/percent_error_vs_sample_size_comparison_gaussian_10.0.png, id=555, 627.3036pt x 395.3169pt>
 File: plots/simulated/percent_error_vs_sample_size_comparison_gaussian_10.0.png Graphic file (type png)
 <use plots/simulated/percent_error_vs_sample_size_comparison_gaussian_10.0.png>
 Package pdftex.def Info: plots/simulated/percent_error_vs_sample_size_comparison_gaussian_10.0.png  used on input line 1123.
 (pdftex.def)             Requested size: 328.82707pt x 207.22478pt.
  [30 <./plots/4-clique/importance-sampling/avg_variance_Importance Sampling.png>]
-<plots/simulated/percent_error_vs_sample_size_comparison_gaussian_100.0.png, id=557, 634.5306pt x 395.3169pt>
+<plots/simulated/percent_error_vs_sample_size_comparison_gaussian_100.0.png, id=562, 634.5306pt x 395.3169pt>
 File: plots/simulated/percent_error_vs_sample_size_comparison_gaussian_100.0.png Graphic file (type png)
 <use plots/simulated/percent_error_vs_sample_size_comparison_gaussian_100.0.png>
 Package pdftex.def Info: plots/simulated/percent_error_vs_sample_size_comparison_gaussian_100.0.png  used on input line 1130.
 (pdftex.def)             Requested size: 328.82707pt x 204.86624pt.
-<plots/simulated/percent_error_vs_sample_size_comparison_gaussian_500.0.png, id=558, 634.5306pt x 395.3169pt>
+<plots/simulated/percent_error_vs_sample_size_comparison_gaussian_500.0.png, id=563, 634.5306pt x 395.3169pt>
 File: plots/simulated/percent_error_vs_sample_size_comparison_gaussian_500.0.png Graphic file (type png)
 <use plots/simulated/percent_error_vs_sample_size_comparison_gaussian_500.0.png>
 Package pdftex.def Info: plots/simulated/percent_error_vs_sample_size_comparison_gaussian_500.0.png  used on input line 1137.
 (pdftex.def)             Requested size: 328.82707pt x 204.86624pt.
  [31 <./plots/simulated/percent_error_vs_sample_size_comparison_gaussian_10.0.png> <./plots/simulated/percent_error_vs_sample_size_comparison_gaussian_100.0.png>]
-<plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.01.png, id=568, 618.6312pt x 395.3169pt>
+<plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.01.png, id=574, 618.6312pt x 395.3169pt>
 File: plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.01.png Graphic file (type png)
 <use plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.01.png>
 Package pdftex.def Info: plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.01.png  used on input line 1154.
 (pdftex.def)             Requested size: 328.82707pt x 210.12619pt.
  [32 <./plots/simulated/percent_error_vs_sample_size_comparison_gaussian_500.0.png>]
-<plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.1.png, id=576, 620.7993pt x 395.3169pt>
+<plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.1.png, id=581, 620.7993pt x 395.3169pt>
 File: plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.1.png Graphic file (type png)
 <use plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.1.png>
 Package pdftex.def Info: plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.1.png  used on input line 1161.
 (pdftex.def)             Requested size: 328.82707pt x 209.3963pt.
-<plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.5.png, id=577, 627.3036pt x 395.3169pt>
+<plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.5.png, id=582, 627.3036pt x 395.3169pt>
 File: plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.5.png Graphic file (type png)
 <use plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.5.png>
 Package pdftex.def Info: plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.5.png  used on input line 1168.
 (pdftex.def)             Requested size: 328.82707pt x 207.22478pt.
- [33 <./plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.01.png> <./plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.1.png>] [34 <./plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.5.png>] [35] [36] [37] [38] [39] [40] (./thesis.bbl [41]) [42] (./thesis.aux)
+ [33 <./plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.01.png> <./plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.1.png>] [34 <./plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.5.png>] [35] [36] [37] [38] [39] [40] [41] [42] [43] (./thesis.bbl [44]) [45] (./thesis.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
  ***********
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: 6F792522400914EB3459D3156F0A9412;4970.
+(rerunfilecheck)             Checksum: D5B387E0BC60C135AFB2314CA8BC2A8A;5313.
  ) 
 Here is how much of TeX's memory you used:
- 25606 strings out of 474116
- 475427 string characters out of 5743682
+ 25615 strings out of 474116
+ 475526 string characters out of 5743682
  2199187 words of memory out of 5000000
- 47335 multiletter control sequences out of 15000+600000
- 567579 words of font info for 72 fonts, out of 8000000 for 9000
+ 47338 multiletter control sequences out of 15000+600000
+ 568200 words of font info for 74 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,11n,93p,585b,2029s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,14n,93p,585b,2029s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
-Output written on thesis.pdf (42 pages, 1669287 bytes).
+Output written on thesis.pdf (45 pages, 1679686 bytes).
 PDF statistics:
- 767 PDF objects out of 1000 (max. 8388607)
- 622 compressed objects within 7 object streams
- 235 named destinations out of 1000 (max. 500000)
- 404 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 785 PDF objects out of 1000 (max. 8388607)
+ 637 compressed objects within 7 object streams
+ 239 named destinations out of 1000 (max. 500000)
+ 412 words of extra memory for PDF output out of 10000 (max. 10000000)
 

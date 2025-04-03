@@ -451,6 +451,8 @@ INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0
 INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.5.png
 INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.5.png
 INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.5.png
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmbx8.tfm
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmbx6.tfm
 INPUT ./thesis.bbl
 INPUT ./thesis.bbl
 INPUT thesis.bbl

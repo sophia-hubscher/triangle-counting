@@ -1232,6 +1232,63 @@ Now, we can plug our value of $\mathrm{Var}(\Delta_i)$ into $\mathrm{Var}(\tilde
 \end{aligned}
 \]
 
+\subsubsubsection{Importance Sampling}
+
+The global triangle count $\Delta$ can be estimated as $\tilde{\Delta}$ using the following formula:
+
+\[
+\tilde{\Delta} = \frac{1}{3s} \sum_{j = 1}^{s} \frac{\Delta_{ij}}{p_{ij}},
+\]
+
+where $p_i = \frac{m_i}{\sum_{j = 1}^{n}m_{ij}}$ with $m_j = \Delta_j + n_j$ where $n_i \in [-\sigma \Delta_i, \sigma \Delta_i]$ and $\sigma < 1$.
+
+\[
+\begin{aligned}
+\mathrm{Var}(\tilde{\Delta}) &= \mathrm{Var} \left( \frac{1}{3s} \sum_{j = 1}^{s} \frac{\Delta_{ij}}{p_{ij}} \right) \\
+&= \frac{1}{9s^2} \mathrm{Var} \left( \sum_{j = 1}^{s} \frac{\Delta_{ij}}{p_{ij}} \right) \\
+&= \frac{1}{9s^2} \sum_{j = 1}^{s} \mathrm{Var} \left( \frac{\Delta_{ij}}{p_{ij}} \right) \\
+&= \frac{1}{9s^2} \sum_{j = 1}^{s} [\mathbb{E}[(\frac{\Delta_{ij}}{p_{ij}})^2] - (\mathbb{E}[\frac{\Delta_{ij}}{p_{ij}}])^2] \\
+&= \frac{1}{9s^2} \sum_{j = 1}^{s} [\mathbb{E}[(\frac{\Delta_{ij}}{p_{ij}})^2] - (\sum_{n}^{j=1}(p_j \frac{\Delta_j}{p_j}))^2] \\
+&= \frac{1}{9s^2} \sum_{j = 1}^{s} [\mathbb{E}[(\frac{\Delta_{ij}}{p_{ij}})^2] - (\sum_{n}^{j=1}\Delta_j)^2] \\
+&= \frac{1}{9s^2} \sum_{j = 1}^{s} [\mathbb{E}[(\frac{\Delta_{ij}}{p_{ij}})^2] - \Delta^2] \\
+&= \frac{1}{9s^2} \sum_{j = 1}^{s} [\sum_{j = 1}^{n}(p_j \frac{\Delta_j^2}{p_j^2}) - \Delta^2] \\
+&= \frac{1}{9s^2} \sum_{j = 1}^{s} [\sum_{j = 1}^{n}(\frac{\Delta_j^2}{p_j}) - \Delta^2] \\
+&= \frac{1}{9s^2} \sum_{j = 1}^{s} [\sum_{j = 1}^{n}\frac{\Delta_j^2}{m_j} \sum_{i = 1}^{n}m_i - \Delta^2] \\
+&= \frac{1}{9s^2} \sum_{j = 1}^{s} [\sum_{i = 1}^{n}m_i \sum_{j = 1}^{n}\frac{\Delta_j^2}{m_j} - \Delta^2] \\
+\end{aligned}
+\]
+
+We can set an upper bound on $\sum_{i = 1}^{n}m_i$ as follows:
+
+\[
+\begin{aligned}
+\sum_{i = 1}^{n}m_i &\leq \sum_{i = 1}^{n}(\Delta_i + \sigma \Delta_i) \\
+&\leq (1 + \sigma) \Delta \\
+\end{aligned}
+\]
+
+We can similarly set an upper bound on $\sum_{j = 1}^{n}\frac{\Delta_j^2}{m_j}$ as follows:
+
+\[
+\begin{aligned}
+\sum_{j = 1}^{n}\frac{\Delta_j^2}{m_j} &\leq \sum_{j = 1}^{n}\frac{\Delta_j^2}{(1 - \sigma) \Delta_j} \\
+&= \sum_{j = 1}^{n}\frac{\Delta_j}{1 - \sigma} \\
+&= \frac{1}{1 - \sigma} \sum_{j = 1}^{n}\Delta_j \\
+&= \frac{1}{1 - \sigma} \Delta \\
+\end{aligned}
+\]
+
+Combining these two bounds we can return to our variance expression:
+
+\[
+\begin{aligned}
+\mathrm{Var}(\tilde{\Delta}) &= \frac{1}{9s^2} \sum_{j = 1}^{s} [\sum_{i = 1}^{n}m_i \sum_{j = 1}^{n}\frac{\Delta_j^2}{m_j} - \Delta^2] \\
+&\leq \frac{1}{9s^2} \sum_{j = 1}^{s} [\frac{1 + \sigma}{1 - \sigma} \Delta^2 - \Delta^2] \\
+&= \frac{1}{9s^2} \sum_{j = 1}^{s} [(\frac{1 + \sigma}{1 - \sigma} - 1) \Delta^2] \\
+&= \frac{1}{9s} (\frac{1 + \sigma}{1 - \sigma} - 1) \Delta^2 \\
+\end{aligned}
+\]
+
 \subsubsection{Variance Reduction}
 
 Across this section, we will use the fact that $\mathrm{Var}[X+Y] \leq 2(\mathrm{Var}[X] + \mathrm{Var}[Y])$. We derive that as follows:
@@ -1326,6 +1383,54 @@ As before, with a better predictor of $\sigma^2 = \frac{\sum_{i = 1}^{n}\Delta_i
 \[
 \mathrm{Var}(\tilde{\Delta}) \leq 2\epsilon(\sum_{i = 1}^{n}\Delta_i^2)^2(\frac{1}{n} + \frac{1}{s})
 \]
+
+\subsubsection{Comparing Variance Reduciton and Importance Sampling}
+
+In this section we will refer to variance in the case of the importance sampling method as $\mathrm{Var}(\tilde{\Delta}_{IS})$ and for the variance reduction method (with multiplicative noise) as $\mathrm{Var}(\tilde{\Delta}_{VR})$.
+These variances, as established in the previous sections are
+
+\[
+\mathrm{Var}(\tilde{\Delta}_{IS}) \leq \frac{1}{9s} (\frac{1 + \sigma}{1 - \sigma} - 1) \Delta^2
+\] and
+
+\[
+\mathrm{Var}(\tilde{\Delta}_{VR}) \leq 2\sigma^2\sum_{i = 1}^{n} \Delta_i^2(1 + \frac{n}{s})
+\].
+
+As $\sigma$ approaches 1, $\frac{1 + \sigma}{1 - \sigma}$ approaches infinity.
+However, with smaller values of $\sigma$, the value of $\frac{1 + \sigma}{1 - \sigma}$ becomes negligible in contrast to $\Delta^2$.
+Thus, we will simplify our expression by removing the $\frac{1 + \sigma}{1 - \sigma}$ term as well as the also small $-1$ term.
+Also, for our purposes, $\frac{1}{9s} \approx \frac{1}{s}$, thus we can now rewrite $\mathrm{Var}(\tilde{\Delta}_{IS})$ as:
+
+\[
+\mathrm{Var}(\tilde{\Delta}_{IS}) \leq \frac{1}{9s} (\frac{1 + \sigma}{1 - \sigma} - 1) \Delta^2 \approx \frac{1}{s} \Delta^2
+\].
+
+Similarly, for our expression of $\mathrm{Var}(\tilde{\Delta}_{VR})$, we know $\frac{n}{s}$ is far greater than $1$.
+Thus, omitting 1 from our expression will not fundamentally change it.
+In addition, as $\sigma < 1$, $\sigma^2$ is a very small number, and we can remove it multiplied by 2 from our expression also.
+Thus, we can rewrite as:
+
+\[
+\mathrm{Var}(\tilde{\Delta}_{VR}) \leq 2\sigma^2\sum_{i = 1}^{n} \Delta_i^2(1 + \frac{n}{s}) \approx \sum_{i = 1}^{n} \Delta_i^2\frac{n}{s}
+\].
+
+Now that we have our two simplified expressions for $\mathrm{Var}(\tilde{\Delta}_{IS})$ and $\mathrm{Var}(\tilde{\Delta}_{VR})$, we can compare them.
+
+Both expressions are multiplied by $\frac{1}{s}$, so we can remove that from both and simply compare $\Delta^2$ to $\sum_{i = 1}^{n} \Delta_i^2 n$.
+We will begin by rewriting $\Delta$ as follows:
+
+\[
+\begin{aligned}
+\Delta &= \sum_{i = 1}^{n}\Delta_i \\
+&= \begin{bmatrix} \Delta_1 & \Delta_2 & \cdots & \Delta_n \end{bmatrix} \cdot \begin{bmatrix} 1 \\ 1 \\ \vdots \\ 1 \end{bmatrix}
+\end{aligned}
+\]
+
+By the Cauchy–Schwarz inequality, we know $|\langle \mathbf{u}, \mathbf{v} \rangle| \leq \|\mathbf{u}\| \|\mathbf{v}\|$.
+Squaring both sides, we also get $|\langle \mathbf{u}, \mathbf{v} \rangle|^2 \leq \|\mathbf{u}\|^2 \|\mathbf{v}\|^2$.
+
+Thus, using this inequality, we know that $\Delta^2 \leq \sum_{i = 1}^{n} \Delta_i^2 n$, and so, in the case of multiplicative noise, $\mathrm{Var}(\tilde{\Delta}_{IS}) \leq \mathrm{Var}(\tilde{\Delta}_{VR})$.
 
 \newpage
 
