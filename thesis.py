@@ -178,9 +178,22 @@ def get_line_of_best_fit(A):
   slope, intercept = np.polyfit(log_degrees, log_triangles, 1)
 
   # line_of_best_fit = slope * log_degrees + intercept
+
+  # plt.figure(figsize=(8, 6))
   # plt.scatter(log_degrees, log_triangles, color='blue', label='Data Points')
-  # plt.plot(log_degrees, line_of_best_fit, color='red', label=f'Best Fit Line (slope={slope:.2f})')
-  # plt.show()
+  # plt.plot(log_degrees, line_of_best_fit, color='red', label=f'Best Fit Line (slope ≈ {slope:.4f})')
+
+  # # Add title and axis labels
+  # plt.title('Log-Log Plot of Degree vs Triangle Count for Facebook Dataset')
+  # plt.xlabel('log(Degree)')
+  # plt.ylabel('log(Triangle Count)')
+
+  # # Show legend
+  # plt.legend()
+
+  # # Save the figure
+  # plt.savefig('report/plots/degree-vs-triangle-count/degree_vs_triangle_count_fb.png')
+  # plt.close()
 
   return slope, intercept
 
@@ -643,15 +656,13 @@ if __name__ == '__main__':
   # node_count = 4000
   # true_triangle_count = 877830
 
-  m = edges_to_adjacency_matrix_txt(file_path, node_count)
+  m = edges_to_adjacency_matrix_csv(file_path, node_count)
 
   slope, intercept = get_line_of_best_fit(m)
   degrees = np.sum(m, axis=1)
 
-  s_values = [4000]
-  # s_values = [5, 100, 500, 1000, 2000, 3000, 4000]
-  powers = [1, 1.5, get_line_of_best_fit(m)[0]]
-  # powers = [0, 1, 1.5, get_line_of_best_fit(m)[0], 2]
+  s_values = [5, 100, 500, 1000, 2000, 3000, 4000]
+  powers = [0, 1, 1.5, get_line_of_best_fit(m)[0], 2]
 
   # true_triangle_count = count_triangles(m)
   print(f"True Triangle Count: {true_triangle_count}")
