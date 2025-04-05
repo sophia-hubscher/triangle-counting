@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex thesis"] 1743611726.18703 "thesis.aux" "thesis.bbl" "thesis" 1743612001.13074 0
+["bibtex thesis"] 1743883434.56058 "thesis.aux" "thesis.bbl" "thesis" 1743883438.83801 0
   "./thesis_bib.bib" 1740498645.39749 27019 635bdb03c1229e41e17174d9e09fa52c ""
   "/usr/local/texlive/2024/texmf-dist/bibtex/bst/base/plain.bst" 1292289607 20613 bd3fbfa9f64872b81ac57a0dd2ed855f ""
-  "thesis.aux" 1743612000.83206 18026 d715e0dfc36452eb60c8fb7a246f8339 "pdflatex"
+  "thesis.aux" 1743883438.40044 24161 6eb0353dde24a10dccd251aee1a54109 "pdflatex"
   (generated)
   "thesis.bbl"
   "thesis.blg"
   (rewritten before read)
-["pdflatex"] 1743611998.11304 "/Users/sophiahubscher/Documents/triangle-counting/report/thesis.tex" "thesis.pdf" "thesis" 1743612001.13092 0
-  "/Users/sophiahubscher/Documents/triangle-counting/report/thesis.tex" 1743611997.85154 71583 fbae8ee9b725112cdec7808351b2df6e ""
+["pdflatex"] 1743883434.67507 "/Users/sophiahubscher/Documents/triangle-counting/report/thesis.tex" "thesis.pdf" "thesis" 1743883438.83822 0
+  "/Users/sophiahubscher/Documents/triangle-counting/report/thesis.tex" 1743883430.72779 78549 a3f91a39b3acbf36e5b4621d3964fe18 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/tcrm1095.tfm" 1136768653 1536 02c06700a42be0f5a28664c7273f82e7 ""
@@ -204,7 +204,6 @@
   "plots/4-clique/comparison/percent_error_vs_sample_size_comparison.png" 1743260800.11031 79881 648abf2738b7cad0511f91cd19b9627d ""
   "plots/4-clique/importance-sampling/avg_duration_Importance Sampling.png" 1743260628.08517 65341 1f84eab8ac5c1bc6567ee8d71f347ad7 ""
   "plots/4-clique/importance-sampling/avg_error_Importance Sampling.png" 1743260592.52258 62432 43e7050989b1f484336f70a38c81d599 ""
-  "plots/4-clique/importance-sampling/avg_variance_Importance Sampling.png" 1743260615.02586 64992 96a2355ab79cefad77e4dd6243505daf ""
   "plots/comparisons/GrQc/limited_method_percent_error_vs_runtime_comparison.png" 1743274612.00331 73072 dfe6734db2b2694bcb90d24b72e7d3fd ""
   "plots/comparisons/GrQc/limited_method_percent_error_vs_sample_size_comparison.png" 1743274612.00761 87450 b1b74e6fa6ae47b1d4afab586b3ecc67 ""
   "plots/comparisons/ba/limited_method_percent_error_vs_runtime_comparison.png" 1743274622.34207 70889 f45e81f9d610e972661670aa8bcfeb74 ""
@@ -213,6 +212,10 @@
   "plots/comparisons/croc/limited_method_percent_error_vs_sample_size_comparison.png" 1743274565.13329 82692 5daf9bc5535dd7bce04e759960cd4dc4 ""
   "plots/comparisons/fb/limited_method_percent_error_vs_runtime_comparison.png" 1743274602.39739 70414 7a5d8f450b5936f0eb2fedf1d037939b ""
   "plots/comparisons/fb/limited_method_percent_error_vs_sample_size_comparison.png" 1743274602.40757 79123 a2d4b3168e53a98caf6406f5d6be5aa8 ""
+  "plots/degree-vs-triangle-count/degree_vs_triangle_count_GrQc.png" 1743867812.31648 55954 52e2eee2b80060a1ebaeaafab4b309a6 ""
+  "plots/degree-vs-triangle-count/degree_vs_triangle_count_ba.png" 1743867888.20766 44511 417250c3dbc520fd67ccd8932049c72f ""
+  "plots/degree-vs-triangle-count/degree_vs_triangle_count_croc.png" 1743867956.75886 56375 a8f62a23cde8fe52b955a95d2f041331 ""
+  "plots/degree-vs-triangle-count/degree_vs_triangle_count_fb.png" 1743867900.14591 42317 dfec2baeef6fffed556ad9ad241ce255 ""
   "plots/durations/avg_duration_Importance Sampling.png" 1743358189.91409 78687 1c7bcebcc7fac8ab37ba30ccf08ddbd7 ""
   "plots/durations/avg_duration_Uniform Sampling.png" 1743358189.92668 40055 8f7f1d21e43499c7cb08c36421552839 ""
   "plots/durations/avg_duration_Variance Reduction + Importance Sampling.png" 1743358189.93445 70686 d61815cce87cde45b4998dbd648f528f ""
@@ -227,11 +230,15 @@
   "plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.01.png" 1743261905.58573 53718 c768992cc13f64de164667358551c33f ""
   "plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.1.png" 1743261905.58149 54720 828b586bb603d5ccf97dbca6326a5f30 ""
   "plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.5.png" 1743261905.58964 53633 044ecd33d6f1ea894f794631155dc6e8 ""
-  "thesis.aux" 1743612000.83206 18026 d715e0dfc36452eb60c8fb7a246f8339 "pdflatex"
-  "thesis.bbl" 1743611726.30451 4841 94bfca19abf33c4d1a54b3da9021b73f "bibtex thesis"
-  "thesis.out" 1743612000.83345 5313 d5b387e0bc60c135afb2314ca8bc2a8a "pdflatex"
-  "thesis.tex" 1743611997.85154 71583 fbae8ee9b725112cdec7808351b2df6e ""
-  "thesis.toc" 1743612000.83367 2914 ae0925ea004a48a61e53872cc11c53d5 "pdflatex"
+  "plots/triangle-counts-vs-noise/GrQc_triangle_count_vs_noise.png" 1743798956.53983 43337 51e3e1e3affe8c5c8e53e04909f54ae6 ""
+  "plots/triangle-counts-vs-noise/ba_triangle_count_vs_noise.png" 1743798956.5258 49008 7f928645da367cffc6d7960aed72623a ""
+  "plots/triangle-counts-vs-noise/croc_triangle_count_vs_noise.png" 1743798956.52992 39109 53c5109ab31491575543d4a75a8d5c5f ""
+  "plots/triangle-counts-vs-noise/fb_triangle_count_vs_noise.png" 1743798956.53623 36316 906b589b43b404118b3ee484ebae352f ""
+  "thesis.aux" 1743883438.40044 24161 6eb0353dde24a10dccd251aee1a54109 "pdflatex"
+  "thesis.bbl" 1743883434.67136 4841 94bfca19abf33c4d1a54b3da9021b73f "bibtex thesis"
+  "thesis.out" 1743883438.40198 5854 e441260cfb549070d5e2c034e88e7e0b "pdflatex"
+  "thesis.tex" 1743883430.72779 78549 a3f91a39b3acbf36e5b4621d3964fe18 ""
+  "thesis.toc" 1743883438.40228 3143 3fc553b633061d7f508354af8b64494c "pdflatex"
   (generated)
   "thesis.aux"
   "thesis.log"
