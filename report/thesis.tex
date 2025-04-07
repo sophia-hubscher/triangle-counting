@@ -935,7 +935,7 @@ First, I set a variable \lstinline{degrees} to be the degree distribution of a r
 I also defined \lstinline{noise} as \lstinline{noise = np.random.normal(0, noise_scale, triangles.shape)}.
 This noise is normally distributed with a mean of zero and a standard deviation of \lstinline{noise_scale}, allowing for random fluctuations around the expected triangle and maintaining a symmetric distribution.
 
-The two relationships defined using these degrees and noise values are the \textbf{Gaussian noise} and \textbf{multiplicative noise} relationships.
+The two relationships defined using these degrees and noise values are the \textbf{Uniform noise} and \textbf{multiplicative noise} relationships.
 For the first, artificial triangle counts for the degree distributions were set to \lstinline{np.power(degrees, slope) * np.exp(intercept) + noise} where the slope and intercept are the outputs from the \lstinline{get_line_of_best()} function defined in section \ref{variance-reduction-algo}.
 Thus, in this relationship, noise does not grow with degree.
 
@@ -1158,11 +1158,13 @@ All shown results are from the Collaboration Network dataset.
 
 \subsection{Simulated Method Tests}
 
-To assess the performance of importance sampling and variance reduction, we tested these algorithms under two different triangle-degree relationships: Gaussian noise and multiplicative noise. In this section, we present the results of these tests, focusing on the relationship between sample size and average error for both types of noise across various scales.
+To assess the performance of importance sampling and variance reduction, we tested these algorithms under two different triangle-degree relationships: uniform noise and multiplicative noise.
+In this section, we present the results of these tests, focusing on the relationship between sample size and average error for both types of noise across various scales.
 
-\subsubsection{Gaussian/Uniform Noise Relationship}
+\subsubsection{Uniform Noise Relationship}
 
-In this subsection, we examine the performance of the algorithms with Gaussian noise. The degree distribution was derived from the Collaboration Network dataset, and the triangle counts were generated using the formula:
+In this subsection, we examine the performance of the algorithms with uniform noise.
+The degree distribution was derived from the Collaboration Network dataset, and the triangle counts were generated using the formula:
 
 \[
 \text{triangle counts} = \text{np.power(degrees, slope)} \times \text{np.exp(intercept)} + \text{noise},
@@ -1172,23 +1174,23 @@ where \text{noise} is normally distributed with mean zero and standard deviation
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{plots/simulated/percent_error_vs_sample_size_comparison_gaussian_10.0.png}
-    \caption{Sample size vs. average error with Gaussian noise (scale = 10). Variance reduction outperforms importance sampling.}
-    \label{fig:gaussian_noise_10}
+    \includegraphics[width=0.7\textwidth]{plots/simulated/percent_error_vs_sample_size_comparison_uniform_10.0.png}
+    \caption{Sample size vs. average error with uniform noise (scale = 10). Variance reduction outperforms importance sampling.}
+    \label{fig:uniform_noise_10}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{plots/simulated/percent_error_vs_sample_size_comparison_gaussian_100.0.png}
-    \caption{Sample size vs. average error with Gaussian noise (scale = 100). Variance reduction outperforms importance sampling.}
-    \label{fig:gaussian_noise_100}
+    \includegraphics[width=0.7\textwidth]{plots/simulated/percent_error_vs_sample_size_comparison_uniform_100.0.png}
+    \caption{Sample size vs. average error with uniform noise (scale = 100). Variance reduction outperforms importance sampling.}
+    \label{fig:uniform_noise_100}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{plots/simulated/percent_error_vs_sample_size_comparison_gaussian_500.0.png}
-    \caption{Sample size vs. average error with Gaussian noise (scale = 500). Variance reduction outperforms importance sampling.}
-    \label{fig:gaussian_noise_500}
+    \includegraphics[width=0.7\textwidth]{plots/simulated/percent_error_vs_sample_size_comparison_uniform_500.0.png}
+    \caption{Sample size vs. average error with uniform noise (scale = 500). Variance reduction outperforms importance sampling.}
+    \label{fig:uniform_noise_500}
 \end{figure}
 
 \subsubsection{Multiplicative Noise Relationship}

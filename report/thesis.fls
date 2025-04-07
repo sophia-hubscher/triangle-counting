@@ -436,21 +436,21 @@ INPUT ./plots/4-clique/importance-sampling/avg_error_Importance Sampling.png
 INPUT ./plots/4-clique/importance-sampling/avg_error_Importance Sampling.png
 INPUT ./plots/4-clique/importance-sampling/avg_error_Importance Sampling.png
 INPUT ./plots/4-clique/importance-sampling/avg_error_Importance Sampling.png
-INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_gaussian_10.0.png
-INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_gaussian_10.0.png
-INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_gaussian_10.0.png
-INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_gaussian_10.0.png
-INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_gaussian_10.0.png
-INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_gaussian_100.0.png
-INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_gaussian_100.0.png
-INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_gaussian_100.0.png
-INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_gaussian_100.0.png
-INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_gaussian_100.0.png
-INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_gaussian_500.0.png
-INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_gaussian_500.0.png
-INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_gaussian_500.0.png
-INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_gaussian_500.0.png
-INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_gaussian_500.0.png
+INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_uniform_10.0.png
+INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_uniform_10.0.png
+INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_uniform_10.0.png
+INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_uniform_10.0.png
+INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_uniform_10.0.png
+INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_uniform_100.0.png
+INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_uniform_100.0.png
+INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_uniform_100.0.png
+INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_uniform_100.0.png
+INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_uniform_100.0.png
+INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_uniform_500.0.png
+INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_uniform_500.0.png
+INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_uniform_500.0.png
+INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_uniform_500.0.png
+INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_uniform_500.0.png
 INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.01.png
 INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.01.png
 INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.01.png

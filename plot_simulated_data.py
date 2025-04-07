@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import os
 from datetime import datetime
 
-dataset = 'GrQc'
+dataset = 'ba'
 dataset_names = {'fb': 'Facebook Dataset',
                  'croc': 'Crocodile Wikipedia Dataset',
                  'GrQc': 'Collaboration Network Dataset',
@@ -16,7 +16,7 @@ def get_timestamped_subfolder(parent_folder):
 
     return new_subfolder
 
-data = pd.read_csv(f"results/simulated_estimation_results_{dataset}.csv")
+data = pd.read_csv(f"results/simulated/simulated_estimation_results_{dataset}.csv")
 plots_folder = get_timestamped_subfolder('plots/simulated_plots')
 
 methods = {
@@ -24,9 +24,9 @@ methods = {
         "Variance Reduction (Multiplicative Noise)",
         "Importance Sampling (Multiplicative Noise)",
     ),
-    "Gaussian": (
-        "Variance Reduction (Gaussian Noise)",
-        "Importance Sampling (Gaussian Noise)",
+    "Uniform": (
+        "Variance Reduction (Uniform Noise)",
+        "Importance Sampling (Uniform Noise)",
     ),
 }
 
