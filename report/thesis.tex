@@ -16,6 +16,7 @@
 \usepackage{caption}   % For captions
 \usepackage{float}     % For placing figures
 \usepackage{subcaption} % For subfigures
+\usepackage{cleveref}
 \usepackage{listings}
 
 \newcommand{\subsubsubsection}[1]{
@@ -29,6 +30,8 @@
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{1em}
 \doublespacing
+
+\addtocontents{toc}{\setcounter{tocdepth}{2}}
 
 \hypersetup{
     linkcolor = {violet},
@@ -966,72 +969,6 @@ These noise models allow us to analyze how different types of randomness impact 
 
 \subsection{Triangle Counting}
 
-\subsubsection{Average Percent Error By Method}
-
-In this section, we present the average percent error of estimating triangle counts for each method.
-All of this data comes from the Social Network (Facebook) dataset.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{plots/percent-errors/percent_error_Uniform Sampling.png}
-    \caption{Percent Error - Uniform Sampling. Percent error decreases as sample size increases.}
-    \label{fig:percent_error_uniform}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{plots/percent-errors/percent_error_Importance Sampling.png}
-    \caption{Percent Error - Importance Sampling. Percent error decreases as sample size increases. Powers closest to ~1.97 perform best.}
-    \label{fig:percent_error_importance}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{plots/percent-errors/percent_error_Variance Reduction.png}
-    \caption{Percent Error - Variance Reduction. Percent error decreases as sample size increases once the sample size is large enough.}
-    \label{fig:percent_error_variance}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{plots/percent-errors/percent_error_Variance Reduction + Importance Sampling.png}
-    \caption{Percent Error - Variance Reduction + Importance Sampling. Percent error decreases as sample size increases. Powers closest to ~1.97 perform best.}
-    \label{fig:percent_error_variance_importance}
-\end{figure}
-
-\subsubsection{Average Duration (Runtime) By Method}
-
-In this section, we display the average duration of estimating triangle counts for each method.
-All of this data comes from the Social Network (Facebook) dataset.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{plots/durations/avg_duration_Uniform Sampling.png}
-    \caption{Average Duration - Uniform Sampling. Runtime increases with sample size.}
-    \label{fig:avg_duration_uniform}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{plots/durations/avg_duration_Importance Sampling.png}
-    \caption{Average Duration - Importance Sampling. Runtime increases with sample size and power.}
-    \label{fig:avg_duration_importance}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{plots/durations/avg_duration_Variance Reduction.png}
-    \caption{Average Duration - Variance Reduction. Runtime increases with sample size.}
-    \label{fig:avg_duration_variance}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{plots/durations/avg_duration_Variance Reduction + Importance Sampling.png}
-    \caption{Average Duration - Variance Reduction + Importance Sampling. Runtime increases with sample size and power.}
-    \label{fig:avg_duration_variance_importance}
-\end{figure}
-
 \subsubsection{Accuracy and Runtime Comparisons}
 
 This section presents the accuracy and runtime comparisons of different sampling methods across various datasets.
@@ -1136,6 +1073,72 @@ Figures \ref{fig:fb_runtime}--\ref{fig:ba_sample_size} provide visual comparison
 \label{fig:ba_sample_size}
 \end{figure}
 
+\subsubsection{Average Percent Error By Method}
+
+In this section, we present the average percent error of estimating triangle counts for each method.
+All of this data comes from the Social Network (Facebook) dataset.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{plots/percent-errors/percent_error_Uniform Sampling.png}
+    \caption{Percent Error - Uniform Sampling. Percent error decreases as sample size increases.}
+    \label{fig:percent_error_uniform}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{plots/percent-errors/percent_error_Importance Sampling.png}
+    \caption{Percent Error - Importance Sampling. Percent error decreases as sample size increases. Powers closest to ~1.97 perform best.}
+    \label{fig:percent_error_importance}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{plots/percent-errors/percent_error_Variance Reduction.png}
+    \caption{Percent Error - Variance Reduction. Percent error decreases as sample size increases once the sample size is large enough.}
+    \label{fig:percent_error_variance}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{plots/percent-errors/percent_error_Variance Reduction + Importance Sampling.png}
+    \caption{Percent Error - Variance Reduction + Importance Sampling. Percent error decreases as sample size increases. Powers closest to ~1.97 perform best.}
+    \label{fig:percent_error_variance_importance}
+\end{figure}
+
+\subsubsection{Average Duration (Runtime) By Method}
+
+In this section, we display the average duration of estimating triangle counts for each method.
+All of this data comes from the Social Network (Facebook) dataset.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{plots/durations/avg_duration_Uniform Sampling.png}
+    \caption{Average Duration - Uniform Sampling. Runtime increases with sample size.}
+    \label{fig:avg_duration_uniform}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{plots/durations/avg_duration_Importance Sampling.png}
+    \caption{Average Duration - Importance Sampling. Runtime increases with sample size and power.}
+    \label{fig:avg_duration_importance}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{plots/durations/avg_duration_Variance Reduction.png}
+    \caption{Average Duration - Variance Reduction. Runtime increases with sample size.}
+    \label{fig:avg_duration_variance}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{plots/durations/avg_duration_Variance Reduction + Importance Sampling.png}
+    \caption{Average Duration - Variance Reduction + Importance Sampling. Runtime increases with sample size and power.}
+    \label{fig:avg_duration_variance_importance}
+\end{figure}
+
 \subsection{4-Clique Counting}
 
 In this section, we present the results of our experiments on 4-clique counting.
@@ -1184,27 +1187,20 @@ The degree distribution was derived from the Collaboration Network dataset, and 
 \text{triangle counts} = \text{np.power(degrees, slope)} \times \text{np.exp(intercept)} + \text{noise},
 \]
 
-where \text{noise} is normally distributed with mean zero and standard deviation defined by three scales: 10, 100, and 500. The following figures display the relationship between sample size and average error for each of these noise scales.
+where \text{noise} is normally distributed with mean zero and standard deviation defined by two scales: 10 and 100. The following figures display the relationship between sample size and average error for each of these noise scales.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{plots/simulated/percent_error_vs_sample_size_comparison_uniform_10.0.png}
+    \includegraphics[width=0.6\textwidth]{plots/simulated/percent_error_vs_sample_size_comparison_uniform_10.0.png}
     \caption{Sample size vs. average error with uniform noise (scale = 10). Variance reduction outperforms importance sampling.}
     \label{fig:uniform_noise_10}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{plots/simulated/percent_error_vs_sample_size_comparison_uniform_100.0.png}
+    \includegraphics[width=0.6\textwidth]{plots/simulated/percent_error_vs_sample_size_comparison_uniform_100.0.png}
     \caption{Sample size vs. average error with uniform noise (scale = 100). Variance reduction outperforms importance sampling.}
     \label{fig:uniform_noise_100}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.7\textwidth]{plots/simulated/percent_error_vs_sample_size_comparison_uniform_500.0.png}
-    \caption{Sample size vs. average error with uniform noise (scale = 500). Variance reduction outperforms importance sampling.}
-    \label{fig:uniform_noise_500}
 \end{figure}
 
 \subsubsection{Multiplicative Noise Relationship}
@@ -1215,27 +1211,20 @@ Next, we consider the performance of the algorithms with multiplicative noise. T
 \text{triangle counts} = \text{np.power(degrees, slope)} \times \text{np.exp(intercept)} \times (1 + \text{noise}),
 \]
 
-where \text{noise} is again normally distributed and grows with the degree, and the noise scale was tested at three values: 0.01, 0.1, and 0.5. Below are the figures for sample size vs. average error for each noise scale in the multiplicative noise case.
+where \text{noise} is again normally distributed and grows with the degree, and the noise scale was tested at two values: 0.01 and 0.1. Below are the figures for sample size vs. average error for each noise scale in the multiplicative noise case.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.01.png}
+    \includegraphics[width=0.6\textwidth]{plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.01.png}
     \caption{Sample size vs. average error with multiplicative noise (scale = 0.01). Importance sampling outperforms variance reduction.}
     \label{fig:multiplicative_noise_001}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.1.png}
+    \includegraphics[width=0.6\textwidth]{plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.1.png}
     \caption{Sample size vs. average error with multiplicative noise (scale = 0.1). Importance sampling outperforms variance reduction.}
     \label{fig:multiplicative_noise_01}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.7\textwidth]{plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.5.png}
-    \caption{Sample size vs. average error with multiplicative noise (scale = 0.5). Importance sampling outperforms variance reduction.}
-    \label{fig:multiplicative_noise_05}
 \end{figure}
 
 \newpage
@@ -1244,25 +1233,25 @@ where \text{noise} is again normally distributed and grows with the degree, and 
 
 \subsection{Triangle Counting}
 
-Overall, across methods, the hybrid method tended to achieve lowest error, while importance sampling typically had the best trade-off between error and runtime.
+As given in \cref{tab:percent_error_100,tab:percent_error_4000}, for all datasets tested on except for the collaboration network dataset, the hybrid method tended to achieve the lowest percent error at both small and large sample sizes (specially, the table displays data for sample sizes of 100 and 4000).
+Shown in \cref{fig:fb_sample_size,fig:grqc_sample_size,fig:croc_sample_size,fig:ba_sample_size}, while the hybrid method almost always achieves the lowest percent error overall, by sample size, importance sampling and the hybrid method are very comparable.
 
-\subsubsection{Average Percent Error By Method}
+When we then also consider runtime, as in \cref{fig:ba_runtime,fig:grqc_runtime,fig:croc_runtime,fig:ba_runtime}, we see importance sampling begin to outperform the hybrid method, especially on smaller sample sizes.
 
-\subsubsection{Average Duration (Runtime) By Method}
+Also important to keep in mind is that in all previously referenced figures and tables, we use a default power, or $\alpha$ of 2.
+However, as illustrated in \cref{fig:avg_duration_importance,fig:avg_duration_variance_importance}, larger powers lead to higher runtimes.
 
-\subsubsection{Accuracy and Runtime Comparisons}
-
-TODO: PUT THIS IN THE CORRECT LOCATION:
-
-As illustrated in figures \ref{fig:avg_duration_importance} and \ref{fig:avg_duration_variance_importance}, larger powers lead to higher runtimes.
-In figures \ref{fig:percent_error_importance} and \ref{fig:percent_error_variance_importance}, we see that powers closest to the optimal value $\alpha$, as described in section \ref{sec:importance-sampling-background} have lowest percent error.
+In figures \cref{fig:percent_error_importance,fig:percent_error_variance_importance}, we see that powers closest to the optimal value $\alpha$, as described in section \ref{sec:importance-sampling-background} have lowest percent error.
 In the case of the Social Network (Facebook) dataset, this value is $\alpha \approx 1.97$.
 
-However, we also see in figures \ref{fig:percent_error_importance} and \ref{fig:percent_error_variance_importance} that after a certain point, the decrease in percent error by power is very slight.
+We also see in figures \ref{fig:percent_error_importance} and \ref{fig:percent_error_variance_importance} that after a certain point, the decrease in percent error by power is very slight.
 For both importance sampling and the hybrid method, powers of 1.5, 2, and $~ 1.97$ all perform about the same.
 Thus, while a higher power may yield the lowest error, in practical applications, it may make more sense to take a slightly lower power to decrease runtime.
+Using a smaller default value for $\alpha$, such as 1.5, may thus impact the performance of the algorithms, particularly when looking at runtime vs. percent error, making it an interesting potential direction for future work.
 
-TODO INTRODUCE THIS AND CONNECT IT TO SIMULATED TESTS
+\subsection{4-Clique Extension}
+
+\subsection{Connection to Simulated Results}
 
 \begin{figure}[H]
     \centering
