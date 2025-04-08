@@ -946,6 +946,7 @@ However, in this thesis, I only tested on values of $\alpha$ of 1 and 1.5 as thi
  More extensive tuning of $\alpha$ and evaluation across a wider range of graphs would be a valuable direction for future work.
 
 \subsubsection{Simulated Method Tests}
+\label{sec:methods-simulated-test}
 
 In order to learn more about when importance sampling and variance reduction perform best, I ran these algorithms on manually defined triangle-degree relationships.
 
@@ -1154,19 +1155,20 @@ These comparisons are not very robust, but they do provide evidence that the pat
 
 \subsection{Simulated Method Tests}
 
-To assess the performance of importance sampling and variance reduction, we tested these algorithms under two different triangle-degree relationships: uniform noise and multiplicative noise.
-In this section, we present the results of these tests, focusing on the relationship between sample size and average error for both types of noise across various scales.
+To gather insight into why specifically importance sampling outperformed the other methods, we turn to a simulated test of the methods.
+Specifically as described in section \ref{sec:methods-simulated-test}, we tested variance reduction and importance sampling under two different triangle-degree relationships: uniform noise and multiplicative noise.
 
 \subsubsection{Uniform Noise Relationship}
 
-In this subsection, we examine the performance of the algorithms with uniform noise.
-The degree distribution was derived from the Collaboration Network dataset, and the triangle counts were generated using the formula:
+When running the algorithms on data simulated to have the following noise:
 
 \[
 \text{triangle counts} = \text{np.power(degrees, slope)} \times \text{np.exp(intercept)} + \text{noise},
 \]
 
-where \text{noise} is normally distributed with mean zero and standard deviation defined by two scales: 10 and 100. The following figures display the relationship between sample size and average error for each of these noise scales.
+i.e noise that is normally distributed with mean zero and standard deviation defined by two scales: 10 and 100, the average error of variance reduction is lower than that of importance sampling, given in \cref{fig:uniform_noise_10,fig:uniform_noise_100}.
+We see too, that as the noise increases, the difference in performance between variance reduction and importance sampling increases too.
+In \cref{fig:uniform_noise_10}, the difference in average errors between the methods is far smaller than the difference in \cref{fig:uniform_noise_100} with noise that is 10 times the size as before.
 
 \begin{figure}[H]
     \centering
@@ -1190,7 +1192,10 @@ Next, we consider the performance of the algorithms with multiplicative noise. T
 \text{triangle counts} = \text{np.power(degrees, slope)} \times \text{np.exp(intercept)} \times (1 + \text{noise}),
 \]
 
-where \text{noise} is again normally distributed and grows with the degree, and the noise scale was tested at two values: 0.01 and 0.1. Below are the figures for sample size vs. average error for each noise scale in the multiplicative noise case.
+where \text{noise} is again normally distributed and grows with the degree, and the noise scale was tested at two values: 0.01 and 0.1.
+
+Unlike before, with this type of noise, as given in \cref{fig:multiplicative_noise_001,fig:multiplicative_noise_01}, importance sampling outperforms variance reduction.
+Similarly to before, we also see the difference in performance between the two methods grow as the noise grows, meaning that, as the noise grows larger, the difference in average error between importance sampling and variance reduction grows larger too.
 
 \begin{figure}[H]
     \centering
@@ -1206,7 +1211,9 @@ where \text{noise} is again normally distributed and grows with the degree, and 
     \label{fig:multiplicative_noise_01}
 \end{figure}
 
-\subsection{Connection to Simulated Results}
+Given this, if our datasets also experience noise similar to the multiplicative noise model, that would explain the high performance of importance sampling for them.
+To check this, we plot true triangle counts vs. `noise' (i.e. the absolute value of the true minus approximate triangle counts) for each dataset.
+These plots are given below in \cref{fig:tri_vs_noise}.
 
 \begin{figure}[H]
     \centering
@@ -1243,12 +1250,18 @@ where \text{noise} is again normally distributed and grows with the degree, and 
     \label{fig:tri_vs_noise}
 \end{figure}
 
-\subsection{Theoretical Analysis of Variances}
+In these plots, we see that as the triangle counts increase, so does the noise.
+This indicates that our datasets more closely fit the multiplicative model than the uniform one.
+Thus, our simulated tests support our findings that importance sampling leads to lower error on our datasets.
+
+\newpage
+
+\section{Theoretical Analysis of Variances}
 
 Understanding the variance of the algorithms tested is crucial for evaluating their reliability.
 Thus, in this section, we derive expressions for the variance of the estimated triangle count across methods.
 
-\subsubsection{Uniform Sampling}
+\subsection{Uniform Sampling}
 
 The global triangle count $\Delta$ can be estimated as $\tilde{\Delta}$ using the following formula:
 
@@ -1301,7 +1314,7 @@ Now, we can plug our value of $\mathrm{Var}(\Delta_i)$ into $\mathrm{Var}(\tilde
 \end{aligned}
 \]
 
-\subsubsubsection{Importance Sampling}
+\subsection{Importance Sampling}
 
 The global triangle count $\Delta$ can be estimated as $\tilde{\Delta}$ using the following formula:
 
@@ -1358,7 +1371,7 @@ Combining these two bounds we can return to our variance expression:
 \end{aligned}
 \]
 
-\subsubsection{Variance Reduction}
+\subsection{Variance Reduction}
 
 Across this section, we will use the fact that $\mathrm{Var}[X+Y] \leq 2(\mathrm{Var}[X] + \mathrm{Var}[Y])$. We derive that as follows:
 
@@ -1372,7 +1385,7 @@ Across this section, we will use the fact that $\mathrm{Var}[X+Y] \leq 2(\mathrm
 \end{aligned}
 \]
 
-\subsubsubsection{Variance Reduction with Uniform Noise}
+\subsubsection{Variance Reduction with Uniform Noise}
 
 Take the estimator of $\Delta$ to be denoted by $M$ where $M = \sum_{i = 1}^{n} m_i$ and $m_i = \Delta_i + N(0, \sigma^2)$.
 
@@ -1412,7 +1425,7 @@ This is the variance expression reached with the trivial predictor, but a better
 \mathrm{Var}(\tilde{\Delta}) \leq 2\sum_{i = 1}^{n}\Delta_i^2 \epsilon (1 + \frac{n}{s})
 \]
 
-\subsubsubsection{Variance Reduction with Multiplicative Noise}
+\subsubsection{Variance Reduction with Multiplicative Noise}
 
 Here, take the estimator of $\Delta$ to be denoted by $M$ where $M = \sum_{i = 1}^{n} m_i$ and $m_i = \Delta_i + \sigma_i^2$ with $\sigma_i^2 = \Delta_i^2 \sigma^2$.
 i.e., as the size of $\Delta_i$ increases, so does the noise $m_i$.
@@ -1453,7 +1466,7 @@ As before, with a better predictor of $\sigma^2 = \frac{\sum_{i = 1}^{n}\Delta_i
 \mathrm{Var}(\tilde{\Delta}) \leq 2\epsilon(\sum_{i = 1}^{n}\Delta_i^2)^2(\frac{1}{n} + \frac{1}{s})
 \]
 
-\subsubsection{Comparing Variance Reduciton and Importance Sampling}
+\subsection{Comparing Variance Reduciton and Importance Sampling}
 
 In this section we will refer to variance in the case of the importance sampling method as $\mathrm{Var}(\tilde{\Delta}_{IS})$ and for the variance reduction method (with multiplicative noise) as $\mathrm{Var}(\tilde{\Delta}_{VR})$.
 These variances, as established in the previous sections are
@@ -1507,10 +1520,7 @@ Thus, using this inequality, we know that $\Delta^2 \leq \sum_{i = 1}^{n} \Delta
 
 \newpage
 
-{
-\singlespacing
 \bibliographystyle{plain}
 \bibliography{thesis_bib}
-}
 
 \end{document}

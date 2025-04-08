@@ -1,33 +1,35 @@
 \global \c@tocdepth 2\relax 
-\contentsline {section}{\numberline {1}Introduction}{4}{section.1}%
-\contentsline {section}{\numberline {2}Notation}{7}{section.2}%
-\contentsline {section}{\numberline {3}Background}{8}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Types of Graphs}{8}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Graph Motifs}{8}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}Methods for Triangle Counting}{9}{subsection.3.3}%
-\contentsline {subsubsection}{\numberline {3.3.1}Sampling Methods}{9}{subsubsection.3.3.1}%
-\contentsline {subsubsection}{\numberline {3.3.2}Linear Algebraic Methods}{11}{subsubsection.3.3.2}%
-\contentsline {subsection}{\numberline {3.4}General Algorithmic Strategies}{15}{subsection.3.4}%
-\contentsline {subsubsection}{\numberline {3.4.1}Variance Reduction}{15}{subsubsection.3.4.1}%
-\contentsline {subsubsection}{\numberline {3.4.2}Importance Sampling}{16}{subsubsection.3.4.2}%
-\contentsline {subsubsection}{\numberline {3.4.3}Learning-Augmented Algorithms}{18}{subsubsection.3.4.3}%
-\contentsline {section}{\numberline {4}Methods}{19}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Implementation}{19}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Datasets}{19}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3}Sampling Methods Evaluated}{20}{subsection.4.3}%
-\contentsline {subsection}{\numberline {4.4}Evaluation Metrics}{25}{subsection.4.4}%
-\contentsline {subsection}{\numberline {4.5}Additional Explorations}{25}{subsection.4.5}%
-\contentsline {subsubsection}{\numberline {4.5.1}4-Clique Variant}{25}{subsubsection.4.5.1}%
-\contentsline {subsubsection}{\numberline {4.5.2}Simulated Method Tests}{26}{subsubsection.4.5.2}%
-\contentsline {section}{\numberline {5}Results and Discussion}{27}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Triangle Counting}{27}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}4-Clique Counting}{33}{subsection.5.2}%
-\contentsline {subsection}{\numberline {5.3}Simulated Method Tests}{35}{subsection.5.3}%
-\contentsline {subsubsection}{\numberline {5.3.1}Uniform Noise Relationship}{35}{subsubsection.5.3.1}%
-\contentsline {subsubsection}{\numberline {5.3.2}Multiplicative Noise Relationship}{36}{subsubsection.5.3.2}%
-\contentsline {subsection}{\numberline {5.4}Connection to Simulated Results}{38}{subsection.5.4}%
-\contentsline {subsection}{\numberline {5.5}Theoretical Analysis of Variances}{38}{subsection.5.5}%
-\contentsline {subsubsection}{\numberline {5.5.1}Uniform Sampling}{38}{subsubsection.5.5.1}%
-\contentsline {subsubsection}{\numberline {5.5.2}Variance Reduction}{42}{subsubsection.5.5.2}%
-\contentsline {subsubsection}{\numberline {5.5.3}Comparing Variance Reduciton and Importance Sampling}{45}{subsubsection.5.5.3}%
-\contentsline {section}{\numberline {6}Conclusion}{48}{section.6}%
+\contentsline {section}{\numberline {1}Introduction}{5}{section.1}%
+\contentsline {section}{\numberline {2}Notation}{8}{section.2}%
+\contentsline {section}{\numberline {3}Background}{9}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Types of Graphs}{9}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Graph Motifs}{9}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Methods for Triangle Counting}{10}{subsection.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.1}Sampling Methods}{10}{subsubsection.3.3.1}%
+\contentsline {subsubsection}{\numberline {3.3.2}Linear Algebraic Methods}{12}{subsubsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.4}General Algorithmic Strategies}{16}{subsection.3.4}%
+\contentsline {subsubsection}{\numberline {3.4.1}Variance Reduction}{16}{subsubsection.3.4.1}%
+\contentsline {subsubsection}{\numberline {3.4.2}Importance Sampling}{17}{subsubsection.3.4.2}%
+\contentsline {subsubsection}{\numberline {3.4.3}Learning-Augmented Algorithms}{19}{subsubsection.3.4.3}%
+\contentsline {section}{\numberline {4}Methods}{20}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Implementation}{20}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Datasets}{20}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Sampling Methods Evaluated}{21}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Evaluation Metrics}{26}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Additional Explorations}{26}{subsection.4.5}%
+\contentsline {subsubsection}{\numberline {4.5.1}4-Clique Variant}{26}{subsubsection.4.5.1}%
+\contentsline {subsubsection}{\numberline {4.5.2}Simulated Method Tests}{27}{subsubsection.4.5.2}%
+\contentsline {section}{\numberline {5}Results and Discussion}{28}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Triangle Counting}{28}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}4-Clique Counting}{34}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Simulated Method Tests}{36}{subsection.5.3}%
+\contentsline {subsubsection}{\numberline {5.3.1}Uniform Noise Relationship}{36}{subsubsection.5.3.1}%
+\contentsline {subsubsection}{\numberline {5.3.2}Multiplicative Noise Relationship}{37}{subsubsection.5.3.2}%
+\contentsline {section}{\numberline {6}Theoretical Analysis of Variances}{41}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Uniform Sampling}{41}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Importance Sampling}{42}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Variance Reduction}{44}{subsection.6.3}%
+\contentsline {subsubsection}{\numberline {6.3.1}Variance Reduction with Uniform Noise}{45}{subsubsection.6.3.1}%
+\contentsline {subsubsection}{\numberline {6.3.2}Variance Reduction with Multiplicative Noise}{46}{subsubsection.6.3.2}%
+\contentsline {subsection}{\numberline {6.4}Comparing Variance Reduciton and Importance Sampling}{47}{subsection.6.4}%
+\contentsline {section}{\numberline {7}Conclusion}{50}{section.7}%
