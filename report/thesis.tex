@@ -965,13 +965,10 @@ These noise models allow us to analyze how different types of randomness impact 
 
 \newpage
 
-\section{Results}
+\section{Results and Discussion}
 
 \subsection{Triangle Counting}
 
-\subsubsection{Accuracy and Runtime Comparisons}
-
-This section presents the accuracy and runtime comparisons of different sampling methods across various datasets.
 Tables \ref{tab:percent_error_100} and \ref{tab:percent_error_4000} summarize the average percent error for different sampling methods across various datasets with sample sizes of 100 and 4000, respectively.
 The most accurate method is highlighted in bold for each dataset.
 
@@ -1011,39 +1008,9 @@ Barab\'asi--Albert & 0.03299 & 0.00163 & 0.00280 & \textbf{0.00132} \\
 \end{tabular}
 \end{table}
 
-Figures \ref{fig:fb_runtime}--\ref{fig:ba_sample_size} provide visual comparisons of percent error versus runtime and percent error versus sample size for multiple datasets.
+In \cref{tab:percent_error_100,tab:percent_error_4000}, we see that for all datasets tested on except for the collaboration network dataset, the hybrid method tended to achieve the lowest percent error at both small and large sample sizes (specially, the table displays data for sample sizes of 100 and 4000).
 
-\textbf{Percent Error vs. Runtime}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\linewidth]{plots/comparisons/fb/limited_method_percent_error_vs_runtime_comparison.png}
-\caption{Percent Error vs. Runtime for Facebook Dataset. Uniform sampling, importance sampling, and the hybrid method have similar errors by runtime, but importance sampling and the hybrid method achieve the lowest errors overall.}
-\label{fig:fb_runtime}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\linewidth]{plots/comparisons/GrQc/limited_method_percent_error_vs_runtime_comparison.png}
-\caption{Percent Error vs. Runtime for Collaboration Network Dataset. Importance sampling outperforms other methods.}
-\label{fig:grqc_runtime}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\linewidth]{plots/comparisons/croc/limited_method_percent_error_vs_runtime_comparison.png}
-\caption{Percent Error vs. Runtime for Crocodile Wikipedia Dataset. Uniform sampling has a far shorter runtime than the other methods with comparable accuracy for large samples.}
-\label{fig:croc_runtime}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\linewidth]{plots/comparisons/ba/limited_method_percent_error_vs_runtime_comparison.png}
-\caption{Percent Error vs. Runtime for Synthetic Barabási–Albert Dataset. The hybrid approach yields the lowest overall error, but for shorter runtimes, importance sampling performs best.}
-\label{fig:ba_runtime}
-\end{figure}
-
-\textbf{Percent Error vs. Sample Size}
+Shown in \cref{fig:fb_sample_size,fig:grqc_sample_size,fig:croc_sample_size,fig:ba_sample_size}, while the hybrid method almost always achieves the lowest percent error overall, by sample size, importance sampling and the hybrid method are very comparable.
 
 \begin{figure}[H]
 \centering
@@ -1073,50 +1040,38 @@ Figures \ref{fig:fb_runtime}--\ref{fig:ba_sample_size} provide visual comparison
 \label{fig:ba_sample_size}
 \end{figure}
 
-\subsubsection{Average Percent Error By Method}
-
-In this section, we present the average percent error of estimating triangle counts for each method.
-All of this data comes from the Social Network (Facebook) dataset.
+When we also consider runtime, as in \cref{fig:fb_runtime,fig:grqc_runtime,fig:croc_runtime,fig:ba_runtime}, we see importance sampling begin to outperform the hybrid method, especially on smaller sample sizes.
 
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{plots/percent-errors/percent_error_Uniform Sampling.png}
-    \caption{Percent Error - Uniform Sampling. Percent error decreases as sample size increases.}
-    \label{fig:percent_error_uniform}
+\centering
+\includegraphics[width=0.9\linewidth]{plots/comparisons/fb/limited_method_percent_error_vs_runtime_comparison.png}
+\caption{Percent Error vs. Runtime for Facebook Dataset. Uniform sampling, importance sampling, and the hybrid method have similar errors by runtime, but importance sampling and the hybrid method achieve the lowest errors overall.}
+\label{fig:fb_runtime}
 \end{figure}
 
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{plots/percent-errors/percent_error_Importance Sampling.png}
-    \caption{Percent Error - Importance Sampling. Percent error decreases as sample size increases. Powers closest to ~1.97 perform best.}
-    \label{fig:percent_error_importance}
+\centering
+\includegraphics[width=0.9\linewidth]{plots/comparisons/GrQc/limited_method_percent_error_vs_runtime_comparison.png}
+\caption{Percent Error vs. Runtime for Collaboration Network Dataset. Importance sampling outperforms other methods.}
+\label{fig:grqc_runtime}
 \end{figure}
 
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{plots/percent-errors/percent_error_Variance Reduction.png}
-    \caption{Percent Error - Variance Reduction. Percent error decreases as sample size increases once the sample size is large enough.}
-    \label{fig:percent_error_variance}
+\centering
+\includegraphics[width=0.9\linewidth]{plots/comparisons/croc/limited_method_percent_error_vs_runtime_comparison.png}
+\caption{Percent Error vs. Runtime for Crocodile Wikipedia Dataset. Uniform sampling has a far shorter runtime than the other methods with comparable accuracy for large samples.}
+\label{fig:croc_runtime}
 \end{figure}
 
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{plots/percent-errors/percent_error_Variance Reduction + Importance Sampling.png}
-    \caption{Percent Error - Variance Reduction + Importance Sampling. Percent error decreases as sample size increases. Powers closest to ~1.97 perform best.}
-    \label{fig:percent_error_variance_importance}
+\centering
+\includegraphics[width=0.9\linewidth]{plots/comparisons/ba/limited_method_percent_error_vs_runtime_comparison.png}
+\caption{Percent Error vs. Runtime for Synthetic Barabási–Albert Dataset. The hybrid approach yields the lowest overall error, but for shorter runtimes, importance sampling performs best.}
+\label{fig:ba_runtime}
 \end{figure}
 
-\subsubsection{Average Duration (Runtime) By Method}
-
-In this section, we display the average duration of estimating triangle counts for each method.
-All of this data comes from the Social Network (Facebook) dataset.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{plots/durations/avg_duration_Uniform Sampling.png}
-    \caption{Average Duration - Uniform Sampling. Runtime increases with sample size.}
-    \label{fig:avg_duration_uniform}
-\end{figure}
+Also important to keep in mind is that in all previously referenced figures and tables, we use a default power, or $\alpha$ of 2.
+However, as illustrated in \cref{fig:avg_duration_importance,fig:avg_duration_variance_importance}, larger powers lead to longer runtimes.
 
 \begin{figure}[H]
     \centering
@@ -1127,17 +1082,35 @@ All of this data comes from the Social Network (Facebook) dataset.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{plots/durations/avg_duration_Variance Reduction.png}
-    \caption{Average Duration - Variance Reduction. Runtime increases with sample size.}
-    \label{fig:avg_duration_variance}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
     \includegraphics[width=0.8\textwidth]{plots/durations/avg_duration_Variance Reduction + Importance Sampling.png}
     \caption{Average Duration - Variance Reduction + Importance Sampling. Runtime increases with sample size and power.}
     \label{fig:avg_duration_variance_importance}
 \end{figure}
+
+In figures \cref{fig:percent_error_importance,fig:percent_error_variance_importance}, we also find that powers closest to the optimal value $\alpha$, as described in section \ref{sec:importance-sampling-background} have lowest percent error.
+In the case of the Social Network (Facebook) dataset, this value is $\alpha \approx 1.97$.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{plots/percent-errors/percent_error_Importance Sampling.png}
+    \caption{Percent Error - Importance Sampling. Percent error decreases as sample size increases. Powers closest to ~1.97 perform best.}
+    \label{fig:percent_error_importance}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{plots/percent-errors/percent_error_Variance Reduction + Importance Sampling.png}
+    \caption{Percent Error - Variance Reduction + Importance Sampling. Percent error decreases as sample size increases. Powers closest to ~1.97 perform best.}
+    \label{fig:percent_error_variance_importance}
+\end{figure}
+
+In these figures, we also observe that after a certain point, the decrease in percent error by power is very slight.
+For both importance sampling and the hybrid method, powers of 1.5, 2, and $~ 1.97$ all perform about the same.
+
+Thus, while a higher power may yield the lowest error, in practical applications, it may make more sense to take a slightly lower power to decrease runtime.
+Using a smaller default value for $\alpha$, such as 1.5, may thus impact the performance of the algorithms, particularly when looking at runtime vs. percent error, making it an interesting potential direction for future work.
+
+To summarize, the hybrid method achieves the overall lowest percent error across almost all datasets, but typically, with runtime in mind, importance sampling performs best, and that performance may be improved even further with more thoughtful selection of the $\alpha$ value.
 
 \subsection{4-Clique Counting}
 
@@ -1226,30 +1199,6 @@ where \text{noise} is again normally distributed and grows with the degree, and 
     \caption{Sample size vs. average error with multiplicative noise (scale = 0.1). Importance sampling outperforms variance reduction.}
     \label{fig:multiplicative_noise_01}
 \end{figure}
-
-\newpage
-
-\section{Discussion}
-
-\subsection{Triangle Counting}
-
-As given in \cref{tab:percent_error_100,tab:percent_error_4000}, for all datasets tested on except for the collaboration network dataset, the hybrid method tended to achieve the lowest percent error at both small and large sample sizes (specially, the table displays data for sample sizes of 100 and 4000).
-Shown in \cref{fig:fb_sample_size,fig:grqc_sample_size,fig:croc_sample_size,fig:ba_sample_size}, while the hybrid method almost always achieves the lowest percent error overall, by sample size, importance sampling and the hybrid method are very comparable.
-
-When we then also consider runtime, as in \cref{fig:ba_runtime,fig:grqc_runtime,fig:croc_runtime,fig:ba_runtime}, we see importance sampling begin to outperform the hybrid method, especially on smaller sample sizes.
-
-Also important to keep in mind is that in all previously referenced figures and tables, we use a default power, or $\alpha$ of 2.
-However, as illustrated in \cref{fig:avg_duration_importance,fig:avg_duration_variance_importance}, larger powers lead to higher runtimes.
-
-In figures \cref{fig:percent_error_importance,fig:percent_error_variance_importance}, we see that powers closest to the optimal value $\alpha$, as described in section \ref{sec:importance-sampling-background} have lowest percent error.
-In the case of the Social Network (Facebook) dataset, this value is $\alpha \approx 1.97$.
-
-We also see in figures \ref{fig:percent_error_importance} and \ref{fig:percent_error_variance_importance} that after a certain point, the decrease in percent error by power is very slight.
-For both importance sampling and the hybrid method, powers of 1.5, 2, and $~ 1.97$ all perform about the same.
-Thus, while a higher power may yield the lowest error, in practical applications, it may make more sense to take a slightly lower power to decrease runtime.
-Using a smaller default value for $\alpha$, such as 1.5, may thus impact the performance of the algorithms, particularly when looking at runtime vs. percent error, making it an interesting potential direction for future work.
-
-\subsection{4-Clique Extension}
 
 \subsection{Connection to Simulated Results}
 

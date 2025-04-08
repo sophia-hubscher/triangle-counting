@@ -338,26 +338,6 @@ INPUT ./plots/degree-vs-triangle-count/degree_vs_triangle_count_ba.png
 INPUT ./plots/degree-vs-triangle-count/degree_vs_triangle_count_ba.png
 INPUT ./plots/degree-vs-triangle-count/degree_vs_triangle_count_ba.png
 INPUT ./plots/degree-vs-triangle-count/degree_vs_triangle_count_ba.png
-INPUT ./plots/comparisons/fb/limited_method_percent_error_vs_runtime_comparison.png
-INPUT ./plots/comparisons/fb/limited_method_percent_error_vs_runtime_comparison.png
-INPUT ./plots/comparisons/fb/limited_method_percent_error_vs_runtime_comparison.png
-INPUT ./plots/comparisons/fb/limited_method_percent_error_vs_runtime_comparison.png
-INPUT ./plots/comparisons/fb/limited_method_percent_error_vs_runtime_comparison.png
-INPUT ./plots/comparisons/GrQc/limited_method_percent_error_vs_runtime_comparison.png
-INPUT ./plots/comparisons/GrQc/limited_method_percent_error_vs_runtime_comparison.png
-INPUT ./plots/comparisons/GrQc/limited_method_percent_error_vs_runtime_comparison.png
-INPUT ./plots/comparisons/GrQc/limited_method_percent_error_vs_runtime_comparison.png
-INPUT ./plots/comparisons/GrQc/limited_method_percent_error_vs_runtime_comparison.png
-INPUT ./plots/comparisons/croc/limited_method_percent_error_vs_runtime_comparison.png
-INPUT ./plots/comparisons/croc/limited_method_percent_error_vs_runtime_comparison.png
-INPUT ./plots/comparisons/croc/limited_method_percent_error_vs_runtime_comparison.png
-INPUT ./plots/comparisons/croc/limited_method_percent_error_vs_runtime_comparison.png
-INPUT ./plots/comparisons/croc/limited_method_percent_error_vs_runtime_comparison.png
-INPUT ./plots/comparisons/ba/limited_method_percent_error_vs_runtime_comparison.png
-INPUT ./plots/comparisons/ba/limited_method_percent_error_vs_runtime_comparison.png
-INPUT ./plots/comparisons/ba/limited_method_percent_error_vs_runtime_comparison.png
-INPUT ./plots/comparisons/ba/limited_method_percent_error_vs_runtime_comparison.png
-INPUT ./plots/comparisons/ba/limited_method_percent_error_vs_runtime_comparison.png
 INPUT ./plots/comparisons/fb/limited_method_percent_error_vs_sample_size_comparison.png
 INPUT ./plots/comparisons/fb/limited_method_percent_error_vs_sample_size_comparison.png
 INPUT ./plots/comparisons/fb/limited_method_percent_error_vs_sample_size_comparison.png
@@ -378,46 +358,46 @@ INPUT ./plots/comparisons/ba/limited_method_percent_error_vs_sample_size_compari
 INPUT ./plots/comparisons/ba/limited_method_percent_error_vs_sample_size_comparison.png
 INPUT ./plots/comparisons/ba/limited_method_percent_error_vs_sample_size_comparison.png
 INPUT ./plots/comparisons/ba/limited_method_percent_error_vs_sample_size_comparison.png
-INPUT ./plots/percent-errors/percent_error_Uniform Sampling.png
-INPUT ./plots/percent-errors/percent_error_Uniform Sampling.png
-INPUT ./plots/percent-errors/percent_error_Uniform Sampling.png
-INPUT ./plots/percent-errors/percent_error_Uniform Sampling.png
-INPUT ./plots/percent-errors/percent_error_Uniform Sampling.png
-INPUT ./plots/percent-errors/percent_error_Importance Sampling.png
-INPUT ./plots/percent-errors/percent_error_Importance Sampling.png
-INPUT ./plots/percent-errors/percent_error_Importance Sampling.png
-INPUT ./plots/percent-errors/percent_error_Importance Sampling.png
-INPUT ./plots/percent-errors/percent_error_Importance Sampling.png
-INPUT ./plots/percent-errors/percent_error_Variance Reduction.png
-INPUT ./plots/percent-errors/percent_error_Variance Reduction.png
-INPUT ./plots/percent-errors/percent_error_Variance Reduction.png
-INPUT ./plots/percent-errors/percent_error_Variance Reduction.png
-INPUT ./plots/percent-errors/percent_error_Variance Reduction.png
-INPUT ./plots/percent-errors/percent_error_Variance Reduction + Importance Sampling.png
-INPUT ./plots/percent-errors/percent_error_Variance Reduction + Importance Sampling.png
-INPUT ./plots/percent-errors/percent_error_Variance Reduction + Importance Sampling.png
-INPUT ./plots/percent-errors/percent_error_Variance Reduction + Importance Sampling.png
-INPUT ./plots/percent-errors/percent_error_Variance Reduction + Importance Sampling.png
-INPUT ./plots/durations/avg_duration_Uniform Sampling.png
-INPUT ./plots/durations/avg_duration_Uniform Sampling.png
-INPUT ./plots/durations/avg_duration_Uniform Sampling.png
-INPUT ./plots/durations/avg_duration_Uniform Sampling.png
-INPUT ./plots/durations/avg_duration_Uniform Sampling.png
+INPUT ./plots/comparisons/fb/limited_method_percent_error_vs_runtime_comparison.png
+INPUT ./plots/comparisons/fb/limited_method_percent_error_vs_runtime_comparison.png
+INPUT ./plots/comparisons/fb/limited_method_percent_error_vs_runtime_comparison.png
+INPUT ./plots/comparisons/fb/limited_method_percent_error_vs_runtime_comparison.png
+INPUT ./plots/comparisons/fb/limited_method_percent_error_vs_runtime_comparison.png
+INPUT ./plots/comparisons/GrQc/limited_method_percent_error_vs_runtime_comparison.png
+INPUT ./plots/comparisons/GrQc/limited_method_percent_error_vs_runtime_comparison.png
+INPUT ./plots/comparisons/GrQc/limited_method_percent_error_vs_runtime_comparison.png
+INPUT ./plots/comparisons/GrQc/limited_method_percent_error_vs_runtime_comparison.png
+INPUT ./plots/comparisons/GrQc/limited_method_percent_error_vs_runtime_comparison.png
+INPUT ./plots/comparisons/croc/limited_method_percent_error_vs_runtime_comparison.png
+INPUT ./plots/comparisons/croc/limited_method_percent_error_vs_runtime_comparison.png
+INPUT ./plots/comparisons/croc/limited_method_percent_error_vs_runtime_comparison.png
+INPUT ./plots/comparisons/croc/limited_method_percent_error_vs_runtime_comparison.png
+INPUT ./plots/comparisons/croc/limited_method_percent_error_vs_runtime_comparison.png
+INPUT ./plots/comparisons/ba/limited_method_percent_error_vs_runtime_comparison.png
+INPUT ./plots/comparisons/ba/limited_method_percent_error_vs_runtime_comparison.png
+INPUT ./plots/comparisons/ba/limited_method_percent_error_vs_runtime_comparison.png
+INPUT ./plots/comparisons/ba/limited_method_percent_error_vs_runtime_comparison.png
+INPUT ./plots/comparisons/ba/limited_method_percent_error_vs_runtime_comparison.png
 INPUT ./plots/durations/avg_duration_Importance Sampling.png
 INPUT ./plots/durations/avg_duration_Importance Sampling.png
 INPUT ./plots/durations/avg_duration_Importance Sampling.png
 INPUT ./plots/durations/avg_duration_Importance Sampling.png
 INPUT ./plots/durations/avg_duration_Importance Sampling.png
-INPUT ./plots/durations/avg_duration_Variance Reduction.png
-INPUT ./plots/durations/avg_duration_Variance Reduction.png
-INPUT ./plots/durations/avg_duration_Variance Reduction.png
-INPUT ./plots/durations/avg_duration_Variance Reduction.png
-INPUT ./plots/durations/avg_duration_Variance Reduction.png
 INPUT ./plots/durations/avg_duration_Variance Reduction + Importance Sampling.png
 INPUT ./plots/durations/avg_duration_Variance Reduction + Importance Sampling.png
 INPUT ./plots/durations/avg_duration_Variance Reduction + Importance Sampling.png
 INPUT ./plots/durations/avg_duration_Variance Reduction + Importance Sampling.png
 INPUT ./plots/durations/avg_duration_Variance Reduction + Importance Sampling.png
+INPUT ./plots/percent-errors/percent_error_Importance Sampling.png
+INPUT ./plots/percent-errors/percent_error_Importance Sampling.png
+INPUT ./plots/percent-errors/percent_error_Importance Sampling.png
+INPUT ./plots/percent-errors/percent_error_Importance Sampling.png
+INPUT ./plots/percent-errors/percent_error_Importance Sampling.png
+INPUT ./plots/percent-errors/percent_error_Variance Reduction + Importance Sampling.png
+INPUT ./plots/percent-errors/percent_error_Variance Reduction + Importance Sampling.png
+INPUT ./plots/percent-errors/percent_error_Variance Reduction + Importance Sampling.png
+INPUT ./plots/percent-errors/percent_error_Variance Reduction + Importance Sampling.png
+INPUT ./plots/percent-errors/percent_error_Variance Reduction + Importance Sampling.png
 INPUT ./plots/4-clique/comparison/percent_error_vs_runtime_comparison.png
 INPUT ./plots/4-clique/comparison/percent_error_vs_runtime_comparison.png
 INPUT ./plots/4-clique/comparison/percent_error_vs_runtime_comparison.png
