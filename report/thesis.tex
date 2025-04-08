@@ -1071,7 +1071,7 @@ When we also consider runtime, as in \cref{fig:fb_runtime,fig:grqc_runtime,fig:c
 \end{figure}
 
 Also important to keep in mind is that in all previously referenced figures and tables, we use a default power, or $\alpha$ of 2.
-However, as illustrated in \cref{fig:avg_duration_importance,fig:avg_duration_variance_importance}, larger powers lead to longer runtimes.
+However, as illustrated in \cref{fig:avg_duration_importance,fig:avg_duration_variance_importance}, which present data from the Facebook dataset, larger powers lead to longer runtimes.
 
 \begin{figure}[H]
     \centering
@@ -1114,9 +1114,11 @@ To summarize, the hybrid method achieves the overall lowest percent error across
 
 \subsection{4-Clique Counting}
 
-In this section, we present the results of our experiments on 4-clique counting.
-We compare importance sampling and variance reduction, and illustrate how the power in importance sampling impacts percent error, sample size, and runtime in 4-clique counting.
+To see if these properties found with triangle counting generalize out to other graph motifs, we look at the results from 4-clique counting.
+Specifically, we compare uniform sampling, importance sampling, and variance reduction, and illustrate how the power in importance sampling impacts percent error and runtime in 4-clique counting.
 All shown results are from the Collaboration Network dataset.
+
+As with triangle counting, we find that importance sampling yields better results than uniform sampling and variance reduction on our dataset, as shown in \cref{fig:4_clique_percent_error_runtime_comparison,fig:4_clique_percent_error_sample_size_comparison}.
 
 \begin{figure}[H]
     \centering
@@ -1132,6 +1134,8 @@ All shown results are from the Collaboration Network dataset.
     \label{fig:4_clique_percent_error_sample_size_comparison}
 \end{figure}
 
+Additionally, as made clear in \cref{fig:4_clique_avg_duration_importance_sampling,fig:4_clique_avg_error_importance_sampling}, the same relationships between power and error and power and runtime are present with 4-clique counting as they are with triangle counting.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{plots/4-clique/importance-sampling/avg_duration_Importance Sampling.png}
@@ -1145,6 +1149,8 @@ All shown results are from the Collaboration Network dataset.
     \caption{Average error of the importance sampling method across powers for 4-clique counting. Average error decreases as sample size increases. The power of 1.5 performs best.}
     \label{fig:4_clique_avg_error_importance_sampling}
 \end{figure}
+
+These comparisons are not very robust, but they do provide evidence that the patterns observed in the triangle counting experiments are likely generalizable to other motifs.
 
 \subsection{Simulated Method Tests}
 

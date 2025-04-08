@@ -22,7 +22,7 @@
 \contentsline {section}{\numberline {5}Results and Discussion}{27}{section.5}%
 \contentsline {subsection}{\numberline {5.1}Triangle Counting}{27}{subsection.5.1}%
 \contentsline {subsection}{\numberline {5.2}4-Clique Counting}{33}{subsection.5.2}%
-\contentsline {subsection}{\numberline {5.3}Simulated Method Tests}{34}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.3}Simulated Method Tests}{35}{subsection.5.3}%
 \contentsline {subsubsection}{\numberline {5.3.1}Uniform Noise Relationship}{35}{subsubsection.5.3.1}%
 \contentsline {subsubsection}{\numberline {5.3.2}Multiplicative Noise Relationship}{36}{subsubsection.5.3.2}%
 \contentsline {subsection}{\numberline {5.4}Connection to Simulated Results}{38}{subsection.5.4}%
