@@ -1,4 +1,4 @@
-\documentclass[11pt]{article}
+\documentclass[11pt, margin=1in]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[colorlinks]{hyperref}
 \usepackage{graphicx}  % For including figures
@@ -28,6 +28,7 @@
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{1em}
+\doublespacing
 
 \hypersetup{
     linkcolor = {violet},
@@ -57,7 +58,7 @@
     showspaces=false,                
     showstringspaces=false,
     showtabs=false,                  
-    tabsize=2,
+    tabsize=2
 }
 
 \lstset{style=mystyle}
@@ -90,7 +91,10 @@ ABSTRACT HERE
 
 \newpage
 
+{
+\singlespacing
 \tableofcontents
+}
 
 \newpage
 
@@ -702,6 +706,8 @@ While simple, uniform sampling often struggle in graphs with skewed degree distr
 
 Code for this method is given below, where $A$ is the adjacency matrix of our graph $G$ and $s$ is the number of nodes of $G$ being sampled.
 
+{
+\singlespacing
 \begin{lstlisting}[language=Python]
 import numpy as np
 import random
@@ -721,6 +727,7 @@ def estimate_uniformly_per_node_method(A, s):
     return triangle_count * (n / s) // 3
 
 \end{lstlisting}
+}
 
 \textbf{Importance Sampling:}
 
@@ -742,6 +749,8 @@ We can then sample each node $n_i$ with probability $p_i$.
 The code for this sampling and estimation process is given below where, like before $A$ is the adjacency matrix of $G$ and $s$ is our sample size.
 We also introduce the parameter $\alpha$, which in the code snippet, is represented by the variable ``power''.
 
+{
+\singlespacing
 \begin{lstlisting}[language=Python]
 def sample_by_degree(A, n, s, power):
     degrees = np.sum(A, axis=1)
@@ -765,6 +774,7 @@ def importance_estimate_per_node_method(A, s, power):
 
     return estimate // 3
 \end{lstlisting}
+}
 
 To select the ideal value for the power ($\alpha$), as described in section \ref{sec:importance-sampling-background}, we plot nodes' degrees verses triangle counts and set $\alpha$ to be the slope of this plot.
 
@@ -772,7 +782,7 @@ The dataset we will primarily use is the Social Network (Facebook) dataset.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{plots/degree-vs-triangle-count/degree_vs_triangle_count_fb.png}
+    \includegraphics[width=0.6\textwidth]{plots/degree-vs-triangle-count/degree_vs_triangle_count_fb.png}
     \caption{Degree vs. triangle count for the Facebook dataset. The slope $\alpha \approx 1.97$.}
     \label{fig:degree_vs_tri_fb}
 \end{figure}
@@ -826,6 +836,8 @@ Then, scaling this up, we can combine our predicted triangle count and predicted
 
 The specific math for this method is given in section \ref{sec:variance-reduction-background} and the code for it is given below.
 
+{
+\singlespacing
 \begin{lstlisting}[language=Python]
 def get_line_of_best_fit(A):
     n = len(A)
@@ -869,6 +881,7 @@ def estimate_variance_reduction_method(A, s, power):
   
     return (M + D) // 3
 \end{lstlisting}
+}
 
 \textbf{Hybrid Approach:}
 
@@ -877,6 +890,8 @@ It functions by running the variance reduction method as before, but using impor
 
 The differences between the following code snippet and that in variance reduction begins on line 13.
 
+{
+\singlespacing
 \begin{lstlisting}[language=Python]
 def estimate_importance_variance_reduction_method(A, s, power):
     n = len(A)
@@ -900,6 +915,7 @@ def estimate_importance_variance_reduction_method(A, s, power):
 
     return (M + D) // 3
 \end{lstlisting}
+}
 
 Values for $\alpha$ for this hybrid method were selected the same way they were for importance sampling.
 
@@ -1059,8 +1075,6 @@ Barab\'asi--Albert & 0.03299 & 0.00163 & 0.00280 & \textbf{0.00132} \\
 \end{table}
 
 Figures \ref{fig:fb_runtime}--\ref{fig:ba_sample_size} provide visual comparisons of percent error versus runtime and percent error versus sample size for multiple datasets.
-
-\newpage
 
 \textbf{Percent Error vs. Runtime}
 
@@ -1227,6 +1241,16 @@ where \text{noise} is again normally distributed and grows with the degree, and 
 \newpage
 
 \section{Discussion}
+
+\subsection{Triangle Counting}
+
+Overall, across methods, the hybrid method tended to achieve lowest error, while importance sampling typically had the best trade-off between error and runtime.
+
+\subsubsection{Average Percent Error By Method}
+
+\subsubsection{Average Duration (Runtime) By Method}
+
+\subsubsection{Accuracy and Runtime Comparisons}
 
 TODO: PUT THIS IN THE CORRECT LOCATION:
 
@@ -1539,7 +1563,10 @@ Thus, using this inequality, we know that $\Delta^2 \leq \sum_{i = 1}^{n} \Delta
 
 \newpage
 
+{
+\singlespacing
 \bibliographystyle{plain}
 \bibliography{thesis_bib}
+}
 
 \end{document}
