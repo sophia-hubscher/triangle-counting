@@ -89,7 +89,13 @@
 \newpage
 
 \begin{abstract}
-ABSTRACT HERE
+Counting triangles in large networks is a fundamental problem in graph theory with significant applications in social networks, bioinformatics, and beyond.
+However, exact enumeration methods are computationally expensive for large-scale graphs due to their high time complexity.
+This thesis explores randomized algorithms for efficient and accurate triangle count estimation, focusing on sampling-based techniques such as uniform sampling, importance sampling, variance reduction, and a hybrid approach.
+These methods are evaluated on diverse real-world and synthetic datasets, including social networks, collaboration networks, and web graphs.
+Results demonstrate that the hybrid method achieves the lowest error rates, while importance sampling offers the best balance between accuracy and runtime.
+Theoretical analyses of variance provide insights into the reliability of these methods under different noise conditions.
+The findings highlight the potential of randomized algorithms to enable scalable and precise triangle counting in large networks.
 \end{abstract}
 
 \newpage
@@ -1253,6 +1259,7 @@ These plots are given below in \cref{fig:tri_vs_noise}.
 In these plots, we see that as the triangle counts increase, so does the noise.
 This indicates that our datasets more closely fit the multiplicative model than the uniform one.
 Thus, our simulated tests support our findings that importance sampling leads to lower error on our datasets.
+We can also imagine that in a dataset that aligns more closely with the uniform model, we may see the comparative performance of variance reduction improve.
 
 \newpage
 
@@ -1517,6 +1524,8 @@ Thus, using this inequality, we know that $\Delta^2 \leq \sum_{i = 1}^{n} \Delta
 \newpage
 
 \section{Conclusion}
+
+We can conclude that, for many networks, particularly those with noise matching the multiplicative model, importance sampling offers the best trade-off between accuracy and efficiency, particularly for smaller sample sizes, but the hybrid method achieves the lowest overall error.
 
 \newpage
 
