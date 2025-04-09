@@ -458,11 +458,11 @@ INPUT ./plots/triangle-counts-vs-noise/ba_triangle_count_vs_noise.png
 INPUT ./plots/triangle-counts-vs-noise/ba_triangle_count_vs_noise.png
 INPUT ./plots/triangle-counts-vs-noise/ba_triangle_count_vs_noise.png
 INPUT ./plots/triangle-counts-vs-noise/ba_triangle_count_vs_noise.png
-INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmbx8.tfm
-INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmbx6.tfm
 INPUT ./thesis.bbl
 INPUT ./thesis.bbl
 INPUT thesis.bbl
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmbx8.tfm
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmbx6.tfm
 INPUT thesis.aux
 INPUT ./thesis.out
 INPUT ./thesis.out

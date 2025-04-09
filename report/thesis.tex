@@ -31,6 +31,8 @@
 \setlength{\parskip}{1em}
 \doublespacing
 
+\newtheorem{theorem}{Theorem}
+
 \addtocontents{toc}{\setcounter{tocdepth}{2}}
 
 \hypersetup{
@@ -1159,7 +1161,7 @@ Additionally, as made clear in \cref{fig:4_clique_avg_duration_importance_sampli
 
 These comparisons are not very robust, but they do provide evidence that the patterns observed in the triangle counting experiments are likely generalizable to other motifs.
 
-\subsection{Simulated Method Tests}
+\subsection{Understanding the Benefits of Importance Sampling vs. Variance Reduction}
 
 To gather insight into why specifically importance sampling outperformed the other methods, we turn to a simulated test of the methods.
 Specifically as described in section \ref{sec:methods-simulated-test}, we tested variance reduction and importance sampling under two different triangle-degree relationships: uniform noise and multiplicative noise.
@@ -1217,6 +1219,16 @@ Similarly to before, we also see the difference in performance between the two m
     \label{fig:multiplicative_noise_01}
 \end{figure}
 
+Additionally, as derived in the appendix in \cref{appendix:variance-comparison}, we have the following theorem:
+
+\begin{theorem}
+\label{theorem:variance-comparison}
+In the case of multiplicative noise, $\mathrm{Var}(\tilde{\Delta}_{IS}) \leq \mathrm{Var}(\tilde{\Delta}_{VR})$.
+\end{theorem}
+
+This theorem supports the previous findings.
+For the multiplicative case, the variance of importance sampling is lower than that of variance reduction, aligning with the finding that, for that case, the average error of importance sampling is lower than that of variance reduction too.
+
 Given this, if our datasets also experience noise similar to the multiplicative noise model, that would explain the high performance of importance sampling for them.
 To check this, we plot true triangle counts vs. `noise' (i.e. the absolute value of the true minus approximate triangle counts) for each dataset.
 These plots are given below in \cref{fig:tri_vs_noise}.
@@ -1263,12 +1275,57 @@ We can also imagine that in a dataset that aligns more closely with the uniform 
 
 \newpage
 
-\section{Theoretical Analysis of Variances}
+\section{Conclusion}
+
+In this thesis, we aimed to find ways to estimate triangles quickly and accurately using randomized algorithms.
+Through experiments and theoretical analysis, we found that, for many networks, particularly those with noise matching the multiplicative model, importance sampling offers the best trade-off between accuracy and efficiency, particularly for smaller sample sizes, but the hybrid method achieves the lowest overall error.
+
+Research into the case where, according to the simulated tests and theoretical analysis, variance reduction outperforms importance sampling, i.e., the case where noise is uniform instead of multiplicative, would be an interesting direction for future work.
+
+In this thesis, we found a trade-off between power and runtime, finding that powers closest to the optimum for achieving low error did not necessarily achieve the best balance between accuracy and runtime.
+Thus, another further research direction would be investigating, and perhaps quantifying, that tradeoff.
+
+Lastly, in this thesis, we extended our analysis out to other motifs, specifically, 4-cliques.
+There are many more graph motifs out there with interesting associated quantities that could be estimated using these techniques.
+Additionally, these techniques could be extended beyond graphs to estimate any number of other sums.
+
+\newpage
+
+\bibliographystyle{plain}
+\bibliography{thesis_bib}
+
+\newpage
+
+\section{Appendix}
+
+\subsection{Links to Code and Extended Results}
+
+The code used for this thesis is available on GitHub at the following URL:
+
+\url{https://github.com/sophia-hubscher/triangle-counting}
+
+Below is a list of the most relevant folders files with descriptions:
+
+\begin{itemize}
+    \item \href{https://github.com/sophia-hubscher/triangle-counting/blob/main/thesis.py}{Triangle counting code}: 
+    Contains implementations of triangle counting algorithms, including the exact counting algorithm and the approximation algorithms. This file also contains code for the simulated runs.
+    
+    \item \href{https://github.com/sophia-hubscher/triangle-counting/blob/main/thesis_4_clique.py}{4-Clique counting code}: 
+    Includes similar code to thesis.py, but for the 4-clique implementations.
+    
+    \item \href{https://github.com/sophia-hubscher/triangle-counting/tree/main/results}{Results folder}: 
+    Contains CSVs of all results from this thesis. Results are separated by motif (triangle vs. 4-clique) and dataset (Facebook, Collaboration Network, etc.).
+
+    \item \href{https://github.com/sophia-hubscher/triangle-counting/tree/main/plots}{All plots}
+    Contains all plots generated throughout the thesis, including various plots not included in the thesis report such as histograms showing the difference between approximate and true triangle counts across all datasets and whisker plots of the estimates for each method on each dataset. Many folders contain date-labeled subfolders. The most recently-dated folder will contain the most up-to-date plots.
+\end{itemize}
+
+\subsection{Theoretical Analysis of Variances}
 
 Understanding the variance of the algorithms tested is crucial for evaluating their reliability.
 Thus, in this section, we derive expressions for the variance of the estimated triangle count across methods.
 
-\subsection{Uniform Sampling}
+\subsubsection{Uniform Sampling}
 
 The global triangle count $\Delta$ can be estimated as $\tilde{\Delta}$ using the following formula:
 
@@ -1321,7 +1378,7 @@ Now, we can plug our value of $\mathrm{Var}(\Delta_i)$ into $\mathrm{Var}(\tilde
 \end{aligned}
 \]
 
-\subsection{Importance Sampling}
+\subsubsection{Importance Sampling}
 
 The global triangle count $\Delta$ can be estimated as $\tilde{\Delta}$ using the following formula:
 
@@ -1378,7 +1435,7 @@ Combining these two bounds we can return to our variance expression:
 \end{aligned}
 \]
 
-\subsection{Variance Reduction}
+\subsubsection{Variance Reduction}
 
 Across this section, we will use the fact that $\mathrm{Var}[X+Y] \leq 2(\mathrm{Var}[X] + \mathrm{Var}[Y])$. We derive that as follows:
 
@@ -1392,7 +1449,7 @@ Across this section, we will use the fact that $\mathrm{Var}[X+Y] \leq 2(\mathrm
 \end{aligned}
 \]
 
-\subsubsection{Variance Reduction with Uniform Noise}
+\subsubsubsection{Variance Reduction with Uniform Noise}
 
 Take the estimator of $\Delta$ to be denoted by $M$ where $M = \sum_{i = 1}^{n} m_i$ and $m_i = \Delta_i + N(0, \sigma^2)$.
 
@@ -1432,7 +1489,7 @@ This is the variance expression reached with the trivial predictor, but a better
 \mathrm{Var}(\tilde{\Delta}) \leq 2\sum_{i = 1}^{n}\Delta_i^2 \epsilon (1 + \frac{n}{s})
 \]
 
-\subsubsection{Variance Reduction with Multiplicative Noise}
+\subsubsubsection{Variance Reduction with Multiplicative Noise}
 
 Here, take the estimator of $\Delta$ to be denoted by $M$ where $M = \sum_{i = 1}^{n} m_i$ and $m_i = \Delta_i + \sigma_i^2$ with $\sigma_i^2 = \Delta_i^2 \sigma^2$.
 i.e., as the size of $\Delta_i$ increases, so does the noise $m_i$.
@@ -1473,7 +1530,8 @@ As before, with a better predictor of $\sigma^2 = \frac{\sum_{i = 1}^{n}\Delta_i
 \mathrm{Var}(\tilde{\Delta}) \leq 2\epsilon(\sum_{i = 1}^{n}\Delta_i^2)^2(\frac{1}{n} + \frac{1}{s})
 \]
 
-\subsection{Comparing Variance Reduciton and Importance Sampling}
+\subsubsection{Comparing Variance Reduction and Importance Sampling}
+\label{appendix:variance-comparison}
 
 In this section we will refer to variance in the case of the importance sampling method as $\mathrm{Var}(\tilde{\Delta}_{IS})$ and for the variance reduction method (with multiplicative noise) as $\mathrm{Var}(\tilde{\Delta}_{VR})$.
 These variances, as established in the previous sections are
@@ -1520,16 +1578,5 @@ By the Cauchy–Schwarz inequality, we know $|\langle \mathbf{u}, \mathbf{v} \ra
 Squaring both sides, we also get $|\langle \mathbf{u}, \mathbf{v} \rangle|^2 \leq \|\mathbf{u}\|^2 \|\mathbf{v}\|^2$.
 
 Thus, using this inequality, we know that $\Delta^2 \leq \sum_{i = 1}^{n} \Delta_i^2 n$, and so, in the case of multiplicative noise, $\mathrm{Var}(\tilde{\Delta}_{IS}) \leq \mathrm{Var}(\tilde{\Delta}_{VR})$.
-
-\newpage
-
-\section{Conclusion}
-
-We can conclude that, for many networks, particularly those with noise matching the multiplicative model, importance sampling offers the best trade-off between accuracy and efficiency, particularly for smaller sample sizes, but the hybrid method achieves the lowest overall error.
-
-\newpage
-
-\bibliographystyle{plain}
-\bibliography{thesis_bib}
 
 \end{document}
