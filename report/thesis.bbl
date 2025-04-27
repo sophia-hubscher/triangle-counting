@@ -48,6 +48,11 @@ M.F. Hutchinson.
 \newblock A stochastic estimator of the trace of the influence matrix for laplacian smoothing splines.
 \newblock {\em Communications in Statistics - Simulation and Computation}, pages 433--450, 1990.
 
+\bibitem{leskovec_snap_2017}
+Jure Leskovec and Rok Sosič.
+\newblock {SNAP}: {A} {General}-{Purpose} {Network} {Analysis} and {Graph}-{Mining} {Library}.
+\newblock {\em ACM Transactions on Intelligent Systems and Technology}, 8(1):1--20, January 2017.
+
 \bibitem{lovasz_large_2012}
 Laszlo Lovasz.
 \newblock {\em Large networks and graph limits}.

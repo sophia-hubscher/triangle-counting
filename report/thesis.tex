@@ -19,12 +19,6 @@
 \usepackage{cleveref}
 \usepackage{listings}
 
-\newcommand{\subsubsubsection}[1]{
-  \vspace{1em} % Space above the section
-  \noindent\textbf{#1} % Bold the section title
-  \vspace{0.5em} % Space below the section
-}
-
 \geometry{letterpaper, margin=1in}
 
 \setlength{\parindent}{0pt}
@@ -92,11 +86,11 @@
 
 \begin{abstract}
 Counting triangles in large networks is a fundamental problem in graph theory with significant applications in social networks, bioinformatics, and beyond.
-However, exact enumeration methods are computationally expensive for large-scale graphs due to their high time complexity.
+However, exact enumeration methods are computationally expensive for large-scale graphs.
 This thesis explores randomized algorithms for efficient and accurate triangle count estimation, focusing on sampling-based techniques such as uniform sampling, importance sampling, variance reduction, and a hybrid approach.
 These methods are evaluated on diverse real-world and synthetic datasets, including social networks, collaboration networks, and web graphs.
 Results demonstrate that the hybrid method achieves the lowest error rates, while importance sampling offers the best balance between accuracy and runtime.
-Theoretical analyses of variance provide insights into the reliability of these methods under different noise conditions.
+Theoretical analyses of variance  as well as simulated tests of different shapes data could take help to explain importance sampling doing so well.
 The findings highlight the potential of randomized algorithms to enable scalable and precise triangle counting in large networks.
 \end{abstract}
 
@@ -112,7 +106,7 @@ The findings highlight the potential of randomized algorithms to enable scalable
 \section{Introduction}
 
 Counting triangles is a fundamental problem in graph theory with widespread applications in social networks, bioinformatics, and more \cite{lovasz_large_2012}.
-These triangles, are formed by three mutually connected nodes, as shown in Figure~\ref{fig:triangles}, which contains three triangles.
+Triangles, are formed by three mutually connected nodes, as shown in Figure~\ref{fig:triangles}, which shows a graph containing three triangles.
 While these triangles appear simple, they are a powerful structural motif that can reveal important insights the networks they are found in.
 
 \begin{figure}[H]
@@ -141,7 +135,6 @@ While these triangles appear simple, they are a powerful structural motif that c
     \end{minipage}%
 \end{figure}
 
-These triangles are more than just theoretical constructs.
 In social network graphs, for example, they can represent closed friendships or tightly-knit groups, signaling levels of local connectivity in a network.
 This, in turn, can reflect greater patterns and structures within a network.
 For example, in social media platforms, triangles are used to model relationships between users, where closed triangles indicate strong communities or mutual interests.
@@ -152,7 +145,6 @@ For example, a study on yeast protein interaction networks used analysis of tria
 The researchers constructed graphs called ``genetic congruence networks," connecting genes that shared similar interaction partners.
 These networks showed a higher-than-expected occurrence of triangles, indicating a strong correlation between genetic congruence and protein interactions.
 This suggests that triangles can capture important structural patterns, such as proteins that function within the same biological pathway or complex.
-Like in the case of social network analysis, this example illustrates how triangle metrics are not just useful for theoretical analysis but also for practical applications.
 
 While the utility of triangle-based metrics is well-documented, counting triangles efficiently in large graphs remains computationally challenging.
 Direct enumeration methods involve inspecting all possible triples of nodes in the graph, a process with a worst-case time complexity of $O(n^3)$ where $n$ is the number of nodes \cite{al_hasan_triangle_2018}.
@@ -208,16 +200,18 @@ This issue is particularly relevant in the era of big data, where networks of mi
 \end{figure}
 
 To address these challenges, researchers have developed a variety of approaches to count triangles efficiently.
-Some deterministic methods outlined in more detail in the background section of this proposal decrease the time it takes to compute global triangle counts \cite{strassen_gaussian_1969}.
+Some deterministic methods outlined in more detail in Section \ref{sec:background} decrease the time it takes to compute exact triangle counts \cite{strassen_gaussian_1969}.
 However, these methods still face scalability issues.
 As a result, randomized algorithms \cite{tsourakakis_doulion_2009, seshadhri_triadic_2013, tsourakakis_fast_2008} have emerged as a promising alternative.
 By leveraging probabilistic techniques, these algorithms provide approximate triangle counts with significant reductions in runtime while maintaining a high degree of accuracy.
 
-Thus, this thesis aims to use randomized algorithms to find new, fast, accurate ways to estimate triangle counts that can be used in real-world applications.
+This thesis aims to extend our understanding of randomized algorithms to find new, fast, accurate ways to estimate triangle counts that can be used in real-world applications.
 
 \newpage
 
 \section{Notation}
+
+We first introduce the notation that will be used throughout this work.
 
 \begin{table}[ht]
     \centering
@@ -233,14 +227,40 @@ Thus, this thesis aims to use randomized algorithms to find new, fast, accurate 
         $\Delta_i$      & Number of triangles node $i$ participates in. \\
         $\Delta$        & Total number of triangles in $G$. \\
         $d_i$           & Degree of node $i$. \\
+        $s$             & Number of nodes sampled. \\
         \bottomrule
     \end{tabular}
     \label{tab:notation}
 \end{table}
 
+In more detail, throughout, we consider a graph \( G = (V, E) \) where:
+\begin{itemize}
+    \item \( G \) is an undirected, unweighted, simple graph (no self-loops or multiple edges).
+    \item \( n = |V| \) is the number of vertices in \( G \).
+    \item \( m = |E| \) is the number of edges in \( G \).
+    \item The adjacency matrix \( A \in \{0,1\}^{n \times n} \) is defined such that
+    \[
+    A_{ij} =
+    \begin{cases}
+    1 & \text{if } (i,j) \in E, \\
+    0 & \text{otherwise}.
+    \end{cases}
+    \]
+    \item The degree of node \( i \) is denoted \( d_i \), where \( d_i = \sum_{j=1}^{n} A_{ij} \).
+    \item The total degree sum satisfies \( \sum_{i=1}^{n} d_i = 2m \), since each edge contributes to the degree of both its endpoints.
+    \item The number of triangles node \( i \) participates in is denoted \( \Delta_i \).
+    \item The total number of triangles in \( G \) is denoted \( \Delta \), and satisfies
+    \[
+    \Delta = \frac{1}{3} \sum_{i=1}^{n} \Delta_i,
+    \]
+    since each triangle is counted once at each of its three vertices.
+    \item $s$ is the number of nodes sampled in $G$.
+\end{itemize}
+
 \newpage
 
 \section{Background}
+\label{sec:background}
 
 \subsection{Types of Graphs}
 
@@ -248,7 +268,7 @@ In graph theory, graphs are classified as either directed or undirected.
 An \emph{undirected graph} is one in which edges have no specific direction, so the relationship between connected nodes is mutual: If $u$ connects to $v$, then $v$ connects to $u$.  
 In contrast, a \emph{directed graph}, or digraph, has edges with a defined direction—$u$ may point to $v$ without $v$ pointing to $u$.  
 This directional property is particularly relevant when calculating triangle counts, as a triangle in a directed graph can follow a specific directional sequence.  
-In this discussion, we generally refer to undirected graphs unless otherwise specified, although the methods described can be extended to directed graphs as well.
+In this discussion, we will only discuss undirected graphs, although the methods described can be extended to directed graphs as well.
 
 \subsection{Graph Motifs}
 
@@ -257,15 +277,7 @@ One such motif is the \emph{clique}, a subset of vertices such that every pair o
 Triangles, for example, are a clique, as they consist of 3 mutually-connected nodes.
 Another common example of a clique is the \emph{4-clique}, denoted as \( K_4 \), which consists of four vertices with edges connecting each pair of vertices.
 
-Formally, we define a 4-clique, \( K_4 \), as the complete graph on four vertices, meaning every pair of vertices is connected by an edge. The set of vertices \( V \) and edges \( E \) for \( K_4 \) are given by:
-\[
-K_4 = (V, E)
-\]
-where  
-\[
-V = \{ v_1, v_2, v_3, v_4 \}, \quad
-E = \{ (v_i, v_j) \mid 1 \leq i < j \leq 4 \}.
-\]
+Formally, we define a 4-clique, \( K_4 \), as the complete graph on four vertices, meaning every pair of vertices is connected by an edge. The set of vertices \( V \) and edges \( E \) for \( K_4 \) are given by $K_4 = (V, E)$ where $V = \{ v_1, v_2, v_3, v_4 \}, E = \{ (v_i, v_j) \mid 1 \leq i < j \leq 4 \}$.
 
 Figure~\ref{fig:k4} illustrates the structure of \( K_4 \), where each vertex is connected to every other vertex, representing the maximal level of connectivity between four vertices.
 
@@ -294,10 +306,10 @@ Figure~\ref{fig:k4} illustrates the structure of \( K_4 \), where each vertex is
 
 Triangle counting can be approached in a variety of ways, each with its own advantages and disadvantages. 
 One of the simplest methods is the brute force technique, where all distinct sets of three vertices ${u, v, w}$ are enumerated and checked for the existence of a triangle.
-This involves examining every possible combination of vertices in the graph and testing whether all three edges $(u, v)$, $(v, w)$, and $(w, u)$ exist. 
+This involves examining every possible combination of vertices $(u, v, w)$ in the graph and testing whether all three edges $(u, v)$, $(v, w)$, and $(w, u)$ exist. 
 
 Assuming optimal conditions with edges stored in a hash table, where edge retrieval takes $O(1)$ time, the time complexity of this brute force approach is $\Theta(n^3)$. 
-This complexity stems from the fact that ${n \choose k} = \Theta(n^k)$, and thus, ${n \choose 3} = \Theta(n^3)$ \cite{al_hasan_triangle_2018}. 
+This complexity stems from the fact that ${n \choose k} = \Theta(n^k)$, and thus, ${n \choose 3} = \Theta(n^3)$ \cite{al_hasan_triangle_2018}, so there are $O(n^3)$ checks and each takes $O(1)$ time. 
 
 While this method is straightforward, it is inefficient for large graphs due to its high computational cost.
 Additionally, this method is no more efficient on sparse graphs (those with relatively few edges compared to the maximum number of edges possible) than on dense ones, which is another area for improvement.
@@ -310,8 +322,9 @@ These methods rely on randomly selecting edges or vertices and then inspecting t
 Sampling-based techniques are particularly useful in scenarios where calculating the exact triangle count is computationally expensive or unnecessary.
 
 Additionally, sampling algorithms often provide tunable accuracy, allowing for a trade-off between precision and performance, making them ideal for processing large-scale networks.
+We detail some of the main sampling approaches below.
 
-\subsubsubsection{Edge Sampling}
+\paragraph{Edge Sampling}
 
 In edge sampling, we randomly sample a subset of edges from the graph, count the number of triangles in the subgraph, and scale up to reach our estimate.
 
@@ -320,13 +333,13 @@ As all triangles consist of three edges, this means that all triangles in $G$ ha
 Thus, the number of triangles counted is scaled by $\frac{1}{p^3}$ to achieve a final estimate.
 
 Other algorithms extend this even further.
-For example, a parallel implementation of Doulion \cite{arifuzzaman_parallel_2012}, where each processor independently sparsifies its assigned partition of the graph, can improve accuracy.
+For example, a parallel implementation of Doulion \cite{arifuzzaman_parallel_2012}, where each processor independently sparsifies its assigned partition of the graph, can improve speed.
 
 In all of these algorithms though, the key piece of their efficiency and efficacy is the sampling of edges to get a good picture of the graph's structure without counting every triangle individually.
 
-\subsubsubsection{Wedge Sampling}
+\paragraph{Wedge Sampling}
 
-Wedge sampling \cite{seshadhri_triadic_2013} focuses on estimating wedges—triplets of nodes that form two edges but not necessarily a triangle.
+Wedge sampling \cite{seshadhri_triadic_2013} focuses on wedges—triplets of nodes that form two edges but not necessarily a triangle.
 A wedge is defined by three vertices $(u, v, w)$ where $u$ is adjacent to both $v$ and $w$, but $v$ and $w$ may or may not be adjacent (see Figure~\ref{fig:wedge_diagram}).
 
 \begin{figure}[H]
@@ -389,10 +402,10 @@ In these matrices, each row and column represents a node, and edges between node
         \[
         A =
         \begin{bmatrix}
-        0 & 1 & 1 & 0 \\
-        1 & 0 & 0 & 1 \\
-        1 & 0 & 0 & 1 \\
-        0 & 1 & 1 & 0 \\
+        0 & \hspace{10pt} 1 & \hspace{10pt} 1 & \hspace{10pt} 0 \\
+        1 & \hspace{10pt} 0 & \hspace{10pt} 0 & \hspace{10pt} 1 \\
+        1 & \hspace{10pt} 0 & \hspace{10pt} 0 & \hspace{10pt} 1 \\
+        0 & \hspace{10pt} 1 & \hspace{10pt} 1 & \hspace{10pt} 0
         \end{bmatrix}
         \]
         \caption{Adjacency matrix corresponding to the graph.}
@@ -406,7 +419,7 @@ One simple method using the adjacency matrix is to use the following formula whe
 \Delta = \frac{1}{6} \mathrm{trace}(A^3)
 \]
 
-This formula is derived from the fact that the diagonal elements of $A^3$ count the number of length-three paths (i.e. triangles) that each vertex participates in.
+This formula is derived from the fact that the diagonal elements of $A^3$ count the number of length-three paths (i.e. triangles) from each vertex to back to itself.
 Each triangle can be formed from six of these length-three paths, as each triangle can be drawn starting at any of its three nodes and moving either clockwise or counter-clockwise, as illustrated in Figure~\ref{fig:triangle-traversal}.
 Thus, the trace of $A^3$ is divided by six to scale down to the global triangle count.
 
@@ -506,13 +519,13 @@ Thus, the trace of $A^3$ is divided by six to scale down to the global triangle 
     \label{fig:triangle-traversal}
 \end{figure}
 
-To compute $A^3$, we first need to calculate $A^2$ (which takes $O(n^3)$ for an $n \times n$ matrix, $n$ thus also being the number of nodes in our graph $G$) and then multiply $A^2$ by $A$ (also $O(n^3)$).
+To compute $A^3$, we first need to calculate $A^2$ (which takes $O(n^3)$ time for an $n \times n$ matrix, $n$ thus also being the number of nodes in our graph $G$) and then multiply $A^2$ by $A$ (also $O(n^3)$).
 Thus, the total complexity for computing $A^3$ is $O(n^3)$.
-After computing $A^3$, calculating the trace takes $O(n)$, as we need to iterate over the $n$ diagonal elements.
+After computing $A^3$, calculating the trace takes $O(n)$ time, as we need to iterate over the $n$ diagonal elements.
 Thus, the overall runtime complexity for the operation is $O(n^3)$.
-While this is not a direct improvement over the runtime of the naive algorithm, this strategy forms the basis of many faster methods.
+While this is not a direct improvement over the runtime of the naive algorithm, this strategy forms the basis of many faster methods, which we discuss below.
 
-\subsubsubsection{Strassen's Algorithm}
+\paragraph{Strassen's Algorithm}
 
 This runtime analysis above assumes that matrix multiplication is performed using the standard algorithm.
 However, more sophisticated techniques, such as Strassen's algorithm \cite{strassen_gaussian_1969}, can reduce matrix multiplication time.
@@ -520,28 +533,26 @@ In this algorithm, that is used on large, square matrices, such as undirected so
 
 Specifically, Strassen's algorithm reduces the complexity of multiplying two $n \times n$ matrices to approximately $O(n^{\log_2 7})$, which is about $O(n^{2.81})$.
 Computing $A^2$ using Strassen's algorithm will take $O(n^{\log_2 7})$.
-Then, multiplying $A^2$ by $A$ again takes $O(n^{\log_2 7})$.
+Then, multiplying $A^2$ by $A$ again takes $O(n^{\log_2 7})$ time.
 Therefore, the total complexity for computing $A^3$ with Strassen's algorithm is $O(n^{\log_2 7}) + O(n^{\log_2 7}) = O(n^{\log_2 7})$, or roughly $O(n^{2.81})$.
 
 To contextualize this, on a $2 \times 2$ matrix, the $n^3$ multiplications required for the naive method would mean we would complete $2^3 = 8$ multiplications.
 With Strassen's method and its $n^{\log_2 7}$ multiplications, there would instead only be $2^{\log_2 7} = 7$ multiplications computed.
 On larger matrices, this leads to a significant speedup.
 
-There are matrix multiplication algorithms that are even faster, such as one with a $O(n^{2.371552})$ runtime, but this algorithm relies on the use of extremely large constants and is thus rarely used in real-world applications \cite{williams_new_2023}.
+There are matrix multiplication algorithms that are even faster, such as one with a $O(n^{2.371552})$ runtime, but these algorithms rely on the use of extremely large constants and are thus rarely used in real-world applications \cite{williams_new_2023}.
 
-\subsubsubsection{EigenTriangle Algorithm}
+\paragraph{EigenTriangle Algorithm}
 
 Another significant approach in triangle counting is the use of spectral methods.
 One such method is the EigenTriangle algorithm \cite{tsourakakis_fast_2008}, which estimates the triangle count $\Delta$ by considering the spectral decomposition of the adjacency matrix $A$.
-
-The EigenTriangle algorithm is based on the observation that the number of triangles in a graph is closely related to the spectrum of its adjacency matrix.
-In particular, the adjacency matrix $A$ is decomposed as:
+In particular, the adjacency matrix $A$ can be decomposed as:
 
 \[
 A = U \Lambda U^T,
 \]
 
-where $U$ is a matrix whose columns are the eigenvectors of $A$, and $\Lambda$ is a diagonal matrix containing the corresponding eigenvalues.
+where $U$ is a matrix whose columns are the orthonormal eigenvectors of $A$, and $\Lambda$ is a diagonal matrix containing the corresponding eigenvalues.
 
 Once the decomposition is performed, the number of triangles can be computed exactly using $\Delta = \frac{1}{6} \sum_{i=1}^{n} \lambda_i^3$, and can be estimated using:
 
@@ -549,15 +560,14 @@ Once the decomposition is performed, the number of triangles can be computed exa
 \Delta \approx \frac{1}{6} \sum_{i=1}^{k} \lambda_i^3,
 \]
 
-where $\lambda_i$ are the $k$ eigenvalues of largest magnitude of the adjacency matrix $A$.
-The runtime of EigenTriangle is dominated by the cost of approximating the top $k$ eigenvalues and eigenvectors of $A$, which, using the Lanszos method \cite{cullum_lanczos_2002}, can be done in roughly $O(k m)$ time, where $m$ is the number of edges and $k$ is typically much smaller than the number of nodes $n$.
-This is a significant improvement over the runtimes of direct methods.
+where $\lambda_1 \ldots \lambda_k$ are the $k$ eigenvalues of largest magnitude of the adjacency matrix $A$.
+The runtime of EigenTriangle is dominated by the cost of approximating the top $k$ eigenvalues and eigenvectors of $A$, which, using the Lanszos method \cite{cullum_lanczos_2002}, can be done in roughly $O(k m)$ time, where $m$ is the number of edges since $k$ is typically set much smaller than the number of nodes $n$, this is a significant improvement over the runtimes of direct methods.
 
 Specifically, for the direct method in which was compute the trace of $A^3$, we know ${trace}(A^3) = \sum_{i = 1}^{n} \lambda_i(A^3) = \sum_{i = 1}^{n} \lambda_i^3$.
 Thus, we see that EigenTriangle approximates ${trace}(A^3)$.
 Given this, it makes sense that this runtime is a substantial improvement over the complexity of computing $\mathrm{trace}(A^3)$ directly.
 
-\subsubsubsection{TraceTriangle Algorithm}
+\paragraph{TraceTriangle Algorithm}
 
 The TraceTriangle algorithm \cite{avron_counting_2010} is a randomized algorithm designed for efficient triangle estimation in large graphs.
 It leverages trace-based techniques, which compute the trace of matrix powers to approximate the number of triangles.
@@ -568,7 +578,7 @@ This randomized approach is based on Hutchinson's method \cite{hutchinson_stocha
 In this case, this significantly reduces computation time by approximating $\mathrm{trace}(A^3)$ through randomized sampling rather than explicit computation.
 
 The TraceTriangle algorithm is a sampling algorithm, and thus, it's runtime depends on the desired accuracy of output, as more or fewer samples can be taken depending on the application.
-Generally though, experiments demonstrate that typically $O(log^2|n|)$, where $n$ is the number of vertices in $G$, samples are required to get good approximations on real-world graphs, and regardless of application, the runtime for taking each sample is $O(|m|)$, where $m$ is the number of edges in $G$.
+Generally though, experiments demonstrate that typically $O(\log^2{n})$, where $n$ is the number of vertices in $G$, samples are required to get good approximations on real-world graphs, and regardless of application, the runtime for taking each sample is $O(m)$, where $m$ is the number of edges in $G$ \cite{avron_counting_2010}.
 
 Comparing TraceTriangle to the EigenTriangle algorithm, TraceTriangle achieves higher accuracy across multiple types of graphs \cite{avron_counting_2010}.
 Despite this accuracy advantage, EigenTriangle tends to run more quickly than TraceTriangle on large graphs.
@@ -577,18 +587,16 @@ This allows TraceTriangle to scale effectively with the size of the graph, ultim
 
 \subsection{General Algorithmic Strategies}
 
-Beyond specific algorithms for triangle counting, various general techniques from theoretical computer science have been adapted for this problem, particularly in designing faster algorithms.
+Beyond specific algorithms for triangle counting, various general techniques from statistics and theoretical computer science have been adapted for this problem, particularly in designing faster algorithms.
 
 \subsubsection{Variance Reduction}
 \label{sec:variance-reduction-background}
 
-Variance reduction \cite{prescott_monte_1965} is another general technique that can be applied to triangle estimation, improving accuracy without increasing the number of samples needed.
-
-Variance reduction methods aim to reduce the spread (or variance) of estimations, leading to more reliable results even with fewer samples.
+Variance reduction methods \cite{prescott_monte_1965} aim to reduce the spread (or variance) of estimations, leading to more reliable results even with fewer samples.
 This is particularly important in large-scale graphs, where taking a high number of samples may be computationally infeasible.
 
 In terms of triangle counting, this method can be applied by finding a fast way of estimating the global triangle count, and then using sampling to estimate the error on that count.
-Specifically, we can begin by finding a relationship between the degree of nodes and the number of triangles they are involved in.
+In our case, we can begin by finding a relationship between the degree of nodes and the number of triangles they are involved in.
 This can be done by plotting nodes' degrees ($d_i$) versus triangle counts $(\Delta_i)$ on a log-log plot, finding a line of best fit, and then exponentiating as follows:
 
 \[
@@ -598,13 +606,13 @@ This can be done by plotting nodes' degrees ($d_i$) versus triangle counts $(\De
 \Delta_i \approx d_i^\alpha \cdot e^\beta = m_i.
 \]
 
-Now, using this equation, we can estimate the overall triangle count $M$ by applying this line of best fit relationship to all nodes in the graph:
+Now, using this equation, we can estimate the overall triangle count $\Delta$ by applying this line of best fit relationship to all nodes in the graph:
 
 \[
-M = \sum_{i = 1}^{n} m_i.
+\Delta \approx M = \sum_{i = 1}^{n} m_i.
 \]
 
-Next, we sample our graph to get $s$ nodes, with $s$ being our sample size. For each of these $s$ sampled nodes, we count the number of triangles they are involved in (written $\Delta_i$) and find the difference between those actual triangle counts and their estimated triangle counts using the line of best fit relationship. We then take the sum of these errors and scale them up to estimate the error on our global triangle count (written $E$). Mathematically, this can be expressed as follows:
+Next, we sample our graph to get $s$ nodes, with $s$ being our sample size. For each of these $s$ sampled nodes, we count the number of triangles they are involved in, $\Delta_i$, and find the difference between those actual triangle counts and their estimated triangle counts using the line of best fit relationship. We then take the sum of these errors and scale them up to estimate the error on our global triangle count (written $E$). Mathematically, this can be expressed as follows:
 
 \[
 E = \left( \sum_{i = 1}^{s} \Delta_i - m_i \right) \cdot \frac{n}{s}.
@@ -635,7 +643,7 @@ For example, we can prioritize high-degree nodes as the most ``important.''
 The weight of this importance is decided by some power $\alpha$ greater than 1 (which is equivalent to uniform sampling).
 This $\alpha$ can be tuned to indicate different strengths of relationships between the degree and triangle counts of nodes. 
 
-To get the optimal value for $\alpha$, we can plot nodes' degrees versus triangle count as described in section \ref{sec:variance-reduction-background} and use the value of the slope ($\alpha$) obtained when calculating the line of best fit of this plot.
+To get the optimal value for $\alpha$, we can plot nodes' degrees versus triangle count as described in Section \ref{sec:variance-reduction-background} and use the value of the slope ($\alpha$) obtained when calculating the line of best fit of this plot.
 
 Once $\alpha$ has been selected, we use it to ascribe each node a probability $p_i$ to each node based in its degree $d_i$:
 
@@ -682,7 +690,7 @@ In general, this method can be highly effective, as accurate predictions can sig
 To evaluate different triangle count estimation methods, I implemented them in Python and compared their accuracies, runtimes, and sample sizes on a diverse set of networks.
 The primary methods implemented were uniform sampling, importance sampling, a variance reduction method, and a hybrid method that combines elements of these approaches. 
 
-The implemented methods were applied to both synthetic and real-world networks sourced from the \href{https://snap.stanford.edu/index.html}{Stanford Network Analysis Platform (SNAP) library}.
+The implemented methods were applied to both synthetic and real-world networks sourced from the Stanford Network Analysis Platform (SNAP) library \cite{leskovec_snap_2017}.
 These networks span a range of sizes, densities, and structural properties to ensure robust comparisons.
 
 \subsection{Implementation}
@@ -695,14 +703,14 @@ The datasets used in this study include both synthetic networks and real-world g
 Specifically, methods were evaluated on these three networks:
 
 \begin{itemize}
-    \item \href{https://snap.stanford.edu/data/ego-Facebook.html}{Social Network (Facebook)}: Social circles (or `friends lists') are represented in this graph, where each user is a node, and each edge is a friendship between users.
-    \item \href{https://snap.stanford.edu/data/ca-GrQc.html}{Collaboration Network}: This graph represents a network of co-authorships from the General Relativity and Quantum Cosmology collaboration network, where nodes represent authors and edges indicate co-authored papers.
-    \item \href{https://snap.stanford.edu/data/wikipedia-article-networks.html}{Wikipedia Article Network}: This graph represents a network of Wikipedia articles relating to crocodiles, where nodes represent articles and edges represent links between them.
+    \item \href{https://snap.stanford.edu/data/ego-Facebook.html}{Social Network (Facebook)}: Social circles (or `friends lists') are represented in this graph, where each user is a node, and each edge is a friendship between users. Contains 4039 nodes, 88234 edges, and 1612010 triangles.
+    \item \href{https://snap.stanford.edu/data/ca-GrQc.html}{Collaboration Network}: This graph represents a network of co-authorships from the General Relativity and Quantum Cosmology collaboration network, where nodes represent authors and edges indicate co-authored papers. Contains 5242 nodes, 14496 edges, and 48260 triangles.
+    \item \href{https://snap.stanford.edu/data/wikipedia-article-networks.html}{Wikipedia Article Network}: This graph represents a network of Wikipedia articles relating to crocodiles, where nodes represent articles and edges represent links between them. Contains 11631 nodes, 170918 edges, and 630879 triangles.
 \end{itemize}
 
 A synthetic network was also generated using the \href{https://networkx.org/}{NetworkX library}.
 Specifically, the library was used to create a Barabási–Albert \cite{albert_statistical_2002} graph.
-Barabási–Albert graphs model preferential attachment, exhibiting power-law degree distributions, making them interesting graphs when using degree as a predictor for other graph features.
+Barabási–Albert graphs are designed to be highly simplified models of social networks, and model preferential attachment, exhibiting power-law degree distributions, making them interesting graphs when using degree as a predictor for other graph features.
 
 To assess accuracy, ground-truth triangle counts were computed using exact algorithms and compared against the approximate counts produced by each estimation method.
 The evaluation metrics included accuracy, runtime efficiency, and the sample size required to achieve a specified error margin.
@@ -710,10 +718,12 @@ By examining performance across different graph characteristics, the study ident
 
 \subsection{Sampling Methods Evaluated}
 
-\subsubsubsection{Uniform Sampling:}
+Four sampling methods—uniform sampling, importance sampling, variance reduction, and a hybrid method, were implemented and tested with all datasets.
 
-This baseline method involves randomly sampling edges or nodes and scaling up the observed triangle counts proportionally.
-While simple, uniform sampling often struggle in graphs with skewed degree distributions.
+\paragraph{Uniform Sampling:}
+
+This baseline method involves randomly sampling nodes and scaling up the observed triangle counts proportionally.
+While simple, uniform sampling often struggles in graphs with skewed degree distributions.
 
 Code for this method is given below, where $A$ is the adjacency matrix of our graph $G$ and $s$ is the number of nodes of $G$ being sampled.
 
@@ -723,31 +733,34 @@ Code for this method is given below, where $A$ is the adjacency matrix of our gr
 import numpy as np
 import random
 
+# Generate a sorted list of s random integers between 0 and n-1
 def gen_s_ints(s, n):
     choice_arr = sorted(random.choices(range(n), k=s))
     return choice_arr
 
+# Estimate the number of triangles in a graph using uniform sampling
 def estimate_uniformly_per_node_method(A, s):
-    n = len(A)
-    sampled_nodes = gen_s_ints(s, n)
+    n = len(A)  # Total number of nodes in the graph
+    sampled_nodes = gen_s_ints(s, n)  # Sample s nodes uniformly at random
 
     triangle_count = 0
     for i in sampled_nodes:
-        triangle_count += count_node_triangles(A, i)
+        triangle_count += count_node_triangles(A, i)  # Count triangles involving node i
 
+    # Scale the sample count up to estimate the total number of triangles
+    # n/s scales the sample to the full node set
+    # Divide by 3 because each triangle is counted once at each vertex
     return triangle_count * (n / s) // 3
-
 \end{lstlisting}
 }
 
 \textbf{Importance Sampling:}
 
-In this method, we attempt to prioritize the sampling of nodes that are likely to form more triangles.
+As detailed in Section \ref{sec:importance-sampling-background}, for importance sampling, we attempt to prioritize the sampling of nodes that are likely to form more triangles.
 This is done by sampling proportionally to the degree of nodes.
 This method aims for higher accuracy with fewer samples.
 
-
-As written in section \ref{sec:importance-sampling-background}, in importance sampling, after we select a value $\alpha$ to indicate the strength of the relationship between the degree and triangle count of nodes, we can use this value $\alpha$ to ascribe each node a probability $p_i$ to each node based in its degree $d_i$:
+After we select a value $\alpha$ to indicate the strength of the relationship between the degree and triangle count of nodes, we can use this value $\alpha$ to ascribe each node a probability $p_i$ to each node based in its degree $d_i$:
 
 \[
 D = \sum_{i = 1}^{n} d_i^\alpha
@@ -758,38 +771,40 @@ p_i = \frac{d_i^\alpha}{D}.
 
 We can then sample each node $n_i$ with probability $p_i$.
 The code for this sampling and estimation process is given below where, like before $A$ is the adjacency matrix of $G$ and $s$ is our sample size.
-We also introduce the parameter $\alpha$, which in the code snippet, is represented by the variable ``power''.
+The parameter $\alpha$ is represented by the variable ``power'' in the code snippet.
 
 {
 \singlespacing
 \begin{lstlisting}[language=Python]
+# Sample s nodes from the graph, with probability proportional to degree^power
 def sample_by_degree(A, n, s, power):
-    degrees = np.sum(A, axis=1)
-    degrees_to_power = np.power(degrees, power)
+    degrees = np.sum(A, axis=1)  # Compute degree of each node
+    degrees_to_power = np.power(degrees, power)  # Raise degrees to the given power
 
-    sum_of_degrees_to_power = np.sum(degrees_to_power)
-    probabilities = degrees_to_power / sum_of_degrees_to_power
+    sum_of_degrees_to_power = np.sum(degrees_to_power)  # Sum of all degrees^power
+    probabilities = degrees_to_power / sum_of_degrees_to_power  # Normalize to get probabilities
 
+    # Sample s nodes according to the computed probabilities
     sampled_nodes = random.choices(range(n), weights=probabilities, k=s)
 
     return probabilities, sampled_nodes
 
+# Estimate the total number of triangles using importance sampling based on degree
 def importance_estimate_per_node_method(A, s, power):
-    n = len(A)
-    probabilities, sampled_nodes = sample_by_degree(A, n, s, power)
+    n = len(A)  # Total number of nodes in the graph
+    probabilities, sampled_nodes = sample_by_degree(A, n, s, power)  # Sample nodes with importance weights
 
     estimate = 0
     for i in sampled_nodes:
-    triangle_count = count_node_triangles(A, i)
-    estimate += triangle_count * (1 / (s * probabilities[i]))
+        triangle_count = count_node_triangles(A, i)  # Count triangles involving node i
+        estimate += triangle_count * (1 / (s * probabilities[i]))  # Scale by inverse sampling probability
 
+    # Divide by 3 because each triangle is counted once at each vertex
     return estimate // 3
 \end{lstlisting}
 }
 
-To select the ideal value for the power ($\alpha$), as described in section \ref{sec:importance-sampling-background}, we plot nodes' degrees verses triangle counts and set $\alpha$ to be the slope of this plot.
-
-The dataset we will primarily use is the Social Network (Facebook) dataset.
+To select the ideal value for the power $\alpha$, as described in Section \ref{sec:importance-sampling-background}, we plot nodes' log degrees verses log triangle counts and set $\alpha$ to be the line of best fit of this plot.
 
 \begin{figure}[H]
     \centering
@@ -845,51 +860,58 @@ However, the number arrived at using our linear regression may either over- or u
 Thus, we sample $s$ additional nodes and calculate the difference between their actual triangle counts and those predicted by our line of best fit.
 Then, scaling this up, we can combine our predicted triangle count and predicted error to arrive at a final estimate of the triangle count $\Delta$.
 
-The specific math for this method is given in section \ref{sec:variance-reduction-background} and the code for it is given below.
+The specific math for this method is given in Section \ref{sec:variance-reduction-background} and the code for it is given below.
 
 {
 \singlespacing
 \begin{lstlisting}[language=Python]
+# Find the slope and intercept of the best fit line for log(degree) vs log(triangle count)
 def get_line_of_best_fit(A):
     n = len(A)
-    degrees = np.sum(A, axis=1)
-    triangles = np.zeros(n)
+    degrees = np.sum(A, axis=1)  # Compute the degree of each node
+    triangles = np.zeros(n)  # Initialize triangle counts
 
     for i in range(n):
-        triangles[i] = count_node_triangles(A, i)
+        triangles[i] = count_node_triangles(A, i)  # Count triangles for each node
 
+    # Only keep nodes with degree > 0 and triangle count > 0
     valid_indices = (degrees > 0) & (triangles > 0)
     filtered_degrees = degrees[valid_indices]
     filtered_triangles = triangles[valid_indices]
 
+    # Take logs of degrees and triangle counts
     log_degrees = np.log(filtered_degrees)
     log_triangles = np.log(filtered_triangles)
 
+    # Fit a line: log(triangle count) ~= slope * log(degree) + intercept
     slope, intercept = np.polyfit(log_degrees, log_triangles, 1)
 
     return slope, intercept
 
+# Estimate the number of triangles using the variance reduction technique
 def estimate_variance_reduction_method(A, s, power):
     n = len(A)
-  
-    slope, intercept = get_line_of_best_fit(A)
-  
-    # obtain M from the line of best fit
+
+    slope, intercept = get_line_of_best_fit(A)  # Fit line between degree and triangle count
+
+    # Estimate number of triangles for each node using the fitted line
     degree_array = np.sum(A, axis=1)
     approx_triangles = np.power(degree_array, slope) * np.exp(intercept)
-    M = np.sum(approx_triangles)
-  
+    M = np.sum(approx_triangles)  # Initial estimate: sum of approximated triangle counts
+
     if s == 0:
-        return M // 3
-  
-    # sample s nodes, and use them to adjust our estimate M
+        return M // 3  # If no samples, just return scaled M
+
+    # Sample s nodes uniformly at random
     sampled_nodes = gen_s_ints(s, n)
-    sampled_node_triangles = np.array([count_node_triangles(A, i) for i in sampled_nodes])
-  
-    sampled_m_i_vals = np.array([approx_triangles[i] for i in sampled_nodes])
-  
-    D = np.sum(sampled_node_triangles - sampled_m_i_vals) * (n/s)
-  
+    sampled_node_triangles = np.array([count_node_triangles(A, i) for i in sampled_nodes]) # Actual triangle counts
+
+    sampled_m_i_vals = np.array([approx_triangles[i] for i in sampled_nodes]) # Approximated triangle counts
+
+    # Compute correction term D
+    D = np.sum(sampled_node_triangles - sampled_m_i_vals) * (n / s)
+
+    # Final estimate: corrected M, divided by 3 (because each triangle is counted 3 times)
     return (M + D) // 3
 \end{lstlisting}
 }
@@ -904,26 +926,34 @@ The differences between the following code snippet and that in variance reductio
 {
 \singlespacing
 \begin{lstlisting}[language=Python]
+# Estimate the number of triangles using the hybrid method
 def estimate_importance_variance_reduction_method(A, s, power):
-    n = len(A)
+    n = len(A)  # Total number of nodes in the graph
 
-    slope, intercept = get_line_of_best_fit(A)
+    slope, intercept = get_line_of_best_fit(A)  # Fit line between degree and triangle count
 
+    # Approximate the number of triangles for each node using the fitted line
     degree_array = np.sum(A, axis=1)
     approx_triangles = np.power(degree_array, slope) * np.exp(intercept)
-    M = np.sum(approx_triangles)
+    M = np.sum(approx_triangles)  # Initial total estimate
 
     if s == 0:
-        return M // 3
+        return M // 3  # If no samples, return the approximation
 
+    # Sample nodes with importance sampling (probability proportional to degree^power)
     probabilities, sampled_nodes = sample_by_degree(A, n, s, power)
-    sampled_node_probabilities = np.array([probabilities[i] for i in sampled_nodes])
-    sampled_node_triangles = np.array([count_node_triangles(A, i) for i in sampled_nodes])
 
+    # Get the probability for each sampled node
+    sampled_node_probabilities = np.array([probabilities[i] for i in sampled_nodes])
+    # Count actual triangles for each sampled node
+    sampled_node_triangles = np.array([count_node_triangles(A, i) for i in sampled_nodes])
+    # Get the approximated triangle counts for each sampled node
     sampled_m_i_vals = np.array([approx_triangles[i] for i in sampled_nodes])
 
+    # Compute the correction term D, scaling each difference by 1/(s * probability)
     D = np.sum((sampled_node_triangles - sampled_m_i_vals) * (1 / (s * sampled_node_probabilities)))
 
+    # Final corrected estimate, divided by 3 (each triangle is counted 3 times)
     return (M + D) // 3
 \end{lstlisting}
 }
@@ -964,7 +994,7 @@ I also defined \lstinline{noise} as \lstinline{noise = np.random.normal(0, noise
 This noise is normally distributed with a mean of zero and a standard deviation of \lstinline{noise_scale}, allowing for random fluctuations around the expected triangle and maintaining a symmetric distribution.
 
 The two relationships defined using these degrees and noise values are the \textbf{Uniform noise} and \textbf{multiplicative noise} relationships.
-For the first, artificial triangle counts for the degree distributions were set to \lstinline{np.power(degrees, slope) * np.exp(intercept) + noise} where the slope and intercept are the outputs from the \lstinline{get_line_of_best()} function defined in section \ref{variance-reduction-algo}.
+For the first, artificial triangle counts for the degree distributions were set to \lstinline{np.power(degrees, slope) * np.exp(intercept) + noise} where the slope and intercept are the outputs from the \lstinline{get_line_of_best()} function defined in Section \ref{variance-reduction-algo}.
 Thus, in this relationship, noise does not grow with degree.
 
 For the second relationship, the \textbf{multiplicative noise} relationship, the artificial triangle counts were set to \lstinline{np.power(degrees, slope) * np.exp(intercept) * (1 + noise)} where the slope, intercept, and noise are defined as before.
@@ -1096,7 +1126,7 @@ However, as illustrated in \cref{fig:avg_duration_importance,fig:avg_duration_va
     \label{fig:avg_duration_variance_importance}
 \end{figure}
 
-In figures \cref{fig:percent_error_importance,fig:percent_error_variance_importance}, we also find that powers closest to the optimal value $\alpha$, as described in section \ref{sec:importance-sampling-background} have lowest percent error.
+In figures \cref{fig:percent_error_importance,fig:percent_error_variance_importance}, we also find that powers closest to the optimal value $\alpha$, as described in Section \ref{sec:importance-sampling-background} have lowest percent error.
 In the case of the Social Network (Facebook) dataset, this value is $\alpha \approx 1.97$.
 
 \begin{figure}[H]
@@ -1164,7 +1194,7 @@ These comparisons are not very robust, but they do provide evidence that the pat
 \subsection{Understanding the Benefits of Importance Sampling vs. Variance Reduction}
 
 To gather insight into why specifically importance sampling outperformed the other methods, we turn to a simulated test of the methods.
-Specifically as described in section \ref{sec:methods-simulated-test}, we tested variance reduction and importance sampling under two different triangle-degree relationships: uniform noise and multiplicative noise.
+Specifically as described in Section \ref{sec:methods-simulated-test}, we tested variance reduction and importance sampling under two different triangle-degree relationships: uniform noise and multiplicative noise.
 
 \subsubsection{Uniform Noise Relationship}
 
@@ -1449,7 +1479,7 @@ Across this section, we will use the fact that $\mathrm{Var}[X+Y] \leq 2(\mathrm
 \end{aligned}
 \]
 
-\subsubsubsection{Variance Reduction with Uniform Noise}
+\paragraph{Variance Reduction with Uniform Noise}
 
 Take the estimator of $\Delta$ to be denoted by $M$ where $M = \sum_{i = 1}^{n} m_i$ and $m_i = \Delta_i + N(0, \sigma^2)$.
 
@@ -1489,7 +1519,7 @@ This is the variance expression reached with the trivial predictor, but a better
 \mathrm{Var}(\tilde{\Delta}) \leq 2\sum_{i = 1}^{n}\Delta_i^2 \epsilon (1 + \frac{n}{s})
 \]
 
-\subsubsubsection{Variance Reduction with Multiplicative Noise}
+\paragraph{Variance Reduction with Multiplicative Noise}
 
 Here, take the estimator of $\Delta$ to be denoted by $M$ where $M = \sum_{i = 1}^{n} m_i$ and $m_i = \Delta_i + \sigma_i^2$ with $\sigma_i^2 = \Delta_i^2 \sigma^2$.
 i.e., as the size of $\Delta_i$ increases, so does the noise $m_i$.
