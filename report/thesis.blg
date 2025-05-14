@@ -4,45 +4,46 @@ The top-level auxiliary file: thesis.aux
 The style file: plain.bst
 Database file #1: thesis_bib.bib
 Warning--empty booktitle in arifuzzaman_parallel_2012
-You've used 22 entries,
+Warning--empty institution in hagberg_exploring_2008
+You've used 24 entries,
             2118 wiz_defined-function locations,
-            631 strings with 7979 characters,
-and the built_in function-call counts, 7844 in all, are:
-= -- 789
-> -- 325
+            639 strings with 8314 characters,
+and the built_in function-call counts, 8346 in all, are:
+= -- 838
+> -- 356
 < -- 9
-+ -- 130
-- -- 105
-* -- 475
-:= -- 1232
-add.period$ -- 67
-call.type$ -- 22
-change.case$ -- 115
++ -- 142
+- -- 115
+* -- 500
+:= -- 1329
+add.period$ -- 73
+call.type$ -- 24
+change.case$ -- 127
 chr.to.int$ -- 0
-cite$ -- 23
-duplicate$ -- 336
-empty$ -- 641
-format.name$ -- 105
-if$ -- 1716
+cite$ -- 26
+duplicate$ -- 354
+empty$ -- 673
+format.name$ -- 115
+if$ -- 1815
 int.to.chr$ -- 0
-int.to.str$ -- 22
-missing$ -- 22
-newline$ -- 110
-num.names$ -- 46
-pop$ -- 148
+int.to.str$ -- 24
+missing$ -- 23
+newline$ -- 120
+num.names$ -- 50
+pop$ -- 157
 preamble$ -- 1
-purify$ -- 96
+purify$ -- 105
 quote$ -- 0
-skip$ -- 276
+skip$ -- 290
 stack$ -- 0
-substring$ -- 490
-swap$ -- 109
+substring$ -- 500
+swap$ -- 110
 text.length$ -- 9
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 82
-warning$ -- 1
-while$ -- 80
-width$ -- 24
-write$ -- 238
-(There was 1 warning)
+type$ -- 90
+warning$ -- 2
+while$ -- 84
+width$ -- 26
+write$ -- 259
+(There were 2 warnings)

@@ -338,6 +338,36 @@ INPUT ./plots/degree-vs-triangle-count/degree_vs_triangle_count_ba.png
 INPUT ./plots/degree-vs-triangle-count/degree_vs_triangle_count_ba.png
 INPUT ./plots/degree-vs-triangle-count/degree_vs_triangle_count_ba.png
 INPUT ./plots/degree-vs-triangle-count/degree_vs_triangle_count_ba.png
+INPUT ./plots/noise-shapes/uniform.png
+INPUT ./plots/noise-shapes/uniform.png
+INPUT ./plots/noise-shapes/uniform.png
+INPUT ./plots/noise-shapes/uniform.png
+INPUT ./plots/noise-shapes/uniform.png
+INPUT ./plots/noise-shapes/multiplicative.png
+INPUT ./plots/noise-shapes/multiplicative.png
+INPUT ./plots/noise-shapes/multiplicative.png
+INPUT ./plots/noise-shapes/multiplicative.png
+INPUT ./plots/noise-shapes/multiplicative.png
+INPUT ./plots/triangle-counts-vs-noise/fb_triangle_count_vs_noise.png
+INPUT ./plots/triangle-counts-vs-noise/fb_triangle_count_vs_noise.png
+INPUT ./plots/triangle-counts-vs-noise/fb_triangle_count_vs_noise.png
+INPUT ./plots/triangle-counts-vs-noise/fb_triangle_count_vs_noise.png
+INPUT ./plots/triangle-counts-vs-noise/fb_triangle_count_vs_noise.png
+INPUT ./plots/triangle-counts-vs-noise/croc_triangle_count_vs_noise.png
+INPUT ./plots/triangle-counts-vs-noise/croc_triangle_count_vs_noise.png
+INPUT ./plots/triangle-counts-vs-noise/croc_triangle_count_vs_noise.png
+INPUT ./plots/triangle-counts-vs-noise/croc_triangle_count_vs_noise.png
+INPUT ./plots/triangle-counts-vs-noise/croc_triangle_count_vs_noise.png
+INPUT ./plots/triangle-counts-vs-noise/GrQc_triangle_count_vs_noise.png
+INPUT ./plots/triangle-counts-vs-noise/GrQc_triangle_count_vs_noise.png
+INPUT ./plots/triangle-counts-vs-noise/GrQc_triangle_count_vs_noise.png
+INPUT ./plots/triangle-counts-vs-noise/GrQc_triangle_count_vs_noise.png
+INPUT ./plots/triangle-counts-vs-noise/GrQc_triangle_count_vs_noise.png
+INPUT ./plots/triangle-counts-vs-noise/ba_triangle_count_vs_noise.png
+INPUT ./plots/triangle-counts-vs-noise/ba_triangle_count_vs_noise.png
+INPUT ./plots/triangle-counts-vs-noise/ba_triangle_count_vs_noise.png
+INPUT ./plots/triangle-counts-vs-noise/ba_triangle_count_vs_noise.png
+INPUT ./plots/triangle-counts-vs-noise/ba_triangle_count_vs_noise.png
 INPUT ./plots/comparisons/fb/limited_method_percent_error_vs_sample_size_comparison.png
 INPUT ./plots/comparisons/fb/limited_method_percent_error_vs_sample_size_comparison.png
 INPUT ./plots/comparisons/fb/limited_method_percent_error_vs_sample_size_comparison.png
@@ -383,21 +413,21 @@ INPUT ./plots/durations/avg_duration_Importance Sampling.png
 INPUT ./plots/durations/avg_duration_Importance Sampling.png
 INPUT ./plots/durations/avg_duration_Importance Sampling.png
 INPUT ./plots/durations/avg_duration_Importance Sampling.png
-INPUT ./plots/durations/avg_duration_Variance Reduction + Importance Sampling.png
-INPUT ./plots/durations/avg_duration_Variance Reduction + Importance Sampling.png
-INPUT ./plots/durations/avg_duration_Variance Reduction + Importance Sampling.png
-INPUT ./plots/durations/avg_duration_Variance Reduction + Importance Sampling.png
-INPUT ./plots/durations/avg_duration_Variance Reduction + Importance Sampling.png
+INPUT ./plots/durations/avg_duration_Hybrid.png
+INPUT ./plots/durations/avg_duration_Hybrid.png
+INPUT ./plots/durations/avg_duration_Hybrid.png
+INPUT ./plots/durations/avg_duration_Hybrid.png
+INPUT ./plots/durations/avg_duration_Hybrid.png
 INPUT ./plots/percent-errors/percent_error_Importance Sampling.png
 INPUT ./plots/percent-errors/percent_error_Importance Sampling.png
 INPUT ./plots/percent-errors/percent_error_Importance Sampling.png
 INPUT ./plots/percent-errors/percent_error_Importance Sampling.png
 INPUT ./plots/percent-errors/percent_error_Importance Sampling.png
-INPUT ./plots/percent-errors/percent_error_Variance Reduction + Importance Sampling.png
-INPUT ./plots/percent-errors/percent_error_Variance Reduction + Importance Sampling.png
-INPUT ./plots/percent-errors/percent_error_Variance Reduction + Importance Sampling.png
-INPUT ./plots/percent-errors/percent_error_Variance Reduction + Importance Sampling.png
-INPUT ./plots/percent-errors/percent_error_Variance Reduction + Importance Sampling.png
+INPUT ./plots/percent-errors/percent_error_Hybrid.png
+INPUT ./plots/percent-errors/percent_error_Hybrid.png
+INPUT ./plots/percent-errors/percent_error_Hybrid.png
+INPUT ./plots/percent-errors/percent_error_Hybrid.png
+INPUT ./plots/percent-errors/percent_error_Hybrid.png
 INPUT ./plots/4-clique/comparison/percent_error_vs_runtime_comparison.png
 INPUT ./plots/4-clique/comparison/percent_error_vs_runtime_comparison.png
 INPUT ./plots/4-clique/comparison/percent_error_vs_runtime_comparison.png
@@ -438,26 +468,6 @@ INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0
 INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.1.png
 INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.1.png
 INPUT ./plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.1.png
-INPUT ./plots/triangle-counts-vs-noise/fb_triangle_count_vs_noise.png
-INPUT ./plots/triangle-counts-vs-noise/fb_triangle_count_vs_noise.png
-INPUT ./plots/triangle-counts-vs-noise/fb_triangle_count_vs_noise.png
-INPUT ./plots/triangle-counts-vs-noise/fb_triangle_count_vs_noise.png
-INPUT ./plots/triangle-counts-vs-noise/fb_triangle_count_vs_noise.png
-INPUT ./plots/triangle-counts-vs-noise/croc_triangle_count_vs_noise.png
-INPUT ./plots/triangle-counts-vs-noise/croc_triangle_count_vs_noise.png
-INPUT ./plots/triangle-counts-vs-noise/croc_triangle_count_vs_noise.png
-INPUT ./plots/triangle-counts-vs-noise/croc_triangle_count_vs_noise.png
-INPUT ./plots/triangle-counts-vs-noise/croc_triangle_count_vs_noise.png
-INPUT ./plots/triangle-counts-vs-noise/GrQc_triangle_count_vs_noise.png
-INPUT ./plots/triangle-counts-vs-noise/GrQc_triangle_count_vs_noise.png
-INPUT ./plots/triangle-counts-vs-noise/GrQc_triangle_count_vs_noise.png
-INPUT ./plots/triangle-counts-vs-noise/GrQc_triangle_count_vs_noise.png
-INPUT ./plots/triangle-counts-vs-noise/GrQc_triangle_count_vs_noise.png
-INPUT ./plots/triangle-counts-vs-noise/ba_triangle_count_vs_noise.png
-INPUT ./plots/triangle-counts-vs-noise/ba_triangle_count_vs_noise.png
-INPUT ./plots/triangle-counts-vs-noise/ba_triangle_count_vs_noise.png
-INPUT ./plots/triangle-counts-vs-noise/ba_triangle_count_vs_noise.png
-INPUT ./plots/triangle-counts-vs-noise/ba_triangle_count_vs_noise.png
 INPUT ./thesis.bbl
 INPUT ./thesis.bbl
 INPUT thesis.bbl

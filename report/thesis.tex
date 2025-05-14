@@ -106,7 +106,7 @@ The findings highlight the potential of randomized algorithms to enable scalable
 \section{Introduction}
 
 Counting triangles is a fundamental problem in graph theory with widespread applications in social networks, bioinformatics, and more \cite{lovasz_large_2012}.
-Triangles, are formed by three mutually connected nodes, as shown in Figure~\ref{fig:triangles}, which shows a graph containing three triangles.
+Triangles, are formed by three mutually connected nodes, as shown in \Cref{fig:triangles}, which shows a graph containing three triangles.
 While these triangles appear simple, they are a powerful structural motif that can reveal important insights the networks they are found in.
 
 \begin{figure}[H]
@@ -148,9 +148,10 @@ This suggests that triangles can capture important structural patterns, such as 
 
 While the utility of triangle-based metrics is well-documented, counting triangles efficiently in large graphs remains computationally challenging.
 Direct enumeration methods involve inspecting all possible triples of nodes in the graph, a process with a worst-case time complexity of $O(n^3)$ where $n$ is the number of nodes \cite{al_hasan_triangle_2018}.
-On smaller networks, this runtime may not pose issues, but unfortunately, for large graphs, especially sparse ones, where the number of edges is much smaller compared to the number of possible edges (as illustrated in Figures \ref{fig:dense_graph} and \ref{fig:sparse_graph}), efficiently counting these triangles poses significant computational challenges.
+With sparse graphs, where the number of edges is much smaller compared to the number of possible edges (as illustrated in \Cref{fig:dense_graph,fig:sparse_graph}), efficiently counting these triangles can be done more efficiently.
+In these cases, an alternate exact counting algorithm runs in $O(nd_{max}^2)$ time, where $d_{max}$ is the maximum node degree \cite{schank_finding_2005}.
 
-As graphs grow larger and more complex, direct methods for counting triangles become increasingly time-consuming, making it difficult to handle graphs of practical size in real-world applications.
+On smaller graphs, these runtimes may be acceptable, but as graphs grow larger and more complex, direct methods for counting triangles become increasingly time-consuming, making it difficult to handle graphs of practical size in real-world applications.
 This issue is particularly relevant in the era of big data, where networks of millions or even billions of nodes and edges are common, and computational efficiency is critical.
 
 \begin{figure}[H]
@@ -200,12 +201,12 @@ This issue is particularly relevant in the era of big data, where networks of mi
 \end{figure}
 
 To address these challenges, researchers have developed a variety of approaches to count triangles efficiently.
-Some deterministic methods outlined in more detail in Section \ref{sec:background} decrease the time it takes to compute exact triangle counts \cite{strassen_gaussian_1969}.
+Some deterministic methods outlined in more detail in \Cref{sec:background} decrease the time it takes to compute exact triangle counts \cite{strassen_gaussian_1969}.
 However, these methods still face scalability issues.
 As a result, randomized algorithms \cite{tsourakakis_doulion_2009, seshadhri_triadic_2013, tsourakakis_fast_2008} have emerged as a promising alternative.
 By leveraging probabilistic techniques, these algorithms provide approximate triangle counts with significant reductions in runtime while maintaining a high degree of accuracy.
 
-This thesis aims to extend our understanding of randomized algorithms to find new, fast, accurate ways to estimate triangle counts that can be used in real-world applications.
+This thesis aims to introduce new variations of randomized algorithms for triangle counting that improve upon existing methods in both accuracy and efficiency, with a particular emphasis on scalability to large, real-world networks.
 
 \newpage
 
@@ -262,6 +263,8 @@ In more detail, throughout, we consider a graph \( G = (V, E) \) where:
 \section{Background}
 \label{sec:background}
 
+This section reviews fundamental concepts in graph theory, classical and modern methods for triangle counting, and algorithmic strategies to enhance efficiency, setting the stage for our exploration of scalable estimation techniques.
+
 \subsection{Types of Graphs}
 
 In graph theory, graphs are classified as either directed or undirected.  
@@ -279,7 +282,7 @@ Another common example of a clique is the \emph{4-clique}, denoted as \( K_4 \),
 
 Formally, we define a 4-clique, \( K_4 \), as the complete graph on four vertices, meaning every pair of vertices is connected by an edge. The set of vertices \( V \) and edges \( E \) for \( K_4 \) are given by $K_4 = (V, E)$ where $V = \{ v_1, v_2, v_3, v_4 \}, E = \{ (v_i, v_j) \mid 1 \leq i < j \leq 4 \}$.
 
-Figure~\ref{fig:k4} illustrates the structure of \( K_4 \), where each vertex is connected to every other vertex, representing the maximal level of connectivity between four vertices.
+\Cref{fig:k4} illustrates the structure of \( K_4 \), where each vertex is connected to every other vertex, representing the maximal level of connectivity between four vertices.
 
 \begin{figure}[H]
     \centering
@@ -302,7 +305,10 @@ Figure~\ref{fig:k4} illustrates the structure of \( K_4 \), where each vertex is
     \label{fig:k4}
 \end{figure}
 
+While this thesis focuses on triangle counting, analysis of other motifs can aide us in seeing how well methods generalize.
+
 \subsection{Methods for Triangle Counting}
+\label{sec:exact-counting}
 
 Triangle counting can be approached in a variety of ways, each with its own advantages and disadvantages. 
 One of the simplest methods is the brute force technique, where all distinct sets of three vertices ${u, v, w}$ are enumerated and checked for the existence of a triangle.
@@ -312,7 +318,14 @@ Assuming optimal conditions with edges stored in a hash table, where edge retrie
 This complexity stems from the fact that ${n \choose k} = \Theta(n^k)$, and thus, ${n \choose 3} = \Theta(n^3)$ \cite{al_hasan_triangle_2018}, so there are $O(n^3)$ checks and each takes $O(1)$ time. 
 
 While this method is straightforward, it is inefficient for large graphs due to its high computational cost.
-Additionally, this method is no more efficient on sparse graphs (those with relatively few edges compared to the maximum number of edges possible) than on dense ones, which is another area for improvement.
+Additionally, this method is no more efficient on sparse graphs (those with relatively few edges compared to the maximum number of edges possible) than on dense ones.
+
+To improve on this, researchers have developed more efficient direct counting techniques that take advantage of sparsity.
+Specifically, the Node-Iterator \cite{schank_finding_2005} algorithm takes each nodes and examines which pairs of its neighbors are connected.
+This method thus runs in $O(nd^2_{max})$ time where $n$ is the number of nodes in the graph $G$ and $d_{max}$ is the maximum node degree \cite{schank_finding_2005}.
+Thus, for graphs with generally low degree, this algorithm performs quickly.
+
+still, with large $n$, this algorithm may perform too slowly for practical applications.
 Thus, researchers have turned to alternative triangle counting and estimation methods.
 
 \subsubsection{Sampling Methods}
@@ -340,7 +353,7 @@ In all of these algorithms though, the key piece of their efficiency and efficac
 \paragraph{Wedge Sampling}
 
 Wedge sampling \cite{seshadhri_triadic_2013} focuses on wedges—triplets of nodes that form two edges but not necessarily a triangle.
-A wedge is defined by three vertices $(u, v, w)$ where $u$ is adjacent to both $v$ and $w$, but $v$ and $w$ may or may not be adjacent (see Figure~\ref{fig:wedge_diagram}).
+A wedge is defined by three vertices $(u, v, w)$ where $u$ is adjacent to both $v$ and $w$, but $v$ and $w$ may or may not be adjacent (see \Cref{fig:wedge_diagram}).
 
 \begin{figure}[H]
     \centering
@@ -363,16 +376,16 @@ A wedge is defined by three vertices $(u, v, w)$ where $u$ is adjacent to both $
 
 First, the algorithm counts the total number of wedges in the graph.
 To count these wedges, only one pass over all nodes is required, as at each node, every unique pair of outgoing edges from the node is counted as a single wedge.
+There are $\binom{d_i}{2}$ such wedges for each node $n_i$, and thus the total number of wedges is $\sum_{i = 1}^{n}\binom{d_i}{2}$.
 Thus, this operation takes $O(m)$ time where $m$ is the number of edges in $G$.
-
 Once wedges are sampled, the algorithm checks how many of them are closed (i.e., form triangles).
 The number of triangles can then be estimated by multiplying the number of total wedges by the fraction of all wedges that were closed in the sample.
-Wedge sampling tends to work well in graphs with a large number of high-degree vertices, where it becomes easier to sample many wedges at once, but unlike edge sampling, it cannot be efficiently done using data structures like adjacency matrices or adjacency lists.
-Thus, wedge sampling comes with an additional preprocessing step that adds to runtime.
+This is equivalent to the Node-Iterator method mentioned in \Cref{sec:exact-counting}.
+Thus, this method, as we saw earlier, also runs in $O(nd_{max}^2)$ time, and is an appropriate option for sparse graphs with low maximum degrees.
 
 \subsubsection{Linear Algebraic Methods}
 
-Along with sampling, we can employ linear algebraic techniques to increase the speed of our triangle counting.
+Along with sampling, we can employ linear algebraic techniques to increase the speed of triangle counting.
 
 Graphs can be conveniently represented using adjacency matrices, which, in social network analysis, are typically referred to as \emph{sociomatrices} \cite{beum_method_1950}. 
 In these matrices, each row and column represents a node, and edges between nodes are represented as 1s in the corresponding matrix entry.
@@ -420,7 +433,7 @@ One simple method using the adjacency matrix is to use the following formula whe
 \]
 
 This formula is derived from the fact that the diagonal elements of $A^3$ count the number of length-three paths (i.e. triangles) from each vertex to back to itself.
-Each triangle can be formed from six of these length-three paths, as each triangle can be drawn starting at any of its three nodes and moving either clockwise or counter-clockwise, as illustrated in Figure~\ref{fig:triangle-traversal}.
+Each triangle can be formed from six of these length-three paths, as each triangle can be drawn starting at any of its three nodes and moving either clockwise or counter-clockwise, as illustrated in \Cref{fig:triangle-traversal}.
 Thus, the trace of $A^3$ is divided by six to scale down to the global triangle count.
 
 \begin{figure}[H]
@@ -542,7 +555,7 @@ On larger matrices, this leads to a significant speedup.
 
 There are matrix multiplication algorithms that are even faster, such as one with a $O(n^{2.371552})$ runtime, but these algorithms rely on the use of extremely large constants and are thus rarely used in real-world applications \cite{williams_new_2023}.
 
-\paragraph{EigenTriangle Algorithm}
+\paragraph{EigenTriangle}
 
 Another significant approach in triangle counting is the use of spectral methods.
 One such method is the EigenTriangle algorithm \cite{tsourakakis_fast_2008}, which estimates the triangle count $\Delta$ by considering the spectral decomposition of the adjacency matrix $A$.
@@ -554,30 +567,27 @@ A = U \Lambda U^T,
 
 where $U$ is a matrix whose columns are the orthonormal eigenvectors of $A$, and $\Lambda$ is a diagonal matrix containing the corresponding eigenvalues.
 
-Once the decomposition is performed, the number of triangles can be computed exactly using $\Delta = \frac{1}{6} \sum_{i=1}^{n} \lambda_i^3$, and can be estimated using:
+Once the decomposition is performed, the number of triangles can be computed exactly using $\Delta = \frac{1}{6} \mathrm{trace}(A^3) = \frac{1}{6} \sum_{i = 1}^{n} \lambda_i(A^3) = \frac{1}{6} \sum_{i = 1}^{n} \lambda_i^3$, and can be estimated using:
 
 \[
 \Delta \approx \frac{1}{6} \sum_{i=1}^{k} \lambda_i^3,
 \]
 
 where $\lambda_1 \ldots \lambda_k$ are the $k$ eigenvalues of largest magnitude of the adjacency matrix $A$.
+Thus, we see that EigenTriangle approximates $\mathrm{trace}(A^3)$.
+Given this, it makes sense that this runtime would see a substantial improvement over the complexity of computing $\mathrm{trace}(A^3)$ directly.
+
 The runtime of EigenTriangle is dominated by the cost of approximating the top $k$ eigenvalues and eigenvectors of $A$, which, using the Lanszos method \cite{cullum_lanczos_2002}, can be done in roughly $O(k m)$ time, where $m$ is the number of edges since $k$ is typically set much smaller than the number of nodes $n$, this is a significant improvement over the runtimes of direct methods.
 
-Specifically, for the direct method in which was compute the trace of $A^3$, we know ${trace}(A^3) = \sum_{i = 1}^{n} \lambda_i(A^3) = \sum_{i = 1}^{n} \lambda_i^3$.
-Thus, we see that EigenTriangle approximates ${trace}(A^3)$.
-Given this, it makes sense that this runtime is a substantial improvement over the complexity of computing $\mathrm{trace}(A^3)$ directly.
+\paragraph{TraceTriangle}
 
-\paragraph{TraceTriangle Algorithm}
-
-The TraceTriangle algorithm \cite{avron_counting_2010} is a randomized algorithm designed for efficient triangle estimation in large graphs.
-It leverages trace-based techniques, which compute the trace of matrix powers to approximate the number of triangles.
-Specifically, the algorithm relies on the previously mentioned property: $\Delta = \frac{1}{6} \mathrm{trace}(A^3)$, where $A$ is the adjacency matrix of the graph and $\Delta$ is the number of triangles.
+The TraceTriangle algorithm \cite{avron_counting_2010} relies on the previously mentioned property: $\Delta = \frac{1}{6} \mathrm{trace}(A^3)$, where $A$ is the adjacency matrix of the graph and $\Delta$ is the number of triangles.
 However, rather than computing the full matrix multiplication $A^3$, which is computationally expensive for large graphs, the TraceTriangle algorithm uses a randomized approach to approximate this trace, significantly reducing computation time.
 
 This randomized approach is based on Hutchinson's method \cite{hutchinson_stochastic_1990}, which is a technique for estimating the trace of a matrix by randomly sampling vectors.
 In this case, this significantly reduces computation time by approximating $\mathrm{trace}(A^3)$ through randomized sampling rather than explicit computation.
 
-The TraceTriangle algorithm is a sampling algorithm, and thus, it's runtime depends on the desired accuracy of output, as more or fewer samples can be taken depending on the application.
+The TraceTriangle algorithm is a sampling algorithm, and thus, its runtime depends on the desired accuracy of output, as more or fewer samples can be taken depending on the application.
 Generally though, experiments demonstrate that typically $O(\log^2{n})$, where $n$ is the number of vertices in $G$, samples are required to get good approximations on real-world graphs, and regardless of application, the runtime for taking each sample is $O(m)$, where $m$ is the number of edges in $G$ \cite{avron_counting_2010}.
 
 Comparing TraceTriangle to the EigenTriangle algorithm, TraceTriangle achieves higher accuracy across multiple types of graphs \cite{avron_counting_2010}.
@@ -589,77 +599,6 @@ This allows TraceTriangle to scale effectively with the size of the graph, ultim
 
 Beyond specific algorithms for triangle counting, various general techniques from statistics and theoretical computer science have been adapted for this problem, particularly in designing faster algorithms.
 
-\subsubsection{Variance Reduction}
-\label{sec:variance-reduction-background}
-
-Variance reduction methods \cite{prescott_monte_1965} aim to reduce the spread (or variance) of estimations, leading to more reliable results even with fewer samples.
-This is particularly important in large-scale graphs, where taking a high number of samples may be computationally infeasible.
-
-In terms of triangle counting, this method can be applied by finding a fast way of estimating the global triangle count, and then using sampling to estimate the error on that count.
-In our case, we can begin by finding a relationship between the degree of nodes and the number of triangles they are involved in.
-This can be done by plotting nodes' degrees ($d_i$) versus triangle counts $(\Delta_i)$ on a log-log plot, finding a line of best fit, and then exponentiating as follows:
-
-\[
-\log(\Delta_i) \approx \alpha \cdot \log(d_i) + \beta
-\]
-\[
-\Delta_i \approx d_i^\alpha \cdot e^\beta = m_i.
-\]
-
-Now, using this equation, we can estimate the overall triangle count $\Delta$ by applying this line of best fit relationship to all nodes in the graph:
-
-\[
-\Delta \approx M = \sum_{i = 1}^{n} m_i.
-\]
-
-Next, we sample our graph to get $s$ nodes, with $s$ being our sample size. For each of these $s$ sampled nodes, we count the number of triangles they are involved in, $\Delta_i$, and find the difference between those actual triangle counts and their estimated triangle counts using the line of best fit relationship. We then take the sum of these errors and scale them up to estimate the error on our global triangle count (written $E$). Mathematically, this can be expressed as follows:
-
-\[
-E = \left( \sum_{i = 1}^{s} \Delta_i - m_i \right) \cdot \frac{n}{s}.
-\]
-
-Lastly, we take the sum of our estimate and our error, and divide this sum by three to avoid triple-counting triangles, as each triangle has three nodes it is involved in:
-
-\[
-\Delta \approx \frac{M + E}{3}.
-\]
-
-Thus, by applying this variance reduction technique, we arrive at an estimate for the triangle count $\Delta$.
-
-\subsubsection{Importance Sampling}
-\label{sec:importance-sampling-background}
-
-One example of a variance reduction method is importance sampling.
-When estimating a metric relating to a large population using uniform sampling, where all edges/nodes/wedges/etc. are sampled with the same probability, often a very large number of samples is required to ensure a good relative approximation \cite{lovasz_large_2012}.
-This is because uniform sampling does not prioritize areas of the graph that may have a disproportionately large impact on the estimate.
-Consequently, the computational cost can be high for achieving a desired accuracy level in many cases.
-
-When using importance sampling \cite{motwani_randomized_1995}, the process is improved by sampling higher-interest nodes with higher probability, focusing computational effort on the most ``important" parts of a graph.
-The key idea behind importance sampling is to bias the sampling distribution towards more informative areas of the graph.
-For instance, in a graph where certain nodes are highly connected or play a critical role in the overall structure, importance sampling would prioritize these nodes to reduce the variance of the estimates.
-
-Importance sampling can also be applied to triangle counts.
-For example, we can prioritize high-degree nodes as the most ``important.''
-The weight of this importance is decided by some power $\alpha$ greater than 1 (which is equivalent to uniform sampling).
-This $\alpha$ can be tuned to indicate different strengths of relationships between the degree and triangle counts of nodes. 
-
-To get the optimal value for $\alpha$, we can plot nodes' degrees versus triangle count as described in Section \ref{sec:variance-reduction-background} and use the value of the slope ($\alpha$) obtained when calculating the line of best fit of this plot.
-
-Once $\alpha$ has been selected, we use it to ascribe each node a probability $p_i$ to each node based in its degree $d_i$:
-
-\[
-D = \sum_{i = 1}^{n} d_i^\alpha
-\]
-\[
-p_i = \frac{d_i^\alpha}{D}.
-\]
-
-Next, we sample $s$ nodes based on their probabilities $p_i$.
-For example if $p_1 = 0.01$ and $p_2 = 0.1$, we are 10 times more likely to sample node 2 than node 1.
-
-Next, for each sampled node we count the number of triangles it is a part of, and then scale that count by $\frac{1}{s \cdot p_i}$.
-The sum of all these counts, scaled down by three (as to avoid triple-counting triangles), is our estimate for the global triangle count $\Delta$.
-
 \subsubsection{Learning-Augmented Algorithms}
 
 A learning-augmented algorithm \cite{roughgarden_algorithms_2020} is an algorithm that uses a prediction to boost its performance.
@@ -670,7 +609,7 @@ An example of a learning-augmented algorithm is its use in the maximum weight ma
 The maximum weight matching problem \cite{duan_linear-time_2014} is the problem of finding a matching in which the sum of weights is maximized in a weighted graph.
 The typical solution for this problem, the Hungarian algorithm, runs in $O(m\sqrt{n})$ time.
 
-When a learning-augmented approach \cite{dinitz_faster_2021} is applied however, where machine-learned predictions are used to ``warm-start" the algorithm, that runtime is significantly reduced when the predictions are accurate.
+When a learning-augmented approach \cite{dinitz_faster_2021} is applied however, where machine-learned predictions are used to ``warm-start" the algorithm—that is, feed the algorithm a pre-computed starting state that is designed to help the algorithm reach a solution more quickly—that runtime is significantly reduced when the predictions are accurate.
 When the predictions are inaccurate, the runtime is simply the same as in the Hungarian algorithm.
 
 This technique can be applied to triangle counting too.
@@ -681,25 +620,129 @@ This allows the algorithm to focus on the edges that are most likely to contribu
 Notably, Tonic provides unbiased estimates of triangle counts regardless of the accuracy of the predictor.
 However, when the predictor provides useful information on heavy edges, the algorithm produces estimates with reduced variance compared to state-of-the-art alternatives.
 
-In general, this method can be highly effective, as accurate predictions can significantly enhance algorithms' efficiency or result quality.
+In general, these methods can be highly effective, as accurate predictions can significantly enhance algorithms' efficiency or result quality.
+The next two techniques we will discuss—variance reduction and importance sampling—are both examples of learning augmented algorithms.
+
+\subsubsection{Variance Reduction}
+\label{sec:variance-reduction-background}
+
+Variance reduction methods \cite{prescott_monte_1965} aim to reduce the spread (or variance) of estimations, leading to more reliable results even with fewer samples.
+This is particularly important in large-scale graphs, where taking a high number of samples may be computationally infeasible.
+
+In terms of triangle counting, this method can be applied by finding a fast way of estimating the global triangle count, and then using sampling to estimate the error on that count.
+In our case, our way of estimating the global triangle count will be to leverage the relationship between node degree and triangle count.
+Intuitively, we would expect a relationship between these two quantities, as the higher a node's degree, the more triangles it could possibly have.
+For example, if a node has only two edges, it can have at most one triangle.
+If that node had far more edges, it could clearly also have far more triangles.
+
+We can begin by quantifying the relationship between the degree of nodes and the number of triangles they are involved in by graphing.
+Specifically, we can plot nodes' degrees ($d_i$) versus triangle counts $(\Delta_i)$ on a log-log plot (shown later in \Cref{fig:degree_vs_tri_fb}), finding a line of best fit, and then exponentiating as follows:
+
+\[
+\log(\Delta_i) \approx \alpha \cdot \log(d_i) + \beta
+\]
+\[
+\Delta_i \approx d_i^\alpha \cdot e^\beta = m_i.
+\]
+
+Now, using this equation, we can estimate the overall triangle count $\Delta$ by applying this line of best fit relationship to all nodes in the graph and summing our results:
+
+\[
+3\Delta \approx M = \sum_{i = 1}^{n} m_i.
+\]
+
+Next, we estimate the error on our global triangle count (written $E$).
+
+\[
+3\Delta = M + (3\Delta - M)
+\]
+\[
+E \approx 3\Delta - M.
+\]
+
+To arrive at this value $E$, we sample our graph to get $s$ nodes, with $s$ being our sample size.
+For each of these $s$ sampled nodes, we count the number of triangles they are involved in, $\Delta_i$, and find the difference between those actual triangle counts and their estimated triangle counts obtained when using the line of best fit.
+We then take the sum of these errors and scale them up to get $E$.
+Mathematically, this can be expressed as follows:
+
+\[
+E = \left( \sum_{i = 1}^{s} \Delta_i - m_i \right) \cdot \frac{n}{s}.
+\]
+
+Lastly, we take the sum of our estimate and our sampled error, and divide this sum by three to avoid triple-counting triangles, as each triangle has three nodes it is involved in:
+
+\[
+\Delta \approx \frac{M + E}{3}.
+\]
+
+Thus, by applying this variance reduction technique, we arrive at an estimate for the triangle count $\Delta$.
+
+It is also important to note that effectiveness of this variance reduction method depends on how well the estimate $m_i$ approximates the true triangle count $\Delta_i$ for each node.
+The closer $m_i$ is to $\Delta_i$, the smaller the variance of the estimator will be, since the quantities $\Delta_i - m_i$ will tend to be small on average.
+A more detailed theoretical analysis of this variance behavior is provided in \Cref{sec:variance-reduction-analysis}.
+
+\subsubsection{Importance Sampling}
+\label{sec:importance-sampling-background}
+
+An alternative to the variance reduction approach is \emph{importance sampling}.
+When estimating a metric relating to a large population using uniform sampling, where all edges/nodes/wedges/etc. are sampled with the same probability, often a very large number of samples is required to ensure a good relative approximation \cite{lovasz_large_2012}.
+This is because in uniform sampling, nodes with high triangle counts are just as likely to be sampled as nodes with low triangle counts.
+This means, if you want to have high odds of selecting high-impact nodes, you need a very large sample size $s$.
+Consequently, the computational cost can be high for achieving a desired accuracy level in many cases.
+
+When using importance sampling \cite{motwani_randomized_1995}, the process is improved by sampling higher-interest nodes with higher probability, focusing computational effort on the most ``important" parts of a graph.
+The key idea behind importance sampling is to bias the sampling distribution towards more informative areas of the graph.
+For instance, in a graph where certain nodes are highly connected or play a critical role in the overall structure, importance sampling would prioritize these nodes to reduce the variance of the estimates.
+
+Importance sampling can also be applied to triangle counts.
+For example, we can prioritize high-degree nodes as the most ``important.''
+The weight of this importance is decided by some power $\alpha$ greater than 0 (which is equivalent to uniform sampling).
+This $\alpha$ can be tuned to indicate different strengths of relationships between the degree and triangle counts of nodes. 
+
+To get the optimal value for $\alpha$, we can plot nodes' degrees versus triangle count as described in \Cref{sec:variance-reduction-background} and use the value of the slope ($\alpha$) obtained when calculating the line of best fit of this plot.
+
+Once $\alpha$ has been selected, we use it to ascribe each node a probability $p_i$ to each node based in its degree $d_i$:
+
+\begin{equation}
+D = \sum_{i = 1}^{n} d_i^\alpha
+\label{eq:D}
+\end{equation}
+
+\begin{equation}
+p_i = \frac{d_i^\alpha}{D}
+\label{eq:pi}
+\end{equation}
+
+As a note, we drop the $e^{\beta}$ term because, given its a constant, it would simply get canceled out regardless.
+
+Next, we independently sample $s$ nodes from the distribution defined by the probabilities $p_1, \ldots p_n$ with replacement.
+For example if $p_1 = 0.01$ and $p_2 = 0.1$, we are 10 times more likely to sample node 2 than node 1.
+
+Next, for each sampled node we count the number of triangles it is a part of, and then scale that count by $\frac{1}{s \cdot p_i}$.
+Intuitively, we do this because, while we want to make sure we sample high-degree nodes, we also want to make sure not to overemphasize them in our final counts.
+Thus, we scaling by the inverse of their probabilities.
+The sum of all these counts, scaled down by three (as to avoid triple-counting triangles), is our estimate for the global triangle count $\Delta$.
+
+After this, we arrive at our final estimate for $\Delta$:
+
+\[
+\tilde{\Delta} = \frac{1}{3s} \sum_{j = 1}^{s} \frac{\Delta_{ij}}{p_{ij}}.
+\]
 
 \newpage
 
 \section{Methods}
 
-To evaluate different triangle count estimation methods, I implemented them in Python and compared their accuracies, runtimes, and sample sizes on a diverse set of networks.
+To evaluate different triangle count estimation methods, we implemented them in Python and compared their accuracies, runtimes, and sample sizes on a diverse set of networks.
 The primary methods implemented were uniform sampling, importance sampling, a variance reduction method, and a hybrid method that combines elements of these approaches. 
-
-The implemented methods were applied to both synthetic and real-world networks sourced from the Stanford Network Analysis Platform (SNAP) library \cite{leskovec_snap_2017}.
-These networks span a range of sizes, densities, and structural properties to ensure robust comparisons.
 
 \subsection{Implementation}
 
-Algorithms were implemented in Python using NetworkX and SNAP, and experiments were run on consistent hardware, with multiple trials to ensure reliable comparisons.
+Algorithms were implemented in Python using NetworkX \cite{hagberg_exploring_2008}, and experiments were run on consistent hardware (8 GM of memory, and an Apple M1 chip), with multiple trials to ensure reliable comparisons.
 
 \subsection{Datasets}
 
-The datasets used in this study include both synthetic networks and real-world graphs from the SNAP library, covering various domains such as social networks, collaboration networks, and web graphs.
+The datasets used in this study include both synthetic networks and real-world graphs from the Stanford Network Analysis Platform (SNAP) library \cite{leskovec_snap_2017}, covering various domains such as social networks, collaboration networks, and web graphs.
 Specifically, methods were evaluated on these three networks:
 
 \begin{itemize}
@@ -720,7 +763,7 @@ By examining performance across different graph characteristics, the study ident
 
 Four sampling methods—uniform sampling, importance sampling, variance reduction, and a hybrid method, were implemented and tested with all datasets.
 
-\paragraph{Uniform Sampling:}
+\textbf{Uniform Sampling}
 
 This baseline method involves randomly sampling nodes and scaling up the observed triangle counts proportionally.
 While simple, uniform sampling often struggles in graphs with skewed degree distributions.
@@ -754,20 +797,13 @@ def estimate_uniformly_per_node_method(A, s):
 \end{lstlisting}
 }
 
-\textbf{Importance Sampling:}
+\textbf{Importance Sampling}
 
-As detailed in Section \ref{sec:importance-sampling-background}, for importance sampling, we attempt to prioritize the sampling of nodes that are likely to form more triangles.
+As detailed in \Cref{sec:importance-sampling-background}, for importance sampling, we attempt to prioritize the sampling of nodes that are likely to form more triangles.
 This is done by sampling proportionally to the degree of nodes.
 This method aims for higher accuracy with fewer samples.
 
-After we select a value $\alpha$ to indicate the strength of the relationship between the degree and triangle count of nodes, we can use this value $\alpha$ to ascribe each node a probability $p_i$ to each node based in its degree $d_i$:
-
-\[
-D = \sum_{i = 1}^{n} d_i^\alpha
-\]
-\[
-p_i = \frac{d_i^\alpha}{D}.
-\]
+After we select a value $\alpha$ to indicate the strength of the relationship between the degree and triangle count of nodes, we use it to compute $p_i$ for each node based on its degree $d_i$, as shown in Equations~\Cref{eq:D} and~\Cref{eq:pi}.
 
 We can then sample each node $n_i$ with probability $p_i$.
 The code for this sampling and estimation process is given below where, like before $A$ is the adjacency matrix of $G$ and $s$ is our sample size.
@@ -804,7 +840,7 @@ def importance_estimate_per_node_method(A, s, power):
 \end{lstlisting}
 }
 
-To select the ideal value for the power $\alpha$, as described in Section \ref{sec:importance-sampling-background}, we plot nodes' log degrees verses log triangle counts and set $\alpha$ to be the line of best fit of this plot.
+To select the ideal value for the power $\alpha$, as described in \Cref{sec:importance-sampling-background}, we plot nodes' log degrees verses log triangle counts and set $\alpha$ to be the line of best fit of this plot.
 
 \begin{figure}[H]
     \centering
@@ -813,26 +849,26 @@ To select the ideal value for the power $\alpha$, as described in Section \ref{s
     \label{fig:degree_vs_tri_fb}
 \end{figure}
 
-The slope $\alpha$  in figure \ref{fig:degree_vs_tri_fb} is $~ 1.97$.
+The slope $\alpha$  in \Cref{fig:degree_vs_tri_fb} is $~ 1.97$.
 Below, we give the degree vs triangle count plots for the other three datasets used:
 
 \begin{figure}[H]
     \centering
-    \begin{subfigure}[b]{0.31\textwidth}
+    \begin{subfigure}[b]{0.495\textwidth}
         \centering
         \includegraphics[width=\textwidth]{plots/degree-vs-triangle-count/degree_vs_triangle_count_croc.png}
         \caption{Wikipedia}
         \label{fig:degree_vs_tri_croc}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[b]{0.31\textwidth}
+    \begin{subfigure}[b]{0.495\textwidth}
         \centering
         \includegraphics[width=\textwidth]{plots/degree-vs-triangle-count/degree_vs_triangle_count_GrQc.png}
         \caption{Collaboration}
         \label{fig:degree_vs_tri_GrQc}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[b]{0.31\textwidth}
+    \begin{subfigure}[b]{0.495\textwidth}
         \centering
         \includegraphics[width=\textwidth]{plots/degree-vs-triangle-count/degree_vs_triangle_count_ba.png}
         \caption{Barabási–Albert}
@@ -844,23 +880,23 @@ Below, we give the degree vs triangle count plots for the other three datasets u
 \end{figure}
 
 Given the spread of $\alpha$ values obtained, we set our default value of $\alpha$ to 2, but also tested values 1 and 1.5 for all datasets.
-In addition, for each dataset, run importance sampling was run with the ``optimal'' $\alpha$ found in its scatter plot.
+In addition, for each dataset, importance sampling was run with the ``optimal'' $\alpha$ found in its scatter plot.
 
-\textbf{Variance Reduction:}
+\textbf{Variance Reduction}
 \label{variance-reduction-algo}
 
-Our next method is variance reduction, which aims minimize the variability of our estimates.
+Our next method is variance reduction, which aims to minimize the variability of our estimates.
 The high variance in uniform or importance sampling methods can lead to inaccurate triangle count estimations, particularly in graphs with skewed degree distributions.
-To address this, we leverage additional information about the relationship between node degrees and triangle counts.
+To address this, we leverage the relationship between node degrees and triangle counts as with importance sampling but use it differently and introduce an error correction term.
 
-In many real-world graphs, nodes with higher degrees tend to form more triangles, suggesting a potential correlation between the log of the degree and the log of the triangle count.
-Thus, by performing a linear regression in log-log space, we can obtain a line of best fit that estimates triangle counts as a function of node degree, and use that to arrive an an estimate of our triangle count.
+Like with importance sampling, we first perform a linear regression in log-log space, obtaining a line of best fit that estimates triangle counts as a function of node degree.
+Then, instead of sampling, we use our line of best fit to arrive an an estimate of our triangle count by plugging in the degree of every node into the formula $\Delta_i \approx d_i^\alpha \cdot e^\beta = m_i$ from \Cref{sec:variance-reduction-background} and summing our results.
 
-However, the number arrived at using our linear regression may either over- or under-count the number of triangles depending on the relationship between degree and triangle count.
+This number, however, may either over- or under-count the number of triangles depending on the relationship between degree and triangle count.
 Thus, we sample $s$ additional nodes and calculate the difference between their actual triangle counts and those predicted by our line of best fit.
 Then, scaling this up, we can combine our predicted triangle count and predicted error to arrive at a final estimate of the triangle count $\Delta$.
 
-The specific math for this method is given in Section \ref{sec:variance-reduction-background} and the code for it is given below.
+The specific math for this method is given in \Cref{sec:variance-reduction-background} and the code for it is given below.
 
 {
 \singlespacing
@@ -916,7 +952,7 @@ def estimate_variance_reduction_method(A, s, power):
 \end{lstlisting}
 }
 
-\textbf{Hybrid Approach:}
+\textbf{Hybrid Approach}
 
 The hybrid approach combines elements from both importance sampling and variance reduction techniques.
 It functions by running the variance reduction method as before, but using importance sampling instead of uniform sampling to generate the $s$ nodes used in correcting our triangle count estimate.
@@ -958,20 +994,22 @@ def estimate_importance_variance_reduction_method(A, s, power):
 \end{lstlisting}
 }
 
-Values for $\alpha$ for this hybrid method were selected the same way they were for importance sampling.
+Values for $\alpha$ for this hybrid method were selected the same way they were for importance sampling and variance reduction.
 
 \subsection{Evaluation Metrics}
 
 To assess the performance of the triangle count estimation methods, the following evaluation metrics were measured on real-world and synthetic networks:
 
 \begin{itemize}
-\item Accuracy: The difference between the estimated and true triangle counts, calculated as the relative error.
+\item Accuracy: The difference between the estimated and true triangle counts, calculated as the relative error ($|\frac{\tilde{\Delta} - \Delta}{\Delta}|$ where $\Delta$ is the true triangle count and $\tilde{\Delta}$ is the estimated triangle count).
 \item Runtime: The computational time required to generate triangle count estimates.
-\item Sample size: The number of nodes or edges sampled to produce an estimate.
-\item Variance: The variability in triangle count estimates across multiple independent runs of the same method.
+\item Sample size: The number of nodes sampled to produce an estimate.
+\item Variance: The variance in triangle count estimates across multiple independent runs of the same method.
 \end{itemize}
 
 \subsection{Additional Explorations}
+
+Along with running the triangle count estimation methods, we extended our work in two additional ways: running our methods on 4-cliques to see how well they generalize and using a simulated version of our methods to study how different types of noise impact performance.
 
 \subsubsection{4-Clique Variant}
 
@@ -980,288 +1018,51 @@ To adapt the previous methods to count 4-cliques, we simply replace the \lstinli
 
 To find the optimal values for $\alpha$ like before, we would plot degree versus 4-clique count and calculate a line of best fit.
 Likely, the optimal values would be close to 3.
-However, in this thesis, I only tested on values of $\alpha$ of 1 and 1.5 as this variant is intended as a preliminary extension to demonstrate feasibility rather than to optimize performance
- More extensive tuning of $\alpha$ and evaluation across a wider range of graphs would be a valuable direction for future work.
+However, in this thesis, we only tested on values of $\alpha$ of 1 and 1.5 as this variant is intended as a preliminary extension to demonstrate feasibility rather than to optimize performance
+More extensive tuning of $\alpha$ and evaluation across a wider range of graphs would be a valuable direction for future work.
 
 \subsubsection{Simulated Method Tests}
 \label{sec:methods-simulated-test}
 
-In order to learn more about when importance sampling and variance reduction perform best, I ran these algorithms on manually defined triangle-degree relationships.
+In order to learn more about when importance sampling and variance reduction perform best, we ran these algorithms on manually defined degree-triangle relationships.
 
 The methods were tested on two different degree-triangle relationships.
-First, I set a variable \lstinline{degrees} to be the degree distribution of a real-world dataset.
+First, we set a variable \lstinline{degrees} to be the degree distribution of a real-world dataset.
 I also defined \lstinline{noise} as \lstinline{noise = np.random.normal(0, noise_scale, triangles.shape)}.
-This noise is normally distributed with a mean of zero and a standard deviation of \lstinline{noise_scale}, allowing for random fluctuations around the expected triangle and maintaining a symmetric distribution.
+This noise is normally distributed with a mean of zero and a standard deviation of \lstinline{noise_scale}, allowing for random fluctuations around the expected triangle count and maintaining a symmetric distribution.
 
-The two relationships defined using these degrees and noise values are the \textbf{Uniform noise} and \textbf{multiplicative noise} relationships.
-For the first, artificial triangle counts for the degree distributions were set to \lstinline{np.power(degrees, slope) * np.exp(intercept) + noise} where the slope and intercept are the outputs from the \lstinline{get_line_of_best()} function defined in Section \ref{variance-reduction-algo}.
+The two relationships defined using these degrees and noise values are the \textbf{Uniform noise} and \textbf{multiplicative noise} relationships, illustrated in \Cref{fig:noise_shapes}.
+For the first, artificial triangle counts for the degree distributions were set to \lstinline{np.power(degrees, slope) * np.exp(intercept) + noise} where the slope and intercept are the outputs from the \lstinline{get_line_of_best()} function defined in \Cref{variance-reduction-algo}.
+That is, the slope will be equivalent to our power value $\alpha$ discussed in \Cref{sec:importance-sampling-background,sec:variance-reduction-background}.
 Thus, in this relationship, noise does not grow with degree.
 
 For the second relationship, the \textbf{multiplicative noise} relationship, the artificial triangle counts were set to \lstinline{np.power(degrees, slope) * np.exp(intercept) * (1 + noise)} where the slope, intercept, and noise are defined as before.
 In this relationship, noise grows as the degree does too, distinguishing this degree-triangle relationship from the former.
 
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.495\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/noise-shapes/uniform.png}
+        \caption{Uniform}
+        \label{fig:uniform_noise}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.495\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/noise-shapes/multiplicative.png}
+        \caption{Multiplicative}
+        \label{fig:multiplicative_noise}
+    \end{subfigure}
+
+    \caption{Triangle Count vs Noise for Uniform and Multiplicative Noise}
+    \label{fig:noise_shapes}
+\end{figure}
+
 These noise models allow us to analyze how different types of randomness impact the performance of variance reduction and importance sampling techniques.
 
-\newpage
-
-\section{Results and Discussion}
-
-\subsection{Triangle Counting}
-
-Tables \ref{tab:percent_error_100} and \ref{tab:percent_error_4000} summarize the average percent error for different sampling methods across various datasets with sample sizes of 100 and 4000, respectively.
-The most accurate method is highlighted in bold for each dataset.
-
-\begin{table}[ht]
-\centering
-\caption{Percent Errors for Different Methods on Various Datasets (Sample Size = 100, Power = 2)}
-\label{tab:percent_error_100}
-\begin{tabular}{|c|c|c|c|c|}
-\hline
-& \multicolumn{4}{c|}{\textbf{Avg Percent Error}} \\
-\hline
-\textbf{Dataset} & \textbf{Unif. Sampling} & \textbf{Imp. Sampling} & \textbf{Var. Reduction} & \textbf{Hybrid} \\
-\hline
-Social Network (FB) & 0.17471 & 0.03741 & 0.18911 & \textbf{0.03267} \\
-Collaboration Network & 0.39456 & \textbf{0.04186} & 0.22566 & 0.04470 \\
-Wikipedia Article Network & 0.36941 & 0.25732 & 0.85303 & \textbf{0.18180} \\
-Barab\'asi--Albert & 0.17220 & 0.01243 & 0.01377 & \textbf{0.00791} \\
-\hline
-\end{tabular}
-\end{table}
-
-\begin{table}[ht]
-\centering
-\caption{Percent Errors for Different Methods on Various Datasets (Sample Size = 4000, Power = 2)}
-\label{tab:percent_error_4000}
-\begin{tabular}{|c|c|c|c|c|}
-\hline
-& \multicolumn{4}{c|}{\textbf{Avg Percent Error}} \\
-\hline
-\textbf{Dataset} & \textbf{Unif. Sampling} & \textbf{Imp. Sampling} & \textbf{Var. Reduction} & \textbf{Hybrid} \\
-\hline
-Social Network (FB) & 0.02551 & 0.00608 & 0.05014 & \textbf{0.00482} \\
-Collaboration Network & 0.03359 & \textbf{0.00932} & 0.02316 & 0.00944 \\
-Wikipedia Article Network & 0.06177 & 0.04821 & 0.14815 & \textbf{0.03789} \\
-Barab\'asi--Albert & 0.03299 & 0.00163 & 0.00280 & \textbf{0.00132} \\
-\hline
-\end{tabular}
-\end{table}
-
-In \cref{tab:percent_error_100,tab:percent_error_4000}, we see that for all datasets tested on except for the collaboration network dataset, the hybrid method tended to achieve the lowest percent error at both small and large sample sizes (specially, the table displays data for sample sizes of 100 and 4000).
-
-Shown in \cref{fig:fb_sample_size,fig:grqc_sample_size,fig:croc_sample_size,fig:ba_sample_size}, while the hybrid method almost always achieves the lowest percent error overall, by sample size, importance sampling and the hybrid method are very comparable.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\linewidth]{plots/comparisons/fb/limited_method_percent_error_vs_sample_size_comparison.png}
-\caption{Percent Error vs. Sample Size for Facebook Dataset. Importance sampling and the hybrid approach perform best, with the hybrid method performing slightly better.}
-\label{fig:fb_sample_size}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\linewidth]{plots/comparisons/GrQc/limited_method_percent_error_vs_sample_size_comparison.png}
-\caption{Percent Error vs. Sample Size for Collaboration Network Datase. Importance sampling and the hybrid approach perform best.}
-\label{fig:grqc_sample_size}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\linewidth]{plots/comparisons/croc/limited_method_percent_error_vs_sample_size_comparison.png}
-\caption{Percent Error vs. Sample Size for Crocodile Wikipedia Dataset. The hybrid method performs best.}
-\label{fig:croc_sample_size}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\linewidth]{plots/comparisons/ba/limited_method_percent_error_vs_sample_size_comparison.png}
-\caption{Percent Error vs. Sample Size for Synthetic Barabási–Albert Dataset. Importance sampling, variance reduction, and the hybrid method perform best, with importance sampling and the hybrid method performing best.}
-\label{fig:ba_sample_size}
-\end{figure}
-
-When we also consider runtime, as in \cref{fig:fb_runtime,fig:grqc_runtime,fig:croc_runtime,fig:ba_runtime}, we see importance sampling begin to outperform the hybrid method, especially on smaller sample sizes.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\linewidth]{plots/comparisons/fb/limited_method_percent_error_vs_runtime_comparison.png}
-\caption{Percent Error vs. Runtime for Facebook Dataset. Uniform sampling, importance sampling, and the hybrid method have similar errors by runtime, but importance sampling and the hybrid method achieve the lowest errors overall.}
-\label{fig:fb_runtime}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\linewidth]{plots/comparisons/GrQc/limited_method_percent_error_vs_runtime_comparison.png}
-\caption{Percent Error vs. Runtime for Collaboration Network Dataset. Importance sampling outperforms other methods.}
-\label{fig:grqc_runtime}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\linewidth]{plots/comparisons/croc/limited_method_percent_error_vs_runtime_comparison.png}
-\caption{Percent Error vs. Runtime for Crocodile Wikipedia Dataset. Uniform sampling has a far shorter runtime than the other methods with comparable accuracy for large samples.}
-\label{fig:croc_runtime}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\linewidth]{plots/comparisons/ba/limited_method_percent_error_vs_runtime_comparison.png}
-\caption{Percent Error vs. Runtime for Synthetic Barabási–Albert Dataset. The hybrid approach yields the lowest overall error, but for shorter runtimes, importance sampling performs best.}
-\label{fig:ba_runtime}
-\end{figure}
-
-Also important to keep in mind is that in all previously referenced figures and tables, we use a default power, or $\alpha$ of 2.
-However, as illustrated in \cref{fig:avg_duration_importance,fig:avg_duration_variance_importance}, which present data from the Facebook dataset, larger powers lead to longer runtimes.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{plots/durations/avg_duration_Importance Sampling.png}
-    \caption{Average Duration - Importance Sampling. Runtime increases with sample size and power.}
-    \label{fig:avg_duration_importance}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{plots/durations/avg_duration_Variance Reduction + Importance Sampling.png}
-    \caption{Average Duration - Variance Reduction + Importance Sampling. Runtime increases with sample size and power.}
-    \label{fig:avg_duration_variance_importance}
-\end{figure}
-
-In figures \cref{fig:percent_error_importance,fig:percent_error_variance_importance}, we also find that powers closest to the optimal value $\alpha$, as described in Section \ref{sec:importance-sampling-background} have lowest percent error.
-In the case of the Social Network (Facebook) dataset, this value is $\alpha \approx 1.97$.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{plots/percent-errors/percent_error_Importance Sampling.png}
-    \caption{Percent Error - Importance Sampling. Percent error decreases as sample size increases. Powers closest to ~1.97 perform best.}
-    \label{fig:percent_error_importance}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{plots/percent-errors/percent_error_Variance Reduction + Importance Sampling.png}
-    \caption{Percent Error - Variance Reduction + Importance Sampling. Percent error decreases as sample size increases. Powers closest to ~1.97 perform best.}
-    \label{fig:percent_error_variance_importance}
-\end{figure}
-
-In these figures, we also observe that after a certain point, the decrease in percent error by power is very slight.
-For both importance sampling and the hybrid method, powers of 1.5, 2, and $~ 1.97$ all perform about the same.
-
-Thus, while a higher power may yield the lowest error, in practical applications, it may make more sense to take a slightly lower power to decrease runtime.
-Using a smaller default value for $\alpha$, such as 1.5, may thus impact the performance of the algorithms, particularly when looking at runtime vs. percent error, making it an interesting potential direction for future work.
-
-To summarize, the hybrid method achieves the overall lowest percent error across almost all datasets, but typically, with runtime in mind, importance sampling performs best, and that performance may be improved even further with more thoughtful selection of the $\alpha$ value.
-
-\subsection{4-Clique Counting}
-
-To see if these properties found with triangle counting generalize out to other graph motifs, we look at the results from 4-clique counting.
-Specifically, we compare uniform sampling, importance sampling, and variance reduction, and illustrate how the power in importance sampling impacts percent error and runtime in 4-clique counting.
-All shown results are from the Collaboration Network dataset.
-
-As with triangle counting, we find that importance sampling yields better results than uniform sampling and variance reduction on our dataset, as shown in \cref{fig:4_clique_percent_error_runtime_comparison,fig:4_clique_percent_error_sample_size_comparison}.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{plots/4-clique/comparison/percent_error_vs_runtime_comparison.png}
-    \caption{Comparison of percent error versus runtime for different methods in 4-clique counting. Importance sampling with higher powers outperforms variance reduction.}
-    \label{fig:4_clique_percent_error_runtime_comparison}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{plots/4-clique/comparison/percent_error_vs_sample_size_comparison.png}
-    \caption{Comparison of percent error versus sample size for different 4-clique counting methods. Importance sampling with higher powers outperforms variance reduction.}
-    \label{fig:4_clique_percent_error_sample_size_comparison}
-\end{figure}
-
-Additionally, as made clear in \cref{fig:4_clique_avg_duration_importance_sampling,fig:4_clique_avg_error_importance_sampling}, the same relationships between power and error and power and runtime are present with 4-clique counting as they are with triangle counting.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{plots/4-clique/importance-sampling/avg_duration_Importance Sampling.png}
-    \caption{Average duration of the importance sampling method across powers for 4-clique counting. Runtime increases with sample size and power.}
-    \label{fig:4_clique_avg_duration_importance_sampling}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{plots/4-clique/importance-sampling/avg_error_Importance Sampling.png}
-    \caption{Average error of the importance sampling method across powers for 4-clique counting. Average error decreases as sample size increases. The power of 1.5 performs best.}
-    \label{fig:4_clique_avg_error_importance_sampling}
-\end{figure}
-
-These comparisons are not very robust, but they do provide evidence that the patterns observed in the triangle counting experiments are likely generalizable to other motifs.
-
-\subsection{Understanding the Benefits of Importance Sampling vs. Variance Reduction}
-
-To gather insight into why specifically importance sampling outperformed the other methods, we turn to a simulated test of the methods.
-Specifically as described in Section \ref{sec:methods-simulated-test}, we tested variance reduction and importance sampling under two different triangle-degree relationships: uniform noise and multiplicative noise.
-
-\subsubsection{Uniform Noise Relationship}
-
-When running the algorithms on data simulated to have the following noise:
-
-\[
-\text{triangle counts} = \text{np.power(degrees, slope)} \times \text{np.exp(intercept)} + \text{noise},
-\]
-
-i.e noise that is normally distributed with mean zero and standard deviation defined by two scales: 10 and 100, the average error of variance reduction is lower than that of importance sampling, given in \cref{fig:uniform_noise_10,fig:uniform_noise_100}.
-We see too, that as the noise increases, the difference in performance between variance reduction and importance sampling increases too.
-In \cref{fig:uniform_noise_10}, the difference in average errors between the methods is far smaller than the difference in \cref{fig:uniform_noise_100} with noise that is 10 times the size as before.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.6\textwidth]{plots/simulated/percent_error_vs_sample_size_comparison_uniform_10.0.png}
-    \caption{Sample size vs. average error with uniform noise (scale = 10). Variance reduction outperforms importance sampling.}
-    \label{fig:uniform_noise_10}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.6\textwidth]{plots/simulated/percent_error_vs_sample_size_comparison_uniform_100.0.png}
-    \caption{Sample size vs. average error with uniform noise (scale = 100). Variance reduction outperforms importance sampling.}
-    \label{fig:uniform_noise_100}
-\end{figure}
-
-\subsubsection{Multiplicative Noise Relationship}
-
-Next, we consider the performance of the algorithms with multiplicative noise. The triangle counts were generated using the following formula:
-
-\[
-\text{triangle counts} = \text{np.power(degrees, slope)} \times \text{np.exp(intercept)} \times (1 + \text{noise}),
-\]
-
-where \text{noise} is again normally distributed and grows with the degree, and the noise scale was tested at two values: 0.01 and 0.1.
-
-Unlike before, with this type of noise, as given in \cref{fig:multiplicative_noise_001,fig:multiplicative_noise_01}, importance sampling outperforms variance reduction.
-Similarly to before, we also see the difference in performance between the two methods grow as the noise grows, meaning that, as the noise grows larger, the difference in average error between importance sampling and variance reduction grows larger too.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.6\textwidth]{plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.01.png}
-    \caption{Sample size vs. average error with multiplicative noise (scale = 0.01). Importance sampling outperforms variance reduction.}
-    \label{fig:multiplicative_noise_001}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.6\textwidth]{plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.1.png}
-    \caption{Sample size vs. average error with multiplicative noise (scale = 0.1). Importance sampling outperforms variance reduction.}
-    \label{fig:multiplicative_noise_01}
-\end{figure}
-
-Additionally, as derived in the appendix in \cref{appendix:variance-comparison}, we have the following theorem:
-
-\begin{theorem}
-\label{theorem:variance-comparison}
-In the case of multiplicative noise, $\mathrm{Var}(\tilde{\Delta}_{IS}) \leq \mathrm{Var}(\tilde{\Delta}_{VR})$.
-\end{theorem}
-
-This theorem supports the previous findings.
-For the multiplicative case, the variance of importance sampling is lower than that of variance reduction, aligning with the finding that, for that case, the average error of importance sampling is lower than that of variance reduction too.
-
-Given this, if our datasets also experience noise similar to the multiplicative noise model, that would explain the high performance of importance sampling for them.
-To check this, we plot true triangle counts vs. `noise' (i.e. the absolute value of the true minus approximate triangle counts) for each dataset.
-These plots are given below in \cref{fig:tri_vs_noise}.
+To see which model most closely matches our datasets, we plot true triangle counts vs. `noise' (i.e. the absolute value of the true minus approximate triangle counts) for each dataset.
+These plots are given below in \Cref{fig:tri_vs_noise}.
 
 \begin{figure}[H]
     \centering
@@ -1300,6 +1101,275 @@ These plots are given below in \cref{fig:tri_vs_noise}.
 
 In these plots, we see that as the triangle counts increase, so does the noise.
 This indicates that our datasets more closely fit the multiplicative model than the uniform one.
+
+\newpage
+
+\section{Results and Discussion}
+
+In this section, we evaluate the accuracy and efficiency of various sampling methods, demonstrating that while the hybrid method consistently yields the lowest percent error, importance sampling offers the best trade-off between accuracy and runtime.
+
+\subsection{Triangle Counting}
+
+\Cref{tab:percent_error_100,tab:percent_error_4000} summarize the average percent error for different sampling methods across various datasets with sample sizes of 100 and 4000, respectively.
+The most accurate method is highlighted in bold for each dataset.
+
+\begin{table}[ht]
+\centering
+\caption{Percent Errors for Different Methods on Various Datasets (Sample Size = 100, $\alpha = 2$)}
+\label{tab:percent_error_100}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+& \multicolumn{4}{c|}{\textbf{Avg Percent Error}} \\
+\hline
+\textbf{Dataset} & \textbf{Unif. Sampling} & \textbf{Imp. Sampling} & \textbf{Var. Reduction} & \textbf{Hybrid} \\
+\hline
+Social Network (FB) & 0.17471 & 0.03741 & 0.18911 & \textbf{0.03267} \\
+Collaboration Network & 0.39456 & \textbf{0.04186} & 0.22566 & 0.04470 \\
+Wikipedia Article Network & 0.36941 & 0.25732 & 0.85303 & \textbf{0.18180} \\
+Barab\'asi--Albert & 0.17220 & 0.01243 & 0.01377 & \textbf{0.00791} \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\caption{Percent Errors for Different Methods on Various Datasets (Sample Size = 4000, $\alpha = 2$)}
+\label{tab:percent_error_4000}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+& \multicolumn{4}{c|}{\textbf{Avg Percent Error}} \\
+\hline
+\textbf{Dataset} & \textbf{Unif. Sampling} & \textbf{Imp. Sampling} & \textbf{Var. Reduction} & \textbf{Hybrid} \\
+\hline
+Social Network (FB) & 0.02551 & 0.00608 & 0.05014 & \textbf{0.00482} \\
+Collaboration Network & 0.03359 & \textbf{0.00932} & 0.02316 & 0.00944 \\
+Wikipedia Article Network & 0.06177 & 0.04821 & 0.14815 & \textbf{0.03789} \\
+Barab\'asi--Albert & 0.03299 & 0.00163 & 0.00280 & \textbf{0.00132} \\
+\hline
+\end{tabular}
+\end{table}
+
+In \Cref{tab:percent_error_100,tab:percent_error_4000}, we see that for all datasets tested on except for the collaboration network dataset, the hybrid method tends to achieve the lowest percent error at both small and large sample sizes (specially, the table displays data for sample sizes of 100 and 4000).
+
+Shown in \Cref{fig:fb_sample_size,fig:grqc_sample_size,fig:croc_sample_size,fig:ba_sample_size}, while the hybrid method almost always achieves the lowest percent error overall, by sample size, importance sampling and the hybrid method are very comparable.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\linewidth]{plots/comparisons/fb/limited_method_percent_error_vs_sample_size_comparison.png}
+\caption{Percent Error vs. Sample Size for Facebook Dataset. Importance sampling and the hybrid approach perform best, with the hybrid method performing slightly better.}
+\label{fig:fb_sample_size}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\linewidth]{plots/comparisons/GrQc/limited_method_percent_error_vs_sample_size_comparison.png}
+\caption{Percent Error vs. Sample Size for Collaboration Network Dataset. Importance sampling and the hybrid approach perform best.}
+\label{fig:grqc_sample_size}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\linewidth]{plots/comparisons/croc/limited_method_percent_error_vs_sample_size_comparison.png}
+\caption{Percent Error vs. Sample Size for Crocodile Wikipedia Dataset. The hybrid method performs best.}
+\label{fig:croc_sample_size}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\linewidth]{plots/comparisons/ba/limited_method_percent_error_vs_sample_size_comparison.png}
+\caption{Percent Error vs. Sample Size for Synthetic Barabási–Albert Dataset. Importance sampling, variance reduction, and the hybrid method perform best, with importance sampling and the hybrid method performing best.}
+\label{fig:ba_sample_size}
+\end{figure}
+
+When we also consider runtime, as in \Cref{fig:fb_runtime,fig:grqc_runtime,fig:croc_runtime,fig:ba_runtime}, we see importance sampling begin to outperform the hybrid method, especially on smaller sample sizes.
+Importance sampling generally has lower computational overhead than the hybrid method, and at smaller sample sizes, the hybrid method's added complexity doesn't pay off in terms of improved accuracy, so importance sampling achieves comparable or better results more efficiently.
+As a result, importance sampling outperforms the hybrid method in runtime-constrained settings.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\linewidth]{plots/comparisons/fb/limited_method_percent_error_vs_runtime_comparison.png}
+\caption{Percent Error vs. Runtime for Facebook Dataset. Uniform sampling, importance sampling, and the hybrid method have similar errors by runtime, but importance sampling and the hybrid method achieve the lowest errors overall.}
+\label{fig:fb_runtime}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\linewidth]{plots/comparisons/GrQc/limited_method_percent_error_vs_runtime_comparison.png}
+\caption{Percent Error vs. Runtime for Collaboration Network Dataset. Importance sampling outperforms other methods.}
+\label{fig:grqc_runtime}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\linewidth]{plots/comparisons/croc/limited_method_percent_error_vs_runtime_comparison.png}
+\caption{Percent Error vs. Runtime for Crocodile Wikipedia Dataset. Uniform sampling has a far shorter runtime than the other methods with comparable accuracy for large samples.}
+\label{fig:croc_runtime}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\linewidth]{plots/comparisons/ba/limited_method_percent_error_vs_runtime_comparison.png}
+\caption{Percent Error vs. Runtime for Synthetic Barabási–Albert Dataset. The hybrid approach yields the lowest overall error, but for shorter runtimes, importance sampling performs best.}
+\label{fig:ba_runtime}
+\end{figure}
+
+\subsubsection{$\alpha$ Tradeoff}
+
+Also important to keep in mind is that in all previously referenced figures and tables, we use a default power, or $\alpha$ of 2.
+However, as illustrated in \Cref{fig:avg_duration_importance,fig:avg_duration_variance_importance}, which present data from the Facebook dataset, larger powers lead to longer runtimes.
+This is because, for larger powers, we are more likely to sample high-degree (and therefore high-triangle) nodes.
+Thus, we will have more triangles to count overall, resulting in longer runtimes.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{plots/durations/avg_duration_Importance Sampling.png}
+    \caption{Average Duration - Importance Sampling. Runtime increases with sample size and power.}
+    \label{fig:avg_duration_importance}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{plots/durations/avg_duration_Hybrid.png}
+    \caption{Average Duration - Hybrid Method. Runtime increases with sample size and power.}
+    \label{fig:avg_duration_variance_importance}
+\end{figure}
+
+In \Cref{fig:percent_error_importance,fig:percent_error_variance_importance}, we also find that powers closest to the optimal value $\alpha$, as described in \Cref{sec:importance-sampling-background} have lowest percent error.
+In the case of the Social Network (Facebook) dataset, this value is $\alpha \approx 1.97$.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{plots/percent-errors/percent_error_Importance Sampling.png}
+    \caption{Percent Error - Importance Sampling. Percent error decreases as sample size increases. Powers closest to ~1.97 perform best.}
+    \label{fig:percent_error_importance}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{plots/percent-errors/percent_error_Hybrid.png}
+    \caption{Percent Error - Hybrid Method. Percent error decreases as sample size increases. Powers closest to ~1.97 perform best.}
+    \label{fig:percent_error_variance_importance}
+\end{figure}
+
+In these figures, we also observe that after a certain point, the decrease in percent error by power is very slight.
+For both importance sampling and the hybrid method, powers of 1.5, 2, and $~ 1.97$ all perform about the same.
+
+Thus, while a higher power may yield the lowest error, in practical applications, it may make more sense to take a slightly lower power to decrease runtime.
+Using a smaller default value for $\alpha$, such as 1.5, may thus impact the performance of the algorithms, particularly when looking at runtime vs. percent error, making it an interesting potential direction for future work.
+
+To summarize, the hybrid method achieves the overall lowest percent error across almost all datasets, but typically, with runtime in mind, importance sampling performs best, and that performance may be improved even further with more thoughtful selection of the $\alpha$ value.
+
+\subsection{4-Clique Counting}
+
+To see if these properties found with triangle counting generalize out to other graph motifs, we look at the results from 4-clique counting.
+Specifically, we compare uniform sampling, importance sampling, and variance reduction, and illustrate how the power in importance sampling impacts percent error and runtime in 4-clique counting.
+All shown results are from the Collaboration Network dataset.
+
+As with triangle counting, we find that importance sampling yields better results than uniform sampling and variance reduction on our dataset, as shown in \Cref{fig:4_clique_percent_error_runtime_comparison,fig:4_clique_percent_error_sample_size_comparison}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{plots/4-clique/comparison/percent_error_vs_runtime_comparison.png}
+    \caption{Comparison of percent error versus runtime for different methods in 4-clique counting. Importance sampling with higher powers outperforms variance reduction.}
+    \label{fig:4_clique_percent_error_runtime_comparison}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{plots/4-clique/comparison/percent_error_vs_sample_size_comparison.png}
+    \caption{Comparison of percent error versus sample size for different 4-clique counting methods. Importance sampling with higher powers outperforms variance reduction.}
+    \label{fig:4_clique_percent_error_sample_size_comparison}
+\end{figure}
+
+Additionally, as made clear in \Cref{fig:4_clique_avg_duration_importance_sampling,fig:4_clique_avg_error_importance_sampling}, the same relationships between power and error and power and runtime are present with 4-clique counting as they are with triangle counting.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{plots/4-clique/importance-sampling/avg_duration_Importance Sampling.png}
+    \caption{Average duration of the importance sampling method across powers for 4-clique counting. Runtime increases with sample size and power.}
+    \label{fig:4_clique_avg_duration_importance_sampling}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{plots/4-clique/importance-sampling/avg_error_Importance Sampling.png}
+    \caption{Average error of the importance sampling method across powers for 4-clique counting. Average error decreases as sample size increases. The power of 1.5 performs best.}
+    \label{fig:4_clique_avg_error_importance_sampling}
+\end{figure}
+
+These comparisons are not very robust, as due to 4-clique counting's runtime, fewer combinations of method, dataset, sample size, and power were run, but they do provide evidence that the patterns observed in the triangle counting experiments are likely generalizable to other motifs.
+
+\subsection{Understanding the Benefits of Importance Sampling vs. Variance Reduction}
+
+To gather insight into why specifically importance sampling outperformed the other methods, we turn to a simulated test of the methods.
+Specifically as described in \Cref{sec:methods-simulated-test}, we tested variance reduction and importance sampling under two different degree-triangle relationships: uniform noise and multiplicative noise.
+
+\subsubsection{Uniform Noise Relationship}
+
+When running the algorithms on data simulated to have the following noise:
+
+\[
+\text{triangle counts} = \text{np.power(degrees, slope)} \times \text{np.exp(intercept)} + \text{noise},
+\]
+
+i.e noise that is normally distributed with mean zero and standard deviation defined by two scales: 10 and 100, the average error of variance reduction is lower than that of importance sampling, given in \Cref{fig:uniform_noise_10,fig:uniform_noise_100}.
+These noise scales were chosen arbitrarily so that we could compare the results between smaller and larger scales.
+We see too, that as the noise increases, the difference in performance between variance reduction and importance sampling increases too.
+In \Cref{fig:uniform_noise_10}, the difference in average errors between the methods is far smaller than the difference in \Cref{fig:uniform_noise_100} with noise that is 10 times the size as before.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{plots/simulated/percent_error_vs_sample_size_comparison_uniform_10.0.png}
+    \caption{Sample size vs. average error with uniform noise (scale = 10). Variance reduction outperforms importance sampling.}
+    \label{fig:uniform_noise_10}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{plots/simulated/percent_error_vs_sample_size_comparison_uniform_100.0.png}
+    \caption{Sample size vs. average error with uniform noise (scale = 100). Variance reduction outperforms importance sampling.}
+    \label{fig:uniform_noise_100}
+\end{figure}
+
+\subsubsection{Multiplicative Noise Relationship}
+
+Next, we consider the performance of the algorithms with multiplicative noise. The triangle counts were generated using the following formula:
+
+\[
+\text{triangle counts} = \text{np.power(degrees, slope)} \times \text{np.exp(intercept)} \times (1 + \text{noise}),
+\]
+
+where \text{noise} is again normally distributed and grows with the degree, and the noise scale was tested at two values: 0.01 and 0.1.
+
+Unlike before, with this type of noise, as given in \Cref{fig:multiplicative_noise_001,fig:multiplicative_noise_01}, importance sampling outperforms variance reduction.
+Similarly to before, we also see the difference in performance between the two methods grow as the noise grows, meaning that, as the noise grows larger, the difference in average error between importance sampling and variance reduction grows larger too.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.01.png}
+    \caption{Sample size vs. average error with multiplicative noise (scale = 0.01). Importance sampling outperforms variance reduction.}
+    \label{fig:multiplicative_noise_001}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{plots/simulated/percent_error_vs_sample_size_comparison_multiplicative_0.1.png}
+    \caption{Sample size vs. average error with multiplicative noise (scale = 0.1). Importance sampling outperforms variance reduction.}
+    \label{fig:multiplicative_noise_01}
+\end{figure}
+
+Additionally, as derived in the appendix in \Cref{appendix:variance-comparison}, we have the following theorem:
+
+\begin{theorem}
+\label{theorem:variance-comparison}
+In the case of multiplicative noise, $\mathrm{Var}(\tilde{\Delta}_{IS}) \leq \mathrm{Var}(\tilde{\Delta}_{VR})$.
+\end{theorem}
+
+This theorem supports the previous findings.
+For the multiplicative case, the variance of importance sampling is lower than that of variance reduction, aligning with the finding that, for that case, the average error of importance sampling is lower than that of variance reduction too.
+
+Given this, if our datasets also experience noise similar to the multiplicative noise model, that would explain the high performance of importance sampling for them.
+As shown \Cref{fig:tri_vs_noise}, that is the case for all four of our datasets. 
 Thus, our simulated tests support our findings that importance sampling leads to lower error on our datasets.
 We can also imagine that in a dataset that aligns more closely with the uniform model, we may see the comparative performance of variance reduction improve.
 
@@ -1312,11 +1382,11 @@ Through experiments and theoretical analysis, we found that, for many networks, 
 
 Research into the case where, according to the simulated tests and theoretical analysis, variance reduction outperforms importance sampling, i.e., the case where noise is uniform instead of multiplicative, would be an interesting direction for future work.
 
-In this thesis, we found a trade-off between power and runtime, finding that powers closest to the optimum for achieving low error did not necessarily achieve the best balance between accuracy and runtime.
+We also found a trade-off between power and runtime, finding that powers closest to the optimum for achieving low error did not necessarily achieve the best balance between accuracy and runtime.
 Thus, another further research direction would be investigating, and perhaps quantifying, that tradeoff.
 
-Lastly, in this thesis, we extended our analysis out to other motifs, specifically, 4-cliques.
-There are many more graph motifs out there with interesting associated quantities that could be estimated using these techniques.
+Lastly, we extended our analysis out to other motifs, specifically, 4-cliques.
+There are many more graph motifs with interesting associated quantities that could be estimated using these techniques.
 Additionally, these techniques could be extended beyond graphs to estimate any number of other sums.
 
 \newpage
@@ -1327,6 +1397,8 @@ Additionally, these techniques could be extended beyond graphs to estimate any n
 \newpage
 
 \section{Appendix}
+
+In the appendix, we give links to code and extended results as well as a theoretical analysis of the variances of algorithms implemented.
 
 \subsection{Links to Code and Extended Results}
 
@@ -1357,80 +1429,90 @@ Thus, in this section, we derive expressions for the variance of the estimated t
 
 \subsubsection{Uniform Sampling}
 
-The global triangle count $\Delta$ can be estimated as $\tilde{\Delta}$ using the following formula:
+For uniform sampling, the global triangle count $\Delta$ is estimated as $\tilde{\Delta}$ using the following formula:
 
 \[
 \tilde{\Delta} = \frac{n}{3s} \sum_{i = 1}^{s} \Delta_i,
 \]
 
 where $n$ is the number of nodes in our graph $G$, $s$ is our sample size, and $\sum_{i = 1}^{s} \Delta_i$ is the sum of all sampled triangle counts. 
-Using this, we can find the variance of $\tilde{\Delta}$ in terms of $n$, $s$, and $\mathrm{Var}(\Delta_i)$.
+Using this, we can find the variance of $\tilde{\Delta}$ in terms of $n$, $s$, and $\mathrm{Var}\left(\Delta_i\right)$.
 
 \[
 \begin{aligned}
-\mathrm{Var}(\tilde{\Delta}) &= \mathrm{Var} \left( \frac{n}{3s} \sum_{i=1}^{s} \Delta_i \right) \\
+\mathrm{Var}\left(\tilde{\Delta}\right) &= \mathrm{Var} \left( \frac{n}{3s} \sum_{i=1}^{s} \Delta_i \right) \\
 &= \frac{n^2}{9s^2} \mathrm{Var} \left( \sum_{i=1}^{s} \Delta_i \right) \\
-&= \frac{n^2}{9s^2} \sum_{i=1}^{s} \mathrm{Var}(\Delta_i)
+&= \frac{n^2}{9s^2} \sum_{i=1}^{s} \mathrm{Var}\left(\Delta_i\right).
 \end{aligned}
 \]
 
-Next, we find $\mathrm{Var}(\Delta_i)$.
+Next, we find $\mathrm{Var}\left(\Delta_i\right)$.
 
 \[
-\mathrm{Var}(\Delta_i) = \mathbb{E}[(\Delta_i - \mathbb{E}[\Delta_i])^2]
+\mathrm{Var}\left(\Delta_i\right) = \mathbb{E}\left[\left(\Delta_i - \mathbb{E}[\Delta_i]\right)^2\right].
 \]
 
+We use the fact that the probability of sampling each node is $\frac{1}{n}$ to arrive at the following step:
+
 \[
-\mathbb{E}[\Delta_i] = 3(\frac{1}{n} \Delta_1 + \frac{1}{n} \Delta_2 + \ldots + \frac{1}{n} \Delta_n) = \frac{3\Delta}{n}
+\mathbb{E}\left[\Delta_i\right] = 3\left(\frac{1}{n} \Delta_1 + \frac{1}{n} \Delta_2 + \ldots + \frac{1}{n} \Delta_n\right) = \frac{3\Delta}{n}.
 \]
 
 \[
 \begin{aligned}
-\mathbb{E}[(\Delta_i - \mathbb{E}[\Delta_i])^2] &= \mathbb{E}[(\Delta_i - \frac{3\Delta}{n})^2] \\
-&= \sum_{i = 1}^{n} \frac{1}{n} (\Delta_i - \frac{3\Delta}{n})^2 \\
-&= \sum_{i = 1}^{n} \frac{1}{n} (\Delta_i^2 - 6 \Delta_i \frac{\Delta}{n} + \frac{9\Delta^2}{n^2}) \\
+\mathbb{E}\left[\left(\Delta_i - \mathbb{E}\left[\Delta_i\right]\right)^2\right] &= \mathbb{E}\left[\left(\Delta_i - \frac{3\Delta}{n}\right)^2\right] \\
+&= \sum_{i = 1}^{n} \frac{1}{n} \left(\Delta_i - \frac{3\Delta}{n}\right)^2 \\
+&= \sum_{i = 1}^{n} \frac{1}{n} \left(\Delta_i^2 - 6 \Delta_i \frac{\Delta}{n} + \frac{9\Delta^2}{n^2}\right) \\
 &= \frac{1}{n} \sum_{i = 1}^{n} \Delta_i^2 - \frac{6}{n} \sum_{i = 1}^{n} \Delta_i \frac{\Delta}{n} + \frac{1}{n} \sum_{i = 1}^{n} \frac{9\Delta^2}{n^2} \\
 &= \frac{1}{n} \sum_{i = 1}^{n} \Delta_i^2 - \frac{6}{n} \sum_{i = 1}^{n} \Delta_i \frac{\Delta}{n} + \frac{9\Delta^2}{n^2} \\
 &= \frac{1}{n} \sum_{i = 1}^{n} \Delta_i^2 - \frac{18\Delta^2}{n^2} + \frac{9\Delta^2}{n^2} \\
-&= \frac{1}{n} \sum_{i = 1}^{n} \Delta_i^2 - \frac{9\Delta^2}{n^2}
+&= \frac{1}{n} \sum_{i = 1}^{n} \Delta_i^2 - \frac{9\Delta^2}{n^2}.
 \end{aligned}
 \]
 
-Now, we can plug our value of $\mathrm{Var}(\Delta_i)$ into $\mathrm{Var}(\tilde{\Delta}) = \frac{n^2}{9s^2} \sum_{i=1}^{s} \mathrm{Var}(\Delta_i)$.
+Now, we can plug our value of $\mathrm{Var}\left(\Delta_i\right)$ into $\mathrm{Var}\left(\tilde{\Delta}\right) = \frac{n^2}{9s^2} \sum_{i=1}^{s} \mathrm{Var}\left(\Delta_i\right)$.
 
 \[
 \begin{aligned}
-\mathrm{Var}(\tilde{\Delta}) &= \frac{n^2}{9s^2} \sum_{i=1}^{s} [\frac{1}{n} \sum_{i = 1}^{n} \Delta_i^2 - \frac{9\Delta^2}{n^2}] \\
-&= \frac{n^2}{9s^2} s [\frac{1}{n} \sum_{i = 1}^{n} \Delta_i^2 - \frac{9\Delta^2}{n^2}] \\
-&= \frac{n^2}{9s} [\frac{1}{n} \sum_{i = 1}^{n} \Delta_i^2 - \frac{9\Delta^2}{n^2}] \\
-&= \frac{n}{s} [\frac{1}{9}\sum_{i = 1}^{n} \Delta_i^2 - \frac{\Delta^2}{n}] \\
-&= \frac{n}{9s} \sum_{i = 1}^{n} \Delta_i^2 - \frac{\Delta^2}{s} \\
+\mathrm{Var}\left(\tilde{\Delta}\right) &= \frac{n^2}{9s^2} \sum_{i=1}^{s} \left[\frac{1}{n} \sum_{i = 1}^{n} \Delta_i^2 - \frac{9\Delta^2}{n^2}\right] \\
+&= \frac{n^2}{9s^2} s \left[\frac{1}{n} \sum_{i = 1}^{n} \Delta_i^2 - \frac{9\Delta^2}{n^2}\right] \\
+&= \frac{n^2}{9s} \left[\frac{1}{n} \sum_{i = 1}^{n} \Delta_i^2 - \frac{9\Delta^2}{n^2}\right] \\
+&= \frac{n}{s} \left[\frac{1}{9}\sum_{i = 1}^{n} \Delta_i^2 - \frac{\Delta^2}{n}\right] \\
+&= \frac{n}{9s} \sum_{i = 1}^{n} \Delta_i^2 - \frac{\Delta^2}{s}. \\
 \end{aligned}
 \]
 
+Altogether, we get
+
+\begin{equation}
+    \mathrm{Var}\left(\tilde{\Delta}_{US}\right) = \frac{n}{9s} \sum_{i = 1}^{n} \Delta_i^2 - \frac{\Delta^2}{s}.
+\label{eq:Var_Delta_US}
+\end{equation}
+
 \subsubsection{Importance Sampling}
 
-The global triangle count $\Delta$ can be estimated as $\tilde{\Delta}$ using the following formula:
+For importance sampling, the global triangle count $\Delta$ is estimated as $\tilde{\Delta}$ using the following formula:
 
 \[
 \tilde{\Delta} = \frac{1}{3s} \sum_{j = 1}^{s} \frac{\Delta_{ij}}{p_{ij}},
 \]
 
 where $p_i = \frac{m_i}{\sum_{j = 1}^{n}m_{ij}}$ with $m_j = \Delta_j + n_j$ where $n_i \in [-\sigma \Delta_i, \sigma \Delta_i]$ and $\sigma < 1$.
+In this model of importance sampling, we will assume multiplicative noise, hence, we see the scale of $n_i$ increase as $\Delta_i$ increases.
 
 \[
 \begin{aligned}
-\mathrm{Var}(\tilde{\Delta}) &= \mathrm{Var} \left( \frac{1}{3s} \sum_{j = 1}^{s} \frac{\Delta_{ij}}{p_{ij}} \right) \\
+\mathrm{Var}\left(\tilde{\Delta}\right) &= \mathrm{Var} \left( \frac{1}{3s} \sum_{j = 1}^{s} \frac{\Delta_{ij}}{p_{ij}} \right) \\
 &= \frac{1}{9s^2} \mathrm{Var} \left( \sum_{j = 1}^{s} \frac{\Delta_{ij}}{p_{ij}} \right) \\
 &= \frac{1}{9s^2} \sum_{j = 1}^{s} \mathrm{Var} \left( \frac{\Delta_{ij}}{p_{ij}} \right) \\
-&= \frac{1}{9s^2} \sum_{j = 1}^{s} [\mathbb{E}[(\frac{\Delta_{ij}}{p_{ij}})^2] - (\mathbb{E}[\frac{\Delta_{ij}}{p_{ij}}])^2] \\
-&= \frac{1}{9s^2} \sum_{j = 1}^{s} [\mathbb{E}[(\frac{\Delta_{ij}}{p_{ij}})^2] - (\sum_{n}^{j=1}(p_j \frac{\Delta_j}{p_j}))^2] \\
-&= \frac{1}{9s^2} \sum_{j = 1}^{s} [\mathbb{E}[(\frac{\Delta_{ij}}{p_{ij}})^2] - (\sum_{n}^{j=1}\Delta_j)^2] \\
-&= \frac{1}{9s^2} \sum_{j = 1}^{s} [\mathbb{E}[(\frac{\Delta_{ij}}{p_{ij}})^2] - \Delta^2] \\
-&= \frac{1}{9s^2} \sum_{j = 1}^{s} [\sum_{j = 1}^{n}(p_j \frac{\Delta_j^2}{p_j^2}) - \Delta^2] \\
-&= \frac{1}{9s^2} \sum_{j = 1}^{s} [\sum_{j = 1}^{n}(\frac{\Delta_j^2}{p_j}) - \Delta^2] \\
-&= \frac{1}{9s^2} \sum_{j = 1}^{s} [\sum_{j = 1}^{n}\frac{\Delta_j^2}{m_j} \sum_{i = 1}^{n}m_i - \Delta^2] \\
-&= \frac{1}{9s^2} \sum_{j = 1}^{s} [\sum_{i = 1}^{n}m_i \sum_{j = 1}^{n}\frac{\Delta_j^2}{m_j} - \Delta^2] \\
+&= \frac{1}{9s^2} \sum_{j = 1}^{s} \left[\mathbb{E}\left[\left(\frac{\Delta_{ij}}{p_{ij}}\right)^2\right] - \left(\mathbb{E}\left[\frac{\Delta_{ij}}{p_{ij}}\right]\right)^2\right] \\
+&= \frac{1}{9s^2} \sum_{j = 1}^{s} \left[\mathbb{E}\left[\left(\frac{\Delta_{ij}}{p_{ij}}\right)^2\right] - \left(\sum_{n}^{j=1}\left(p_j \frac{\Delta_j}{p_j}\right)\right)^2\right] \\
+&= \frac{1}{9s^2} \sum_{j = 1}^{s} \left[\mathbb{E}\left[\left(\frac{\Delta_{ij}}{p_{ij}}\right)^2\right] - \left(\sum_{n}^{j=1}\Delta_j\right)^2\right] \\
+&= \frac{1}{9s^2} \sum_{j = 1}^{s} \left[\mathbb{E}\left[\left(\frac{\Delta_{ij}}{p_{ij}}\right)^2\right] - \Delta^2\right] \\
+&= \frac{1}{9s^2} \sum_{j = 1}^{s} \left[\sum_{j = 1}^{n}\left(p_j \frac{\Delta_j^2}{p_j^2}\right) - \Delta^2\right] \\
+&= \frac{1}{9s^2} \sum_{j = 1}^{s} \left[\sum_{j = 1}^{n}\left(\frac{\Delta_j^2}{p_j}\right) - \Delta^2\right] \\
+&= \frac{1}{9s^2} \sum_{j = 1}^{s} \left[\sum_{j = 1}^{n}\frac{\Delta_j^2}{m_j} \sum_{i = 1}^{n}m_i - \Delta^2\right] \\
+&= \frac{1}{9s^2} \sum_{j = 1}^{s} \left[\sum_{i = 1}^{n}m_i \sum_{j = 1}^{n}\frac{\Delta_j^2}{m_j} - \Delta^2\right]. \\
 \end{aligned}
 \]
 
@@ -1438,8 +1520,8 @@ We can set an upper bound on $\sum_{i = 1}^{n}m_i$ as follows:
 
 \[
 \begin{aligned}
-\sum_{i = 1}^{n}m_i &\leq \sum_{i = 1}^{n}(\Delta_i + \sigma \Delta_i) \\
-&\leq (1 + \sigma) \Delta \\
+\sum_{i = 1}^{n}m_i &\leq \sum_{i = 1}^{n}\left(\Delta_i + \sigma \Delta_i\right) \\
+&\leq \left(1 + \sigma\right) \Delta. \\
 \end{aligned}
 \]
 
@@ -1447,10 +1529,10 @@ We can similarly set an upper bound on $\sum_{j = 1}^{n}\frac{\Delta_j^2}{m_j}$ 
 
 \[
 \begin{aligned}
-\sum_{j = 1}^{n}\frac{\Delta_j^2}{m_j} &\leq \sum_{j = 1}^{n}\frac{\Delta_j^2}{(1 - \sigma) \Delta_j} \\
+\sum_{j = 1}^{n}\frac{\Delta_j^2}{m_j} &\leq \sum_{j = 1}^{n}\frac{\Delta_j^2}{\left(1 - \sigma\right) \Delta_j} \\
 &= \sum_{j = 1}^{n}\frac{\Delta_j}{1 - \sigma} \\
 &= \frac{1}{1 - \sigma} \sum_{j = 1}^{n}\Delta_j \\
-&= \frac{1}{1 - \sigma} \Delta \\
+&= \frac{1}{1 - \sigma} \Delta. \\
 \end{aligned}
 \]
 
@@ -1458,141 +1540,170 @@ Combining these two bounds we can return to our variance expression:
 
 \[
 \begin{aligned}
-\mathrm{Var}(\tilde{\Delta}) &= \frac{1}{9s^2} \sum_{j = 1}^{s} [\sum_{i = 1}^{n}m_i \sum_{j = 1}^{n}\frac{\Delta_j^2}{m_j} - \Delta^2] \\
-&\leq \frac{1}{9s^2} \sum_{j = 1}^{s} [\frac{1 + \sigma}{1 - \sigma} \Delta^2 - \Delta^2] \\
-&= \frac{1}{9s^2} \sum_{j = 1}^{s} [(\frac{1 + \sigma}{1 - \sigma} - 1) \Delta^2] \\
-&= \frac{1}{9s} (\frac{1 + \sigma}{1 - \sigma} - 1) \Delta^2 \\
+\mathrm{Var}\left(\tilde{\Delta}\right) &= \frac{1}{9s^2} \sum_{j = 1}^{s} \left[\sum_{i = 1}^{n}m_i \sum_{j = 1}^{n}\frac{\Delta_j^2}{m_j} - \Delta^2\right] \\
+&\leq \frac{1}{9s^2} \sum_{j = 1}^{s} \left[\frac{1 + \sigma}{1 - \sigma} \Delta^2 - \Delta^2\right] \\
+&= \frac{1}{9s^2} \sum_{j = 1}^{s} \left[\left(\frac{1 + \sigma}{1 - \sigma} - 1\right) \Delta^2\right] \\
+&= \frac{1}{9s} \left(\frac{1 + \sigma}{1 - \sigma} - 1\right) \Delta^2. \\
 \end{aligned}
 \]
 
-\subsubsection{Variance Reduction}
+Altogether, we get
 
-Across this section, we will use the fact that $\mathrm{Var}[X+Y] \leq 2(\mathrm{Var}[X] + \mathrm{Var}[Y])$. We derive that as follows:
+\begin{equation}
+    \mathrm{Var}\left(\tilde{\Delta}_{IS}\right) \leq \frac{1}{9s} \left(\frac{1 + \sigma}{1 - \sigma} - 1\right) \Delta^2.
+\label{eq:Var_Delta_IS}
+\end{equation}
+
+\subsubsection{Variance Reduction}
+\label{sec:variance-reduction-analysis}
+
+Across this section, we will use the fact that, when our distributions are mean 0, $\mathrm{Var}\left[X+Y\right] \leq 2\left(\mathrm{Var}\left[X\right] + \mathrm{Var}\left[Y\right]\right)$. We derive that as follows:
 
 \[
 \begin{aligned}
-    \mathrm{Var}[X+Y] &= \mathbb{E}[(X+Y)^2] \\
-    &= \mathbb{E}[X^2] + \mathbb{E}[Y^2] + 2\mathbb{E}[XY] \\
-    &\leq \mathbb{E}[X^2] + \mathbb{E}[Y^2] + (\mathbb{E}[X^2] + \mathbb{E}[Y^2]) \\
-    &= 2(\mathbb{E}[X^2] + \mathbb{E}[Y^2]) \\
-    &= 2(\mathrm{Var}[X] + \mathrm{Var}[Y])
+\mathrm{Var}(X + Y) &= \mathbb{E}[(X + Y)^2] - \mathbb{E}[X + Y]^2 \\
+&= \mathbb{E}[X^2 + 2XY + Y^2] - (\mathbb{E}[X] + \mathbb{E}[Y])^2 \\
+&= \mathbb{E}[X^2] + 2\mathbb{E}[XY] + \mathbb{E}[Y^2] - \mathbb{E}[X]^2 - 2\mathbb{E}[X]\mathbb{E}[Y] - \mathbb{E}[Y]^2 \\
+&= \underbrace{\mathbb{E}[X^2] - \mathbb{E}[X]^2}_{\mathrm{Var}(X)} + \underbrace{\mathbb{E}[Y^2] - \mathbb{E}[Y]^2}_{\mathrm{Var}(Y)} + 2(\mathbb{E}[XY] - \mathbb{E}[X]\mathbb{E}[Y]) \\
+&= \mathrm{Var}(X) + \mathrm{Var}(Y) + 2(\mathbb{E}[XY] - \mathbb{E}[X]\mathbb{E}[Y]).
 \end{aligned}
 \]
+    
+Now, applying the Cauchy-Schwarz inequality:
+
+\[
+\begin{aligned}
+2\mathbb{E}[(X - \mathbb{E}[X])(Y - \mathbb{E}[Y])] 
+&\leq 2 \sqrt{\mathbb{E}[(X - \mathbb{E}[X])^2] \cdot \mathbb{E}[(Y - \mathbb{E}[Y])^2]} \\
+&= 2 \sqrt{\mathrm{Var}(X) \cdot \mathrm{Var}(Y)} \\
+&\leq \mathrm{Var}(X) + \mathrm{Var}(Y) \quad \text{(by AM-GM inequality)}.
+\end{aligned}
+\]
+
+Thus, we have $\mathrm{Var}\left[X+Y\right] \leq 2\left(\mathrm{Var}\left[X\right] + \mathrm{Var}\left[Y\right]\right)$.
 
 \paragraph{Variance Reduction with Uniform Noise}
 
-Take the estimator of $\Delta$ to be denoted by $M$ where $M = \sum_{i = 1}^{n} m_i$ and $m_i = \Delta_i + N(0, \sigma^2)$.
+Take the estimator of $\Delta$ to be $\sum_{i = 1}^{n} m_i$ where $m_i = \Delta_i + N\left(0, \sigma^2\right)$.
 
 \[
-\tilde{\Delta} = \sum_{i = 1}^{n} m_i + \frac{n}{s} \sum_{i = 1}^{s} (m_i - \Delta_i)
+\tilde{\Delta} = \sum_{i = 1}^{n} m_i + \frac{n}{s} \sum_{i = 1}^{s} \left(m_i - \Delta_i\right).
 \]
+
+This equations mirrors that seen in \Cref{sec:variance-reduction-background}, where $\sum_{i = 1}^{n} m_i$ gives an estimate of $\Delta$ and $\frac{n}{s} \sum_{i = 1}^{s} \left(m_i - \Delta_i\right)$ serves as the error correction term.
 
 \[
 \begin{aligned}
-\mathrm{Var}(\tilde{\Delta}) &= \mathrm{Var}( \sum_{i = 1}^{n} m_i + \frac{n}{s} \sum_{i = 1}^{s} (m_i - \Delta_i)) \\
-&\leq 2\sum_{i = 1}^{n} \mathrm{Var}(m_i) + 2\mathrm{Var}(\frac{n}{s} \sum_{i = 1}^{s} (m_i - \Delta_i)) \\
-&= 2\sum_{i = 1}^{n} \mathrm{Var}(m_i) + \frac{2n^2}{s^2} \mathrm{Var}(\sum_{i = 1}^{s} (m_i - \Delta_i)) \\
-&= 2\sum_{i = 1}^{n} \mathrm{Var}(m_i) + \frac{2n^2}{s^2} \sum_{i = 1}^{s} \mathrm{Var}(m_i - \Delta_i) \\
-&= 2n \sigma^2 + \frac{2n^2}{s^2} \sum_{i = 1}^{s} \mathrm{Var}(m_i - \Delta_i) \\
+\mathrm{Var}\left(\tilde{\Delta}\right) &= \mathrm{Var}\left( \sum_{i = 1}^{n} m_i + \frac{n}{s} \sum_{i = 1}^{s} \left(m_i - \Delta_i\right)\right) \\
+&\leq 2\sum_{i = 1}^{n} \mathrm{Var}\left(m_i\right) + 2\mathrm{Var}\left(\frac{n}{s} \sum_{i = 1}^{s} \left(m_i - \Delta_i\right)\right) \\
+&= 2\sum_{i = 1}^{n} \mathrm{Var}\left(m_i\right) + \frac{2n^2}{s^2} \mathrm{Var}\left(\sum_{i = 1}^{s} \left(m_i - \Delta_i\right)\right) \\
+&= 2\sum_{i = 1}^{n} \mathrm{Var}\left(m_i\right) + \frac{2n^2}{s^2} \sum_{i = 1}^{s} \mathrm{Var}\left(m_i - \Delta_i\right) \\
+&= 2n \sigma^2 + \frac{2n^2}{s^2} \sum_{i = 1}^{s} \mathrm{Var}\left(m_i - \Delta_i\right) \\
 &= 2n \sigma^2 + \frac{2n^2}{s^2} s \sigma^2 \\
-&= 2n \sigma^2 + \frac{2n^2}{s} \sigma^2 \\
+&= 2n \sigma^2 + \frac{2n^2}{s} \sigma^2. \\
 \end{aligned}
 \]
 
-To allow for better comparison with other methods, assume $\sigma^2$ is the average squared error when using the trivial predictor of $m_i = 0$.
+Thus, we get
+
+\begin{equation}
+    \mathrm{Var}\left(\tilde{\Delta}_{VRu}\right) \leq 2n \sigma^2 + \frac{2n^2}{s} \sigma^2.
+\label{eq:Var_Delta_VRu}
+\end{equation}
+
+To allow for better comparison methods that do not contain a variable $\sigma$ (in our case, uniform sampling), assume $\sigma^2$ is the average squared error when using the trivial predictor of $m_i = 0$.
 In this case, $\sigma^2 = \frac{\sum_{i = 1}^{n}\Delta_i^2}{n}$.
 
 Plugging this value for $\sigma^2$ into our result, we get:
 
 \[
 \begin{aligned}
-\mathrm{Var}(\tilde{\Delta}) &\leq 2n \sigma^2 + \frac{2n^2}{s} \sigma^2 \\
+\mathrm{Var}\left(\tilde{\Delta}\right) &\leq 2n \sigma^2 + \frac{2n^2}{s} \sigma^2 \\
 &= 2n \frac{\sum_{i = 1}^{n}\Delta_i^2}{n} + \frac{2n^2}{s} \frac{\sum_{i = 1}^{n}\Delta_i^2}{n} \\
 &= 2\sum_{i = 1}^{n}\Delta_i^2 + \frac{2n}{s} \sum_{i = 1}^{n}\Delta_i^2 \\
-&= 2\sum_{i = 1}^{n}\Delta_i^2(1 + \frac{n}{s}) \\
+&= 2\sum_{i = 1}^{n}\Delta_i^2\left(1 + \frac{n}{s}\right). \\
 \end{aligned}
 \]
 
 This is the variance expression reached with the trivial predictor, but a better predictor $\sigma^2 = \frac{\sum_{i = 1}^{n}\Delta_i^2}{n} \epsilon$ for some small value $\epsilon$ would lead to a far smaller variance of:
 
 \[
-\mathrm{Var}(\tilde{\Delta}) \leq 2\sum_{i = 1}^{n}\Delta_i^2 \epsilon (1 + \frac{n}{s})
+\mathrm{Var}\left(\tilde{\Delta}\right) \leq 2\sum_{i = 1}^{n}\Delta_i^2 \epsilon \left(1 + \frac{n}{s}\right).
 \]
 
 \paragraph{Variance Reduction with Multiplicative Noise}
 
-Here, take the estimator of $\Delta$ to be denoted by $M$ where $M = \sum_{i = 1}^{n} m_i$ and $m_i = \Delta_i + \sigma_i^2$ with $\sigma_i^2 = \Delta_i^2 \sigma^2$.
+Here, take the estimator of $\Delta$ to be $\sum_{i = 1}^{n} m_i$ where $m_i = \Delta_i + n_i$ where $\mathrm{Var}(n_i) = \sigma_i^2$ and $\sigma_i^2 = \Delta_i^2 \sigma^2$.
 i.e., as the size of $\Delta_i$ increases, so does the noise $m_i$.
 
 \[
-\tilde{\Delta} = \sum_{i = 1}^{n} m_i + \frac{n}{s} \sum_{i = 1}^{s} (m_i - \Delta_i)
+\tilde{\Delta} = \sum_{i = 1}^{n} m_i + \frac{n}{s} \sum_{i = 1}^{s} \left(m_i - \Delta_i\right).
 \]
 
 \[
 \begin{aligned}
-\mathrm{Var}(\tilde{\Delta}) &= \mathrm{Var}( \sum_{i = 1}^{n} m_i + \frac{n}{s} \sum_{i = 1}^{s} (m_i - \Delta_i)) \\
-&\leq 2\sum_{i = 1}^{n} \mathrm{Var}(m_i) + 2\mathrm{Var}(\frac{n}{s} \sum_{i = 1}^{s} (m_i - \Delta_i)) \\
-&= 2\sum_{i = 1}^{n} \mathrm{Var}(m_i) + \frac{2n^2}{s^2} \mathrm{Var}(\sum_{i = 1}^{s} (m_i - \Delta_i)) \\
-&= 2\sum_{i = 1}^{n} \sigma_i^2 + \frac{2n^2}{s^2} \mathrm{Var}(\sum_{i = 1}^{s} (m_i - \Delta_i)) \\
-&= 2\sigma^2\sum_{i = 1}^{n} \Delta_i^2 + \frac{2n^2}{s^2} \mathrm{Var}(\sum_{i = 1}^{s} (m_i - \Delta_i)) \\
-&= 2\sigma^2\sum_{i = 1}^{n} \Delta_i^2 + \frac{2n^2}{s^2}\sum_{i = 1}^{s} (\frac{1}{n}\sum_{i = 1}^{n}\sigma^2\Delta_i^2) \\
+\mathrm{Var}\left(\tilde{\Delta}\right) &= \mathrm{Var}\left( \sum_{i = 1}^{n} m_i + \frac{n}{s} \sum_{i = 1}^{s} \left(m_i - \Delta_i\right)\right) \\
+&\leq 2\sum_{i = 1}^{n} \mathrm{Var}\left(m_i\right) + 2\mathrm{Var}\left(\frac{n}{s} \sum_{i = 1}^{s} \left(m_i - \Delta_i\right)\right) \\
+&= 2\sum_{i = 1}^{n} \mathrm{Var}\left(m_i\right) + \frac{2n^2}{s^2} \mathrm{Var}\left(\sum_{i = 1}^{s} \left(m_i - \Delta_i\right)\right) \\
+&= 2\sum_{i = 1}^{n} \sigma_i^2 + \frac{2n^2}{s^2} \mathrm{Var}\left(\sum_{i = 1}^{s} \left(m_i - \Delta_i\right)\right) \\
+&= 2\sigma^2\sum_{i = 1}^{n} \Delta_i^2 + \frac{2n^2}{s^2} \mathrm{Var}\left(\sum_{i = 1}^{s} \left(m_i - \Delta_i\right)\right) \\
+&= 2\sigma^2\sum_{i = 1}^{n} \Delta_i^2 + \frac{2n^2}{s^2}\sum_{i = 1}^{s} \left(\frac{1}{n}\sum_{i = 1}^{n}\sigma^2\Delta_i^2\right) \\
 &= 2\sigma^2\sum_{i = 1}^{n} \Delta_i^2 + \frac{2n}{s}\sigma^2\sum_{i = 1}^{n}\Delta_i^2 \\
-&= 2\sigma^2(\sum_{i = 1}^{n} \Delta_i^2 + \frac{n}{s}\sum_{i = 1}^{n}\Delta_i^2) \\
-&= 2\sigma^2\sum_{i = 1}^{n} \Delta_i^2(1 + \frac{n}{s}) \\
+&= 2\sigma^2\left(\sum_{i = 1}^{n} \Delta_i^2 + \frac{n}{s}\sum_{i = 1}^{n}\Delta_i^2\right) \\
+&= 2\sigma^2\sum_{i = 1}^{n} \Delta_i^2\left(1 + \frac{n}{s}\right). \\
 \end{aligned}
 \]
+
+Thus, we get
+
+\begin{equation}
+    \mathrm{Var}\left(\tilde{\Delta}_{VRm}\right) \leq 2\sigma^2\sum_{i = 1}^{n} \Delta_i^2\left(1 + \frac{n}{s}\right).
+\label{eq:Var_Delta_VRm}
+\end{equation}
 
 As with uniform noise, we will plug in the value $\sigma^2 = \frac{\sum_{i = 1}^{n}\Delta_i^2}{n}$.
 This yields the following:
 
 \[
 \begin{aligned}
-\mathrm{Var}(\tilde{\Delta}) &\leq 2\sigma^2\sum_{i = 1}^{n} \Delta_i^2(1 + \frac{n}{s}) \\
-&= 2\frac{\sum_{i = 1}^{n}\Delta_i^2}{n}\sum_{i = 1}^{n} \Delta_i^2(1 + \frac{n}{s}) \\
-&= \frac{2}{n}(\sum_{i = 1}^{n}\Delta_i^2)^2(1 + \frac{n}{s}) \\
-&= 2(\sum_{i = 1}^{n}\Delta_i^2)^2(\frac{1}{n} + \frac{1}{s}) \\
+\mathrm{Var}\left(\tilde{\Delta}\right) &\leq 2\sigma^2\sum_{i = 1}^{n} \Delta_i^2\left(1 + \frac{n}{s}\right) \\
+&= 2\frac{\sum_{i = 1}^{n}\Delta_i^2}{n}\sum_{i = 1}^{n} \Delta_i^2\left(1 + \frac{n}{s}\right) \\
+&= \frac{2}{n}\left(\sum_{i = 1}^{n}\Delta_i^2\right)^2\left(1 + \frac{n}{s}\right) \\
+&= 2\left(\sum_{i = 1}^{n}\Delta_i^2\right)^2\left(\frac{1}{n} + \frac{1}{s}\right). \\
 \end{aligned}
 \]
 
 As before, with a better predictor of $\sigma^2 = \frac{\sum_{i = 1}^{n}\Delta_i^2}{n} \epsilon$ for some small value $\epsilon$ we can recompute the variance as:
 
 \[
-\mathrm{Var}(\tilde{\Delta}) \leq 2\epsilon(\sum_{i = 1}^{n}\Delta_i^2)^2(\frac{1}{n} + \frac{1}{s})
+\mathrm{Var}\left(\tilde{\Delta}\right) \leq 2\epsilon\left(\sum_{i = 1}^{n}\Delta_i^2\right)^2\left(\frac{1}{n} + \frac{1}{s}\right).
 \]
 
 \subsubsection{Comparing Variance Reduction and Importance Sampling}
 \label{appendix:variance-comparison}
 
-In this section we will refer to variance in the case of the importance sampling method as $\mathrm{Var}(\tilde{\Delta}_{IS})$ and for the variance reduction method (with multiplicative noise) as $\mathrm{Var}(\tilde{\Delta}_{VR})$.
-These variances, as established in the previous sections are
-
-\[
-\mathrm{Var}(\tilde{\Delta}_{IS}) \leq \frac{1}{9s} (\frac{1 + \sigma}{1 - \sigma} - 1) \Delta^2
-\] and
-
-\[
-\mathrm{Var}(\tilde{\Delta}_{VR}) \leq 2\sigma^2\sum_{i = 1}^{n} \Delta_i^2(1 + \frac{n}{s})
-\].
+In this section we will refer to variance in the case of the importance sampling method as $\mathrm{Var}\left(\tilde{\Delta}_{IS}\right)$ and for the variance reduction method (with multiplicative noise) as $\mathrm{Var}\left(\tilde{\Delta}_{VR}\right)$.
+In the previous sections, we derived expressions for $\mathrm{Var}\left(\tilde{\Delta}_{IS}\right)$ and $\mathrm{Var}\left(\tilde{\Delta}_{VRm}\right)$ as equations \eqref{eq:Var_Delta_IS} and \eqref{eq:Var_Delta_VRm} respectively.
 
 As $\sigma$ approaches 1, $\frac{1 + \sigma}{1 - \sigma}$ approaches infinity.
 However, with smaller values of $\sigma$, the value of $\frac{1 + \sigma}{1 - \sigma}$ becomes negligible in contrast to $\Delta^2$.
 Thus, we will simplify our expression by removing the $\frac{1 + \sigma}{1 - \sigma}$ term as well as the also small $-1$ term.
-Also, for our purposes, $\frac{1}{9s} \approx \frac{1}{s}$, thus we can now rewrite $\mathrm{Var}(\tilde{\Delta}_{IS})$ as:
+Also, for our purposes, $\frac{1}{9s} \approx \frac{1}{s}$, thus we can now rewrite $\mathrm{Var}\left(\tilde{\Delta}_{IS}\right)$ as:
 
 \[
-\mathrm{Var}(\tilde{\Delta}_{IS}) \leq \frac{1}{9s} (\frac{1 + \sigma}{1 - \sigma} - 1) \Delta^2 \approx \frac{1}{s} \Delta^2
+\mathrm{Var}\left(\tilde{\Delta}_{IS}\right) \leq \frac{1}{9s} \left(\frac{1 + \sigma}{1 - \sigma} - 1\right) \Delta^2 \approx \frac{1}{s} \Delta^2.
 \].
 
-Similarly, for our expression of $\mathrm{Var}(\tilde{\Delta}_{VR})$, we know $\frac{n}{s}$ is far greater than $1$.
+Similarly, for our expression of $\mathrm{Var}\left(\tilde{\Delta}_{VRm}\right)$, we know $\frac{n}{s}$ is far greater than $1$.
 Thus, omitting 1 from our expression will not fundamentally change it.
 In addition, as $\sigma < 1$, $\sigma^2$ is a very small number, and we can remove it multiplied by 2 from our expression also.
 Thus, we can rewrite as:
 
 \[
-\mathrm{Var}(\tilde{\Delta}_{VR}) \leq 2\sigma^2\sum_{i = 1}^{n} \Delta_i^2(1 + \frac{n}{s}) \approx \sum_{i = 1}^{n} \Delta_i^2\frac{n}{s}
+\mathrm{Var}\left(\tilde{\Delta}_{VRm}\right) \leq 2\sigma^2\sum_{i = 1}^{n} \Delta_i^2\left(1 + \frac{n}{s}\right) \approx \sum_{i = 1}^{n} \Delta_i^2\frac{n}{s}.
 \].
 
-Now that we have our two simplified expressions for $\mathrm{Var}(\tilde{\Delta}_{IS})$ and $\mathrm{Var}(\tilde{\Delta}_{VR})$, we can compare them.
+Now that we have our two simplified expressions for $\mathrm{Var}\left(\tilde{\Delta}_{IS}\right)$ and $\mathrm{Var}\left(\tilde{\Delta}_{VRm}\right)$, we can compare them.
 
 Both expressions are multiplied by $\frac{1}{s}$, so we can remove that from both and simply compare $\Delta^2$ to $\sum_{i = 1}^{n} \Delta_i^2 n$.
 We will begin by rewriting $\Delta$ as follows:
@@ -1607,6 +1718,6 @@ We will begin by rewriting $\Delta$ as follows:
 By the Cauchy–Schwarz inequality, we know $|\langle \mathbf{u}, \mathbf{v} \rangle| \leq \|\mathbf{u}\| \|\mathbf{v}\|$.
 Squaring both sides, we also get $|\langle \mathbf{u}, \mathbf{v} \rangle|^2 \leq \|\mathbf{u}\|^2 \|\mathbf{v}\|^2$.
 
-Thus, using this inequality, we know that $\Delta^2 \leq \sum_{i = 1}^{n} \Delta_i^2 n$, and so, in the case of multiplicative noise, $\mathrm{Var}(\tilde{\Delta}_{IS}) \leq \mathrm{Var}(\tilde{\Delta}_{VR})$.
+Thus, using this inequality, we know that $\Delta^2 \leq \sum_{i = 1}^{n} \Delta_i^2 n$, and so, in the case of multiplicative noise, $\mathrm{Var}\left(\tilde{\Delta}_{IS}\right) \leq \mathrm{Var}\left(\tilde{\Delta}_{VRm}\right)$.
 
 \end{document}

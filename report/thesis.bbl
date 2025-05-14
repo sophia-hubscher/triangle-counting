@@ -8,7 +8,7 @@ Mohammad Al~Hasan and Vachik~S. Dave.
 \bibitem{albert_statistical_2002}
 Reka Albert and Albert-Laszlo Barabasi.
 \newblock Statistical mechanics of complex networks.
-\newblock {\em Reviews of Modern Physics}, 74(1):47--97, January 2002.
+\newblock {\em Reviews of Modern Physics}, 74(1):47--97, 2002.
 
 \bibitem{arifuzzaman_parallel_2012}
 SM~Arifuzzaman, Maleq Khan, and Madhav Marathe.
@@ -43,6 +43,11 @@ Ran Duan and Seth Pettie.
 \newblock Linear-{Time} {Approximation} for {Maximum} {Weight} {Matching}.
 \newblock {\em J. ACM}, pages 1:1--1:23, 2014.
 
+\bibitem{hagberg_exploring_2008}
+Aric Hagberg, Pieter~J. Swart, and Daniel~A. Schult.
+\newblock Exploring network structure, dynamics, and function using {NetworkX}.
+\newblock Technical report, 2008.
+
 \bibitem{hutchinson_stochastic_1990}
 M.F. Hutchinson.
 \newblock A stochastic estimator of the trace of the influence matrix for laplacian smoothing splines.
@@ -51,7 +56,7 @@ M.F. Hutchinson.
 \bibitem{leskovec_snap_2017}
 Jure Leskovec and Rok Sosič.
 \newblock {SNAP}: {A} {General}-{Purpose} {Network} {Analysis} and {Graph}-{Mining} {Library}.
-\newblock {\em ACM Transactions on Intelligent Systems and Technology}, 8(1):1--20, January 2017.
+\newblock {\em ACM Transactions on Intelligent Systems and Technology}, 8(1):1--20, 2017.
 
 \bibitem{lovasz_large_2012}
 Laszlo Lovasz.
@@ -72,6 +77,11 @@ Rajeev Motwani and Prabhakar Raghavan.
 P.~Prescott, J.~M. Hammersley, and D.~C. Handscomb.
 \newblock Monte {Carlo} {Methods}.
 \newblock {\em Applied Statistics}, 14(2/3):211, 1965.
+
+\bibitem{schank_finding_2005}
+Thomas Schank and Dorothea Wagner.
+\newblock Finding, {Counting} and {Listing} {All} {Triangles} in {Large} {Graphs}, an {Experimental} {Study}.
+\newblock {\em Lecture Notes in Computer Science}, 3503, 2005.
 
 \bibitem{seshadhri_triadic_2013}
 C.~Seshadhri, Ali Pinar, and Tamara~G. Kolda.
@@ -105,6 +115,6 @@ Virginia~Vassilevska Williams, Yinzhan Xu, Zixuan Xu, and Renfei Zhou.
 \bibitem{ye_commensurate_2005}
 Ping Ye, Brian~D. Peyser, Forrest~A. Spencer, and Joel~S. Bader.
 \newblock Commensurate distances and similar motifs in genetic congruence and protein interaction networks in yeast.
-\newblock {\em BMC Bioinformatics}, 6:270, November 2005.
+\newblock {\em BMC Bioinformatics}, 6:270, 2005.
 
 \end{thebibliography}

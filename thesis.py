@@ -340,11 +340,21 @@ def simulated_importance_estimate_per_node_method(A, s, noise_scale):
   triangles = np.power(degrees, slope) * np.exp(intercept)
 
   noise = np.random.normal(0, noise_scale, triangles.shape)
+  noise = np.clip(noise, -0.99, None)
   # noise = np.random.uniform(-noise_scale, noise_scale, size=triangles.shape)
 
   triangles = triangles + noise
   # triangles = triangles * (1 + noise)
   true_triangle_count = np.sum(triangles) // 3
+
+  plt.figure(figsize=(8, 5))
+  plt.scatter(triangles, np.abs(noise))
+  plt.xlabel('Triangle Count')
+  plt.ylabel('Noise')
+  plt.title('Noise vs Triangle Count for Uniform Noise')
+  plt.grid(True)
+  plt.tight_layout()
+  plt.savefig('plots/simulated_plots/triangle_count_vs_noise/uniform.png')
 
   # run importance sampling
   degrees_to_power = np.power(degrees, slope)
@@ -656,21 +666,23 @@ if __name__ == '__main__':
   # node_count = 4000
   # true_triangle_count = 877830
 
-  m = edges_to_adjacency_matrix_csv(file_path, node_count)
+  m = edges_to_adjacency_matrix_txt(file_path, node_count)
 
-  slope, intercept = get_line_of_best_fit(m)
-  degrees = np.sum(m, axis=1)
+  # simulated_importance_estimate_per_node_method(m, 50, 3)
 
-  s_values = [5, 100, 500, 1000, 2000, 3000, 4000]
-  powers = [0, 1, 1.5, get_line_of_best_fit(m)[0], 2]
+  # slope, intercept = get_line_of_best_fit(m)
+  # degrees = np.sum(m, axis=1)
 
-  # true_triangle_count = count_triangles(m)
-  print(f"True Triangle Count: {true_triangle_count}")
+  # s_values = [5, 100, 500, 1000, 2000, 3000, 4000]
+  # powers = [0, 1, 1.5, get_line_of_best_fit(m)[0], 2]
 
-  results = run_parallel_estimation(s_values, powers, true_triangle_count, m, estimate_importance_variance_reduction_method)
+  # # true_triangle_count = count_triangles(m)
+  # print(f"True Triangle Count: {true_triangle_count}")
 
-  output_file = 'estimation_results_fb.csv'
-  method_name = 'Variance Reduction + Importance Sampling'
-  serialize_results_to_csv(results, s_values, powers, f'results/{output_file}', method_name)
+  # results = run_parallel_estimation(s_values, powers, true_triangle_count, m, estimate_importance_variance_reduction_method)
 
-  plot(s_values, results, powers)
+  # output_file = 'estimation_results_fb.csv'
+  # method_name = 'Variance Reduction + Importance Sampling'
+  # serialize_results_to_csv(results, s_values, powers, f'results/{output_file}', method_name)
+
+  # plot(s_values, results, powers)
