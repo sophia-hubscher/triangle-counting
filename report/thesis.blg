@@ -5,45 +5,45 @@ The style file: plain.bst
 Database file #1: thesis_bib.bib
 Warning--empty booktitle in arifuzzaman_parallel_2012
 Warning--empty institution in hagberg_exploring_2008
-You've used 24 entries,
+You've used 31 entries,
             2118 wiz_defined-function locations,
-            639 strings with 8314 characters,
-and the built_in function-call counts, 8346 in all, are:
-= -- 838
-> -- 356
-< -- 9
-+ -- 142
-- -- 115
-* -- 500
-:= -- 1329
-add.period$ -- 73
-call.type$ -- 24
-change.case$ -- 127
+            676 strings with 9554 characters,
+and the built_in function-call counts, 10923 in all, are:
+= -- 1107
+> -- 440
+< -- 12
++ -- 176
+- -- 141
+* -- 674
+:= -- 1718
+add.period$ -- 96
+call.type$ -- 31
+change.case$ -- 161
 chr.to.int$ -- 0
-cite$ -- 26
-duplicate$ -- 354
-empty$ -- 673
-format.name$ -- 115
-if$ -- 1815
+cite$ -- 33
+duplicate$ -- 465
+empty$ -- 898
+format.name$ -- 141
+if$ -- 2382
 int.to.chr$ -- 0
-int.to.str$ -- 24
-missing$ -- 23
-newline$ -- 120
-num.names$ -- 50
-pop$ -- 157
+int.to.str$ -- 31
+missing$ -- 30
+newline$ -- 155
+num.names$ -- 64
+pop$ -- 197
 preamble$ -- 1
-purify$ -- 105
+purify$ -- 132
 quote$ -- 0
-skip$ -- 290
+skip$ -- 375
 stack$ -- 0
-substring$ -- 500
-swap$ -- 110
-text.length$ -- 9
+substring$ -- 705
+swap$ -- 146
+text.length$ -- 12
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 90
+type$ -- 118
 warning$ -- 2
-while$ -- 84
-width$ -- 26
-write$ -- 259
+while$ -- 114
+width$ -- 33
+write$ -- 333
 (There were 2 warnings)

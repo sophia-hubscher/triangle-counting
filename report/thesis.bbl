@@ -43,6 +43,11 @@ Ran Duan and Seth Pettie.
 \newblock Linear-{Time} {Approximation} for {Maximum} {Weight} {Matching}.
 \newblock {\em J. ACM}, pages 1:1--1:23, 2014.
 
+\bibitem{eckmann_curvature_2002}
+Jean-Pierre Eckmann and Elisha Moses.
+\newblock Curvature of co-links uncovers hidden thematic layers in the {World} {Wide} {Web}.
+\newblock {\em Proceedings of the National Academy of Sciences}, 99(9):5825--5829, April 2002.
+
 \bibitem{hagberg_exploring_2008}
 Aric Hagberg, Pieter~J. Swart, and Daniel~A. Schult.
 \newblock Exploring network structure, dynamics, and function using {NetworkX}.
@@ -61,7 +66,7 @@ Jure Leskovec and Rok Sosič.
 \bibitem{lovasz_large_2012}
 Laszlo Lovasz.
 \newblock {\em Large networks and graph limits}.
-\newblock American {Mathematical} {Society} colloquium publications. American Mathematical Society, Providence, Rhode Island, 2012.
+\newblock American Mathematical Society, 2012.
 
 \bibitem{roughgarden_algorithms_2020}
 Michael Mitzenmacher and Sergei Vassilvitskii.
@@ -71,12 +76,27 @@ Michael Mitzenmacher and Sergei Vassilvitskii.
 \bibitem{motwani_randomized_1995}
 Rajeev Motwani and Prabhakar Raghavan.
 \newblock {\em Randomized {Algorithms}}.
-\newblock Cambridge University Press, Cambridge, 1995.
+\newblock Cambridge University Press, 1995.
 
 \bibitem{prescott_monte_1965}
 P.~Prescott, J.~M. Hammersley, and D.~C. Handscomb.
 \newblock Monte {Carlo} {Methods}.
 \newblock {\em Applied Statistics}, 14(2/3):211, 1965.
+
+\bibitem{rossi_higher-order_2018}
+Ryan~A. Rossi, Nesreen~K. Ahmed, and Eunyee Koh.
+\newblock Higher-order {Network} {Representation} {Learning}.
+\newblock In {\em Companion of the {The} {Web} {Conference} 2018 on {The} {Web} {Conference} 2018 - {WWW} '18}, pages 3--4. ACM Press, 2018.
+
+\bibitem{rougemont_dna_2003}
+Jacques Rougemont and Pascal Hingamp.
+\newblock {DNA} microarray data and contextual analysis of correlation graphs.
+\newblock {\em BMC Bioinformatics}, 4(1):15, April 2003.
+
+\bibitem{sandryhaila_big_2014}
+Aliaksei Sandryhaila and Jose~M.F. Moura.
+\newblock Big {Data} {Analysis} with {Signal} {Processing} on {Graphs}: {Representation} and processing of massive data sets with irregular structure.
+\newblock {\em IEEE Signal Processing Magazine}, 31(5):80--90, September 2014.
 
 \bibitem{schank_finding_2005}
 Thomas Schank and Dorothea Wagner.
@@ -96,7 +116,12 @@ V.~Strassen.
 \bibitem{su_effect_2016}
 Jessica Su, Aneesh Sharma, and Sharad Goel.
 \newblock The {Effect} of {Recommendations} on {Network} {Structure}.
-\newblock In {\em Proceedings of the 25th {International} {Conference} on {World} {Wide} {Web}}, {WWW} '16, pages 1157--1167, Republic and Canton of Geneva, CHE, 2016. International World Wide Web Conferences Steering Committee.
+\newblock In {\em Proceedings of the 25th {International} {Conference} on {World} {Wide} {Web}}, pages 1157--1167. International World Wide Web Conferences Steering Committee, 2016.
+
+\bibitem{tsourakakis_k-clique_2015}
+Charalampos Tsourakakis.
+\newblock The {K}-clique {Densest} {Subgraph} {Problem}.
+\newblock In {\em Proceedings of the 24th {International} {Conference} on {World} {Wide} {Web}}, pages 1122--1132. International World Wide Web Conferences Steering Committee, May 2015.
 
 \bibitem{tsourakakis_fast_2008}
 Charalampos~E. Tsourakakis.
@@ -106,11 +131,21 @@ Charalampos~E. Tsourakakis.
 \bibitem{tsourakakis_doulion_2009}
 Charalampos~E. Tsourakakis, U.~Kang, Gary~L. Miller, and Christos Faloutsos.
 \newblock {DOULION}: counting triangles in massive graphs with a coin.
-\newblock In {\em Proceedings of the 15th {ACM} {SIGKDD} international conference on {Knowledge} discovery and data mining}, {KDD} '09, pages 837--846. Association for Computing Machinery, 2009.
+\newblock In {\em Proceedings of the 15th {ACM} {SIGKDD} international conference on {Knowledge} discovery and data mining}, pages 837--846. Association for Computing Machinery, 2009.
+
+\bibitem{williams_multiplying_2012}
+Virginia~Vassilevska Williams.
+\newblock Multiplying matrices faster than coppersmith-winograd.
+\newblock In {\em Proceedings of the forty-fourth annual {ACM} symposium on {Theory} of computing}, pages 887--898. ACM, May 2012.
 
 \bibitem{williams_new_2023}
 Virginia~Vassilevska Williams, Yinzhan Xu, Zixuan Xu, and Renfei Zhou.
 \newblock New {Bounds} for {Matrix} {Multiplication}: from {Alpha} to {Omega}, 2023.
+
+\bibitem{wimmer_beyond_2010}
+Andreas Wimmer and Kevin Lewis.
+\newblock Beyond and {Below} {Racial} {Homophily}: {ERG} {Models} of a {Friendship} {Network} {Documented} on {Facebook}.
+\newblock {\em American Journal of Sociology}, 116(2):583--642, September 2010.
 
 \bibitem{ye_commensurate_2005}
 Ping Ye, Brian~D. Peyser, Forrest~A. Spencer, and Joel~S. Bader.

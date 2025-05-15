@@ -12,7 +12,7 @@
 \contentsline {paragraph}{Strassen's Algorithm}{13}{figure.caption.7}%
 \contentsline {paragraph}{EigenTriangle}{14}{figure.caption.7}%
 \contentsline {paragraph}{TraceTriangle}{15}{figure.caption.7}%
-\contentsline {subsection}{\numberline {3.4}General Algorithmic Strategies}{16}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.4}General Algorithmic Strategies}{15}{subsection.3.4}%
 \contentsline {subsubsection}{\numberline {3.4.1}Learning-Augmented Algorithms}{16}{subsubsection.3.4.1}%
 \contentsline {subsubsection}{\numberline {3.4.2}Variance Reduction}{17}{subsubsection.3.4.2}%
 \contentsline {subsubsection}{\numberline {3.4.3}Importance Sampling}{19}{subsubsection.3.4.3}%
@@ -38,6 +38,6 @@
 \contentsline {subsubsection}{\numberline {7.2.1}Uniform Sampling}{49}{subsubsection.7.2.1}%
 \contentsline {subsubsection}{\numberline {7.2.2}Importance Sampling}{51}{subsubsection.7.2.2}%
 \contentsline {subsubsection}{\numberline {7.2.3}Variance Reduction}{53}{subsubsection.7.2.3}%
-\contentsline {paragraph}{Variance Reduction with Uniform Noise}{54}{subsubsection.7.2.3}%
-\contentsline {paragraph}{Variance Reduction with Multiplicative Noise}{56}{equation.7.5}%
+\contentsline {paragraph}{Variance Reduction with Uniform Noise}{53}{subsubsection.7.2.3}%
+\contentsline {paragraph}{Variance Reduction with Multiplicative Noise}{55}{equation.7.5}%
 \contentsline {subsubsection}{\numberline {7.2.4}Comparing Variance Reduction and Importance Sampling}{57}{subsubsection.7.2.4}%
